@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hearth Deck Style Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+@page{size:1280px 720px;margin:0}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.t-warm{--a2-ink:#FFFFFF;--bg:#FBF7F1;--surface:#FFFDF9;--ink:#2A211C;--muted:#6F625A;--line:#E8DCCB;--accent:#B4502C;--accent-ink:#FFF;--a2:#4E7A5C;--a3:#6C4E7E;--soft:#F6E3D3;--soft2:#DDEBDF;--head:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;--hw:700;--r:18px}
+.t-sage{--a2-ink:#FFFFFF;--bg:#F3F6F2;--surface:#FFF;--ink:#1F2D2A;--muted:#5B6B66;--line:#D5E0D9;--accent:#2F6B57;--accent-ink:#FFF;--a2:#9A5A14;--a3:#3D5A80;--soft:#DCE9E1;--soft2:#F6E7D3;--head:'DM Serif Display',Georgia,serif;--body:'DM Sans',sans-serif;--hw:400;--r:14px}
+.t-night{--a2-ink:#1A1426;--bg:#14121F;--surface:#1E1B2E;--ink:#F2EEF8;--muted:#B3ABC6;--line:#332D4D;--accent:#F2A65A;--accent-ink:#1A1426;--a2:#7FD1AE;--a3:#B69CF2;--soft:#2A2540;--soft2:#1F3A33;--head:'Space Grotesk',sans-serif;--body:'Inter',sans-serif;--hw:700;--r:16px}
+.t-pop{--a2-ink:#FFFFFF;--bg:#FFF8E7;--surface:#FFF;--ink:#1E1B4B;--muted:#57537A;--line:#1E1B4B;--accent:#2D3FE0;--accent-ink:#FFF;--a2:#C8381C;--a3:#7A3FD1;--soft:#FFE9A8;--soft2:#FFD9CF;--head:'Bricolage Grotesque',sans-serif;--body:'Nunito',sans-serif;--hw:800;--r:24px}
+.t-trust{--a2-ink:#FFFFFF;--bg:#FFF;--surface:#F6F8FB;--ink:#0F1B2D;--muted:#546179;--line:#E2E8F0;--accent:#1D4ED8;--accent-ink:#FFF;--a2:#0F766E;--a3:#7C3AED;--soft:#E6EEFF;--soft2:#DDF3F0;--head:'Inter',sans-serif;--body:'Inter',sans-serif;--hw:800;--r:10px}
+.page{width:1280px;height:720px;page-break-after:always;break-after:page;background:var(--bg);color:var(--ink);font-family:var(--body);position:relative;overflow:hidden;padding:64px 80px;display:flex;flex-direction:column;justify-content:space-between}
+.page:last-child{page-break-after:auto;break-after:auto}
+h1,h2{font-family:var(--head);font-weight:var(--hw);margin:0;line-height:1.05;letter-spacing:-.015em}
+h1{font-size:76px;max-width:900px;position:relative}
+h2{font-size:52px;max-width:900px}
+.kick{font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800;position:relative}
+.sub{font-size:24px;color:var(--muted);max-width:760px;margin-top:20px;position:relative}
+.foot{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);position:relative}
+.opt{position:absolute;top:22px;right:28px;font:700 13px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:999px;background:var(--ink);color:var(--bg);z-index:3}
+.blob{position:absolute;right:-110px;top:-140px;width:520px;height:520px;border-radius:50%;background:var(--soft)}
+.blob2{position:absolute;right:160px;bottom:-120px;width:240px;height:240px;border-radius:50%;background:var(--soft2)}
+.t-pop .blob{border-radius:30%;transform:rotate(14deg);border:3px solid var(--ink)}
+.t-pop .blob2{border-radius:24px;transform:rotate(-10deg);border:3px solid var(--ink)}
+.t-trust .blob{border-radius:0;right:0;top:0;width:380px;height:720px}.t-trust .blob2{display:none}
+.t-night .blob{background:radial-gradient(circle,rgba(182,156,242,.45) 0,transparent 65%)}.t-night .blob2{background:radial-gradient(circle,rgba(242,166,90,.35) 0,transparent 65%)}
+.cta{display:inline-block;margin-top:28px;padding:16px 26px;border-radius:calc(var(--r) - 6px);background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:20px;position:relative}
+.t-pop .cta{border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.kpis{display:flex;gap:28px}
+.kpi{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 28px}
+.t-pop .kpi{border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.kpi b{display:block;font-family:var(--head);font-weight:var(--hw);font-size:64px;line-height:1;color:var(--ink)}
+.kpi.hl b{color:var(--accent)}
+.kpi span{display:block;margin-top:8px;font-size:18px;color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:18px;height:150px;margin-top:6px}
+.bars div{flex:1;background:var(--accent);border-radius:6px 6px 0 0;position:relative;opacity:.9}
+.bars div:nth-child(-n+3){opacity:.45}
+.bars div span{position:absolute;top:-24px;left:0;right:0;text-align:center;font-size:14px;color:var(--ink);font-weight:700}
+.bars-l{display:flex;gap:18px;font-size:13px;color:var(--muted)}.bars-l span{flex:1;text-align:center}
+</style>
+</head>
+<body>
+<script>
+const T=[['warm','Option 1 · Hearth Warm'],['sage','Option 2 · Calm Sage'],['night','Option 3 · Night Feed'],['pop','Option 4 · Playful Pop'],['trust','Option 5 · Clinical Trust']];
+const arr=[0.324,2.0,6.9,16.1,29.4];
+let html='';
+T.forEach(([id,name])=>{
+ html+=`<section class="page t-${id}"><div class="opt">${name} · title</div><div class="blob"></div><div class="blob2"></div>
+  <div class="kick">Business Cup 2.0 · Skills track</div>
+  <div><h1>You need a license to drive. Not to raise a human.</h1><div class="sub">Hearth: the Family License, for two. Parenting as a team, from pregnancy to age 12.</div><span class="cta">hearth.app · try it as a guest</span></div>
+  <div class="foot"><span><b style="color:var(--ink)">Hearth</b> · Team name</span><span>01</span></div></section>`;
+ html+=`<section class="page t-${id}"><div class="opt">${name} · numbers</div>
+  <div><div class="kick">Unit economics · base case (market medians)</div><h2 style="margin-top:14px">Each household pays back in 7 months</h2></div>
+  <div class="kpis"><div class="kpi hl"><b>1.6×</b><span>LTV / CAC</span></div><div class="kpi"><b>$52</b><span>blended CAC (by channel)</span></div><div class="kpi"><b>$29M</b><span>ARR in Y5 · $107M optimistic</span></div></div>
+  <div><div class="bars">${arr.map((v,i)=>`<div style="height:${Math.max(6,v/29.4*100)}%"><span>$${v<1?Math.round(v*1000)+'K':v+'M'}</span></div>`).join('')}</div><div class="bars-l">${arr.map((_,i)=>`<span>Y${i+1}</span>`).join('')}</div></div>
+  <div class="foot"><span>Sources: RevenueCat State of Subscription Apps 2026 · Adapty Meta Ads Q3 2026</span><span>08</span></div></section>`;
+});
+document.body.innerHTML=html;
+</script>
+</body>
+</html>

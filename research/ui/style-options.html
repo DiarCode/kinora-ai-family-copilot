@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth Style Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ---------- Theme tokens (each option = one class on <body>) ---------- */
+.t-warm{--a2-ink:#FFFFFF;--bg:#FBF7F1;--surface:#FFFDF9;--ink:#2A211C;--muted:#6F625A;--line:#E8DCCB;--accent:#B4502C;--accent-ink:#FFFFFF;--a2:#4E7A5C;--a3:#6C4E7E;--soft:#F6E3D3;--soft2:#DDEBDF;--soft3:#E9DFF0;--head:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--hw:700;--r:16px;--bw:1px;--shadow:0 1px 2px rgba(42,33,28,.06),0 10px 28px rgba(42,33,28,.08)}
+.t-sage{--a2-ink:#FFFFFF;--bg:#F3F6F2;--surface:#FFFFFF;--ink:#1F2D2A;--muted:#5B6B66;--line:#D5E0D9;--accent:#2F6B57;--accent-ink:#FFFFFF;--a2:#9A5A14;--a3:#3D5A80;--soft:#DCE9E1;--soft2:#F6E7D3;--soft3:#DDE5F0;--head:'DM Serif Display',Georgia,serif;--body:'DM Sans',system-ui,sans-serif;--hw:400;--r:12px;--bw:1px;--shadow:0 1px 2px rgba(31,45,42,.05),0 8px 24px rgba(31,45,42,.07)}
+.t-night{--a2-ink:#1A1426;--bg:#14121F;--surface:#1E1B2E;--ink:#F2EEF8;--muted:#B3ABC6;--line:#332D4D;--accent:#F2A65A;--accent-ink:#1A1426;--a2:#7FD1AE;--a3:#B69CF2;--soft:#2A2540;--soft2:#1F3A33;--soft3:#2E2547;--head:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--hw:700;--r:14px;--bw:1px;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45)}
+.t-pop{--a2-ink:#FFFFFF;--bg:#FFF8E7;--surface:#FFFFFF;--ink:#1E1B4B;--muted:#57537A;--line:#1E1B4B;--accent:#2D3FE0;--accent-ink:#FFFFFF;--a2:#C8381C;--a3:#7A3FD1;--soft:#FFE9A8;--soft2:#FFD9CF;--soft3:#E6DDFB;--head:'Bricolage Grotesque',system-ui,sans-serif;--body:'Nunito',system-ui,sans-serif;--hw:800;--r:22px;--bw:2px;--shadow:4px 4px 0 #1E1B4B}
+.t-trust{--a2-ink:#FFFFFF;--bg:#FFFFFF;--surface:#F6F8FB;--ink:#0F1B2D;--muted:#546179;--line:#E2E8F0;--accent:#1D4ED8;--accent-ink:#FFFFFF;--a2:#0F766E;--a3:#7C3AED;--soft:#E6EEFF;--soft2:#DDF3F0;--soft3:#EEE7FE;--head:'Inter',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--hw:800;--r:10px;--bw:1px;--shadow:0 1px 2px rgba(15,27,45,.05),0 6px 18px rgba(15,27,45,.06)}
+
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);transition:background .25s,color .25s}
+h1,h2,h3{font-family:var(--head);font-weight:var(--hw);line-height:1.1;margin:0 0 .4em;letter-spacing:-.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 64px}
+/* switcher bar (neutral, not themed) */
+.bar{position:sticky;top:0;z-index:10;background:#111;color:#fff;font:13px/1.4 Inter,system-ui,sans-serif;padding:10px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.bar b{margin-right:6px}
+.bar button{font:inherit;border:1px solid #444;background:#222;color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.bar button[aria-pressed="true"]{background:#fff;color:#111;border-color:#fff}
+.bar .dots{display:inline-flex;gap:2px}.bar .dots i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.bar .info{margin-left:auto;color:#bbb;max-width:520px}
+.label{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin:22px 0 14px}
+.label .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.label p{margin:0;color:var(--muted);max-width:640px;font-size:14px}
+.swatches{display:flex;gap:6px;flex-wrap:wrap}
+.sw{display:flex;flex-direction:column;align-items:center;font-size:10.5px;color:var(--muted);gap:3px}
+.sw i{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);display:block}
+/* product pieces */
+.card{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.btn{display:inline-block;border:var(--bw) solid transparent;border-radius:calc(var(--r) - 4px);padding:13px 20px;font-weight:700;font-family:var(--body);background:var(--accent);color:var(--accent-ink);cursor:pointer;font-size:15px}
+.t-pop .btn{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:stretch}
+.hero h1{font-size:clamp(30px,4.4vw,50px)}
+.kick{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:8px}
+.lead{font-size:17px;color:var(--muted);max-width:560px}
+.jury{margin-top:14px;padding:12px 14px;border-radius:calc(var(--r) - 4px);background:var(--soft);font-size:14px}
+.stat{font-family:var(--head);font-weight:var(--hw);font-size:38px;color:var(--accent);line-height:1}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:var(--bw) solid var(--line);border-radius:calc(var(--r) - 4px);padding:11px 13px;margin-bottom:8px;color:var(--ink);font:inherit}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+.progress{height:8px;background:var(--soft);border-radius:999px;overflow:hidden;margin:8px 0 14px}.progress i{display:block;height:100%;width:60%;background:var(--accent)}
+.agree{background:var(--soft2);border-radius:calc(var(--r) - 4px);padding:10px 12px;font-size:14px;margin-top:8px}
+.price .amt{font-family:var(--head);font-weight:var(--hw);font-size:40px;line-height:1}
+.price .badge{display:inline-block;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+.small{font-size:13px;color:var(--muted)}
+/* mini deck slide (16:9) */
+.slide{aspect-ratio:16/9;background:var(--surface);border:var(--bw) solid var(--line);border-radius:calc(var(--r) - 2px);box-shadow:var(--shadow);padding:5% 6%;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.slide h2{font-size:clamp(20px,3vw,38px);max-width:80%}
+.slide .row{display:flex;gap:4%;align-items:flex-end}
+.slide .k{flex:1;border-top:3px solid var(--accent);padding-top:8px}
+.slide .k b{display:block;font-family:var(--head);font-weight:var(--hw);font-size:clamp(20px,3.2vw,42px);line-height:1}
+.slide .k span{font-size:clamp(10px,1.1vw,13px);color:var(--muted)}
+.slide .foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.slide .blob{position:absolute;right:-6%;top:-12%;width:38%;aspect-ratio:1;border-radius:50%;background:var(--soft);opacity:.9}
+.t-pop .slide .blob{border-radius:30%;transform:rotate(12deg);background:var(--soft)}
+.t-trust .slide .blob{border-radius:0;width:30%;right:0;top:0;height:100%;aspect-ratio:auto;background:var(--soft)}
+.t-night .slide .blob{background:radial-gradient(circle,var(--a3) 0,transparent 65%);opacity:.35}
+.slides{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.section-title{margin:28px 0 4px;font-size:22px}
+@media (max-width:900px){.hero,.grid3,.slides{grid-template-columns:1fr}}
+@media (max-width:560px){.bar .info{display:none}}
+</style>
+</head>
+<body class="t-warm">
+<div class="bar" role="toolbar" aria-label="Style options">
+  <b>Style options:</b>
+  <span id="btns"></span>
+  <span class="info" id="info"></span>
+</div>
+
+<div class="wrap">
+  <div class="label">
+    <div><div class="tag" id="optName"></div><h2 style="margin:4px 0 0" id="optTitle"></h2></div>
+    <div class="swatches" id="sw"></div>
+  </div>
+  <p class="small" id="optWhy" style="margin:-4px 0 18px;max-width:900px"></p>
+
+  <!-- 1. Landing hero -->
+  <div class="hero">
+    <div class="card">
+      <div class="kick">The license nobody gave you</div>
+      <h1>You need a license to drive. Not to raise a human.</h1>
+      <p class="lead">Hearth helps couples parent as one team, a few minutes at a time. Practice the hard moments, repair after a fight, and grow with your kid.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><span class="btn">Take the 2-minute Family Quiz →</span><span class="btn ghost">How it works</span></div>
+      <div class="jury"><b>For the jury:</b> open <u>Link A</u> (Partner A), then <u>Link B</u> in a second window (Partner B). Demo data is labeled.</div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;justify-content:space-around;gap:10px">
+      <div><div class="stat">2×</div><div class="small">Parents are about twice as likely as other adults to say stress is overwhelming most days (48% vs 26%)</div></div>
+      <div><div class="stat">~2 in 3</div><div class="small">couples see relationship satisfaction drop after the first baby</div></div>
+      <div><div class="stat">6 yrs</div><div class="small">the average wait before couples seek help</div></div>
+    </div>
+  </div>
+
+  <!-- 2. Three product cards -->
+  <div class="grid3">
+    <div class="card">
+      <div class="small" style="font-weight:700">Family Quiz · 3 of 7</div>
+      <div class="progress"><i></i></div>
+      <h3>Where do you two clash most?</h3>
+      <button class="opt" type="button">Discipline: one strict, one soft</button>
+      <button class="opt sel" type="button">Who does more (chores, night wakes)</button>
+      <button class="opt" type="button">Screens and routines</button>
+    </div>
+    <div class="card">
+      <span class="pill" style="background:var(--soft3);color:var(--a3)">Repair Room · neutral summary</span>
+      <h3 style="margin-top:10px">You both want evenings to feel like a team again.</h3>
+      <p class="small" style="margin:0"><b style="color:var(--ink)">Jess</b> felt alone with the evening chores. <b style="color:var(--ink)">Mike</b> felt blamed the moment he walked in.</p>
+      <div class="agree"><b>One small agreement:</b> 10 minutes of landing time after work, then Mike takes bedtime on Mon and Wed.</div>
+      <div style="margin-top:12px;display:flex;gap:8px"><span class="btn" style="background:var(--a2);color:var(--a2-ink);padding:10px 14px;font-size:14px">We both agree</span></div>
+    </div>
+    <div class="card price">
+      <span class="badge">Best value</span>
+      <div style="font-weight:700">Annual Family License</div>
+      <div class="amt" style="margin:6px 0">$149<span class="small" style="font-size:15px">/yr</span></div>
+      <div class="small">≈ $12.40/mo · both partners · all license classes. Renews yearly; reminder 7 days before.</div>
+      <span class="btn" style="margin-top:14px;display:block;text-align:center">Start (test mode)</span>
+      <div class="small" style="margin-top:8px">or $9.99 for the first 4 weeks, then $24.99</div>
+    </div>
+  </div>
+
+  <!-- 3. Deck slides -->
+  <h2 class="section-title">Pitch deck in this style</h2>
+  <div class="slides">
+    <div class="slide">
+      <div class="blob"></div>
+      <div class="kick" style="position:relative">Business Cup 2.0 · Skills track</div>
+      <h2 style="position:relative">You need a license to drive.<br>Not to raise a human.</h2>
+      <div class="foot"><span><b style="color:var(--ink)">Hearth</b> · the Family License, for two</span><span>01</span></div>
+    </div>
+    <div class="slide">
+      <div class="kick">Unit economics · base case</div>
+      <h2 style="font-size:clamp(18px,2.4vw,30px)">Each household pays back in 7 months</h2>
+      <div class="row">
+        <div class="k"><b>1.6×</b><span>LTV / CAC (base)</span></div>
+        <div class="k"><b>$52</b><span>blended CAC</span></div>
+        <div class="k"><b>$29M</b><span>ARR in Y5 (base)</span></div>
+      </div>
+      <div class="foot"><span>Sources: RevenueCat 2026, Adapty Q3 2026</span><span>08</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const T=[
+ {id:'warm',name:'Option 1 · Hearth Warm',title:'Warm & earthy (recommended)',why:'Cream base, terracotta accent, sage for progress, plum for repair. Fraunces serif + Inter. Feels like home and trust; gender-neutral; stands apart from tech and finance apps.',sw:['#FBF7F1','#2A211C','#B4502C','#4E7A5C','#6C4E7E','#F6E3D3']},
+ {id:'sage',name:'Option 2 · Calm Sage',title:'Calm, natural, wellness',why:'Sage-green brand, warm amber and dusty-blue support. DM Serif + DM Sans. The most soothing option, close to wellness apps. Less energetic, so CTAs stand out less.',sw:['#F3F6F2','#1F2D2A','#2F6B57','#9A5A14','#3D5A80','#DCE9E1']},
+ {id:'night',name:'Option 3 · Night Feed',title:'Dark, cozy, premium',why:'Deep indigo night, warm amber accent, mint and lavender. Space Grotesk. Feels premium and techy, close to the organizers\' own deck style. Riskier for a "warm family" brand, and dark pages print poorly.',sw:['#14121F','#F2EEF8','#F2A65A','#7FD1AE','#B69CF2','#2A2540']},
+ {id:'pop',name:'Option 4 · Playful Pop',title:'Bright & playful (not neon)',why:'Cream-yellow base, cobalt accent, coral and violet, chunky outlines with offset shadows. Bricolage Grotesque + Nunito. The most energetic and Duolingo-like. Fun and memorable, but less "serious" for conflict-repair topics.',sw:['#FFF8E7','#1E1B4B','#2D3FE0','#C8381C','#FFE9A8','#7A3FD1']},
+ {id:'trust',name:'Option 5 · Clinical Trust',title:'Clean, health-tech, trustworthy',why:'White, deep navy ink, blue accent, teal and violet. Inter only. Looks like Maven or a health-insurer app: credible and evidence-based, but generic and less emotional.',sw:['#FFFFFF','#0F1B2D','#1D4ED8','#0F766E','#7C3AED','#E6EEFF']},
+];
+const btns=document.getElementById('btns');
+T.forEach(t=>{const b=document.createElement('button');b.type='button';b.dataset.id=t.id;b.innerHTML=`<span class="dots">${t.sw.slice(0,4).map(c=>`<i style="background:${c}"></i>`).join('')}</span>${t.name.split('·')[1].trim()}`;b.onclick=()=>set(t.id);btns.appendChild(b)});
+function set(id){const t=T.find(x=>x.id===id);document.body.className='t-'+id;
+  btns.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===id));
+  document.getElementById('optName').textContent=t.name;document.getElementById('optTitle').textContent=t.title;document.getElementById('optWhy').textContent=t.why;
+  document.getElementById('info').textContent='Same content, different style. Contrast checked for every option.';
+  document.getElementById('sw').innerHTML=t.sw.map(c=>`<div class="sw"><i style="background:${c}"></i>${c}</div>`).join('');
+  try{localStorage.setItem('hearth-style',id)}catch(e){}}
+let start=new URLSearchParams(location.search).get('style');if(!start){try{start=localStorage.getItem('hearth-style')}catch(e){}}start=start||'warm';
+if(!T.some(t=>t.id===start))start='warm';set(start);
+document.addEventListener('keydown',e=>{const i=T.findIndex(t=>'t-'+t.id===document.body.className);if(e.key==='ArrowRight')set(T[(i+1)%T.length].id);if(e.key==='ArrowLeft')set(T[(i+T.length-1)%T.length].id)});
+</script>
+</body>
+</html>

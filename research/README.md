@@ -33,6 +33,7 @@
 | R13 | [docs/research/us-teen-independence-and-market.md](docs/research/us-teen-independence-and-market.md) | US vs Europe leaving home, teen autonomy, teen-parent market, parent age by child age |
 | R1 | [docs/research/competitors.md](docs/research/competitors.md) | Competitive landscape (~30 products), failures, gaps |
 | R2 | [docs/research/evidence-ai-mediation-psychology.md](docs/research/evidence-ai-mediation-psychology.md) | Evidence on AI mediation risks, parenting/couple programs, gamification, signaling psychology, privacy |
+| 🎨 | [ui/style-options.html](ui/style-options.html) + [ui/deck-style-options.pdf](ui/deck-style-options.pdf) | **5 visual styles to choose from** (Hearth Warm, Calm Sage, Night Feed, Playful Pop, Clinical Trust): the same screens and deck slides in each. Toggle in the HTML (or `?style=night`); 2 PDF pages per style |
 | 🆚 | [ui/competitors.html](ui/competitors.html) | **Open first:** visual competitor map (Good Inside, Paired, Joon, Kinedu + 15 more), filterable table, the gaps we close |
 | 📊 | [ui/economics.html](ui/economics.html) | **Key metrics dashboard:** 4 scenarios, ARR chart, cost breakdown (AI/servers vs ads), word-of-mouth lever, market funnel |
 | 👶 | [docs/13-child-age-scope.md](docs/13-child-age-scope.md) | **Why kids 0–12 (+ a later 13–15 "Road Test" class), not 0–18:** developmental evidence, "do teens still listen?", US leaving-home facts, and the 25–45 buyer-age arithmetic |
