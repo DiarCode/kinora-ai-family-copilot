@@ -183,6 +183,8 @@ A private "vent to AI about my spouse" chat is the exact triangulation pattern t
 
 ## 7. 24-hour MVP scope (what the jury must be able to use with no login)
 
+> **Updated by the official FAQ (see [10-official-faq-analysis.md](10-official-faq-analysis.md)):** only the **key scenario** must work, but fully live on any input (Q3, Q134), and dead buttons must be hidden (Q85). Recommended core flow: **Quiz → Team Plan → Partner B joins in a 2nd window (jury instructions on the landing page, Q52) → Repair Room: both answer → live neutral AI summary + agreement → Rehearsal before/after score (Q126) → paywall + Stripe test checkout with the test card shown (Q95)**. Add a labeled **"simulate a week"** demo button (Q35). Lead the pitch with **renewal**, not daily use (Q30).
+
 | # | Feature | Must be real? | Notes |
 |---|---|---|---|
 | 1 | **Onboarding quiz → Family Profile + 28-day Team Plan** | ✅ Real logic | Kid age, conflict hotspots, goals → personalized plan (rule-based + LLM summary) |

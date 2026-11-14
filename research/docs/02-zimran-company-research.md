@@ -29,7 +29,8 @@
 | **Coursiv** | Practical **AI-tools skills**: a 28-day challenge plus a personalized learning path | Web + iOS | Weekly trial → monthly subscription, plus add-on packs |
 | **Finelo** ("Master Trading") | **Finance and investing education**: daily micro-lessons, market simulator with virtual funds, AI analysis, streaks, tracks (trading, investing, crypto, passive income) | Web + iOS | 4-week plan $19.99 first month, $6.93 trial week, packs $9.99–29.99 |
 | Prosperi Academy | The original 2021 investing-education brand | — | Legacy |
-| 2 unnamed niches | The company says it runs "4 product niches" | — | — |
+| **Subpilot** | Named by the organizers in the official FAQ (Q31); not described there. The name suggests a subscription-management tool [E] | — | — |
+| Trading simulator | Named in the FAQ (Q31) as a separate product (may be part of Finelo) | — | — |
 
 **Pattern across products:** a "**Duolingo-inspired**" design (founders say so), "**28-day challenge**", **daily 5–15 minute micro-lessons**, **streaks**, an **AI helper**, a **simulator/practice** environment, and a **certificate**. This is the template the jury will judge against.
 
@@ -64,6 +65,10 @@ Paid social video ad (Meta / TikTok / YouTube)
 > On "IRR": no internal rate of return is published, and it isn't really a startup metric. For a bootstrapped, ad-funded subscription business the right lens is **ROAS / payback period** (how many days until an ad dollar returns), plus **LTV/CAC**. Category norms for profitable web-funnel players: **D0 ROAS 40–70%, payback within 30–90 days, LTV/CAC ≥ 3.** We use these in our own model (see the business model doc).
 
 **Scale sanity check:** at about $20M/year with ~100K paying users, ARPPU is roughly **$200/year**. That fits a $30–40/month plan with typical 4–6 month average lifetimes.
+
+## 4b. From the official FAQ (Nov 14)
+- Products: **Finelo, Coursiv, Subpilot, a trading simulator**. They build mainly for **US and Europe** users.
+- **"People pay for a clear result, not for content."** (Q14) · **"Paying users matter, not DAU/MAU"** (Q30) · **"We assess user value, not trendy tech"** (Q25) · internal unit economics are not disclosed; use RevenueCat/Adapty (Q33).
 
 ## 5. Culture and what Business Cup rewards
 - Values: **Extra Obsessed, Extra Curiosity, Extra Ambition, Extra GTD, Extra Business Sense**. Slogan: "be extra" (it's on the hackathon slide too).

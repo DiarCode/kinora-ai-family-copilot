@@ -1,5 +1,7 @@
 # Pitch Deck: Slide-by-Slide Points + Speaker Notes
 
+> **Updated after the official FAQ ([10-official-faq-analysis.md](10-official-faq-analysis.md)):** 10 slides *including the title and any appendix*; no video in the PDF, so show the product as **screenshots**; the jury tests the product via the link *before* the pitch; **renewal beats daily use**; show **CAC by channel**.
+>
 > Rules: **max 10 slides, PDF**, 5-minute pitch + 2-minute Q&A. Judging: Does it work 40% · Value & retention 20% · Problem & user 15% · Money 15% · Originality 10%.
 > Every number below has its original source linked in `docs/research/*` or `docs/03`. Use the **exact wording** shown, since several stats are easy to over-claim (see "How to say the stress stat correctly" at the end).
 
@@ -34,8 +36,10 @@
 
 ---
 
-## Slide 4: The product (Does it work, 40%). **Live demo here**
-One loop, all working end-to-end, no login:
+## Slide 4: The product (Does it work, 40%). **Screenshot flow, not a live demo**
+The PDF can't play video (FAQ Q76), so show **5 screenshots left→right**: Quiz → Team Plan → Partner B joins (2nd window) → Repair Room neutral summary → Paywall (Stripe test). The jury will already have tried it via the link; the landing page has a **"For the jury: open link A, then link B"** box (Q52).
+
+One core flow, all working end-to-end, no login:
 1. **Family Quiz → personalized 28-day Team Plan** (team type, kid age, family type: only child, 3+ kids, adopted, blended…)
 2. **Partner invite** → the second laptop joins the same team live
 3. **Today:** 90-second lesson → scenario rep → a 10-minute real-life play mission with the kid
@@ -43,7 +47,9 @@ One loop, all working end-to-end, no login:
 5. **Pause & Repair:** a pre-agreed pause button (no AI during a fight) → each partner answers privately → a **neutral** AI summary for both + one small agreement
 6. **License card** + Stripe test checkout
 
-**Say:** "Let me show you, on two laptops: Jess and Mike." *(Have a recorded backup video.)*
+**Say:** "You've already tried it: one window as Jess, one as Mike. Here's the flow." *(Live demo only if the stage allows; the slides must stand alone.)*
+
+**Before → after proof (FAQ Q126, "strong evidence"):** in Rehearsal, the first attempt scores e.g. 35/100 → coaching → a retry on a *new* similar scenario scores 80/100. Put this pair of screenshots on the slide.
 
 ---
 
@@ -58,7 +64,14 @@ One loop, all working end-to-end, no login:
 
 ---
 
-## Slide 6: Why they come back tomorrow (Value & Retention, 20%)
+## Slide 6: Why they RENEW (Value & Retention, 20%)
+> FAQ Q30: *"Paying users matter, not DAU/MAU. Weekly use renewed for six months beats a daily habit that churns in a month."* Lead with renewal; daily reps are a bonus.
+
+- **The result they pay for (Q14: "a clear result, not content"):** *in 28 days, a written Team Plan you both agreed to, a fair split of nights and chores you can both see, and a repair ritual you've used at least once.* Measured by a 1-minute team check-in on day 0 and day 28.
+- **Renewal drivers:** the weekly Team Huddle ritual · a monthly Team Report · the next license class as the child grows · two people's shared history (agreements, repairs, milestones) they won't want to lose · the annual plan after 2 renewals.
+- **Numbers:** base renewal after month 1 = 50%, then 14% monthly churn (≈ RevenueCat/FunnelFox medians); a stress test shows renewal can drop 41% before each customer stops paying back.
+
+*(Older version below, keep only as supporting detail.)*
 - **Daily:** a 5-minute rep + a kid mission. **Shared team streak**: your partner sees it.
 - **Weekly:** a 10-minute **Team Huddle** (stats, appreciations, one goal), which makes the invisible load visible ("noticed" earns credit, not only "did").
 - **Monthly → yearly:** **license classes grow with the child**: Learner's Permit (expecting) → Night Shift (0–1) → Calm Driver (1–3) → School Zone (3–6) → Open Road (6–12).
@@ -97,6 +110,7 @@ One loop, all working end-to-end, no login:
 | Payback | 7 mo | 5 mo | 4 mo |
 | **Y5 ARR** | $29M | **$84M** | **$107M** |
 
+- **CAC by channel (FAQ Q58):** Meta ~$65 (50% of payers) · TikTok ~$75 (10%) · Pinterest/YouTube ~$55 (10%) · referrals ~$25 (10%) · parent communities ~$20 (8%) · daycare/Class Pack ~$15 (7%) · gifts ~$0 (5%) → **blended ≈ $52**. Benchmark: Adapty Q3 2026 median cost per paying user $43–82.
 - **Costs, itemized:** AI + servers ≈ **8% of revenue**; ads ≈ **60% of costs**. We win on acquisition, not AI cost.
 - **Word of mouth is the lever:** if 45% of customers arrive free (partner invites, referrals, gifts), base LTV/CAC rises from 1.6 to 2.4 and Y5 ARR from $29M to $45M with the same ad budget.
 - **$100M ARR ≈ 460K paying households ≈ 4–5% of the able-to-pay pool.** Expansion to UK/CA/AU adds ~1.3×.
@@ -125,6 +139,8 @@ One loop, all working end-to-end, no login:
 | Conflict repair | ✗ | light | ✗ | ✗ | ✓ |
 | Grows to age 12 | partly | ✗ | partly | ✗ (0–3) | ✓ |
 
+**Originality line (FAQ Q147: a B2C version of a B2B-only product is a new angle):** *"Evidence-based family coaching today is sold to employers (Maven-style benefits) or through certified facilitators (Gottman's Bringing Baby Home). We bring it straight to any couple for ~$12 a month."* Note: Zimran said a new acquisition channel alone is not a new angle (Q31), so don't pitch "same funnel" as originality.
+
 **Say:** "Good Inside is content for mom. Paired is a couple without kids. Joon is a game for the kid. Kinedu is activities for the baby. **We're the first product where the user is the parent team.**"
 
 ---
@@ -145,7 +161,7 @@ One loop, all working end-to-end, no login:
 ## Q&A prep (2 minutes)
 | Likely question | Answer |
 |---|---|
-| Why not just ChatGPT? | ChatGPT works for one person and **takes your side** (AI affirms users ~49% more than humans do, Science 2026). It has no curriculum, no partner sync, no habit loop. We're a structured two-person skill gym |
+| Why not just ChatGPT? | *(FAQ Q32: "structured path, accumulated data, personalization over time, mechanics")* Our Repair summary is built from **two people's private answers**, which ChatGPT never sees. Plus a structured license path, a shared history, a weekly ritual. And ChatGPT works for one person and **takes your side** (AI affirms users ~49% more than humans do, Science 2026). It has no curriculum, no partner sync, no habit loop. We're a structured two-person skill gym |
 | Will dads use it? | Dads want in: 63% want more time with their kids. We give them their own track and "license/training" framing, never "therapy". Couple programs keep dads better than dad-only ones |
 | Isn't this therapy? Legal? | No. It's skills education and coaching, with AI disclosure, crisis and DV routing, no diagnoses. Built with the IL/NV laws in mind |
 | Isn't 48% stress about work, not family? | Partly, and we say so. It's general stress. But parents report it at **almost twice the rate of other adults** (48% vs 26%), and **29% say parenting itself** is stressful all or most of the time |
