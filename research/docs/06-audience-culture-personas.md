@@ -180,5 +180,36 @@ College-educated mom, **28–40**, partnered (married or cohabiting), household 
 6. **Price for the $100K+ household, but frame it as tiny vs alternatives:** $149/yr vs $13K/yr childcare, $1,016/yr youth sports, $100–300/therapy session, $11–23K divorce.
 7. **Pitch line to add:** *"US couples wait 6 years to get help. Women file two-thirds of divorces. 40% of parents' top fear is their kid's anxiety. We start in the baby year, with 5 minutes a day, as a team."*
 
+
+---
+
+## 8. Official US family-structure statistics (divorce, single parents, co-parenting)
+Full report with a source URL for every number: [research/us-family-structure-official-stats.md](research/us-family-structure-official-stats.md). census.gov and acf.gov blocked automated fetches, so several Census figures come via FRED (which republishes Census CPS data) or secondary mirrors.
+
+| Topic | Number | Source |
+|---|---|---|
+| Divorces (CDC, reporting states) | **662,950 in 2024 = 2.3 per 1,000** (2.4 in 2023). Excludes CA, HI, IN, MN, NM, so this undercounts | CDC/NCHS [S] |
+| Divorces (ACS-based, all states) | **~1M a year** (986,810 women divorced in 2024); refined rate **14.2 per 1,000 married women** | NCFMR [SEC] |
+| Median marriage length at divorce | **12 years** (10 in 2008) | Pew 2025 [SEC] |
+| One-parent families with kids under 18 | **~10.2M** (2025): **7.67M mother-only, 2.57M father-only (25%)** | Census CPS via FRED [S] |
+| Children living with two parents | **71%** (2023). ~15.1M live with a single mother, ~3.05M with a single father | Census [S] |
+| Children in stepfamilies | **~10%** | NCFMR 2025 [SEC] |
+| Children with cohabiting parents | **3.2M** | Census 2023 [S] |
+| Poverty, families with kids | **Single-mother 30.8% vs married-couple 4.8%** (2024) | Census via FRED [S] |
+| Custodial parents | **13.9M (2022), 78% mothers**. Only **37%** have a legal child-support agreement. Of those owed, **49.5%** got the full amount and **24.5%** got nothing | Census P60 [S, via secondary] |
+| Shared physical custody after divorce | **34%** (2010–14), up from 13% before 1985 | Meyer et al. 2022 [SEC] |
+| Non-resident fathers' contact | **22%** see their kids more than weekly, **29%** 1–4×/month, **27% not at all in the past year** | Pew 2011 / NSFG [SEC] |
+| Non-resident fathers' day-to-day involvement (kids 5–18) | 69% did no homework help and 53% ate no meals with the child in the past 4 weeks. Resident fathers: 30% help with homework daily and 66% eat meals daily | CDC NSFG (Jones & Mosher 2013) [S] |
+| Fathers living apart from at least one child | **~24%** | NSFG 2017 [SEC] |
+| Foster care | **368,530** children in care (FY2022). Removal reasons (FFY2025): neglect 55%, caretaker drug use 29%, **abandonment 5% (~7,900 children)** | HHS AFCARS [S, via secondary] |
+| Children with no father of any kind in the home | **~19M (~25%)** (2023). Household definition only; it does *not* measure contact or involvement | Census via secondary [SEC] |
+
+**What it means for us:**
+1. **Separated parents who still co-parent are a real, large segment:** ~20–28M parents live in two-household arrangements, and an estimated **8–14M actively co-parent** across households [E]. Shared custody now covers about a third of divorces. → Our **"Co-parent seat"** (quiz option: "Me + my co-parent, we're separated") is justified, as a **roadmap mode**, not the MVP headline.
+2. **Single parents (~10.2M families, 25% are dads)** need **Solo + Village mode** (a grandparent or relative as teammate). About half of single parents never married, so don't assume a divorce story. Single-mother families are far poorer (30.8% poverty), so our **$100K+ primary buyer** stays the partnered couple. The single-parent segment is better served later with a lower price or a free tier.
+3. **Tone:** "abandonment" (5% of foster-care removals) and "father-absent" households are *official categories that don't measure involvement*. Never use "fatherless" or "deadbeat" framing. Treat moms and dads equally.
+4. **Pitch use (one line, optional):** *"About 1M divorces a year, 13.9M custodial parents, and a third of divorces now end in shared custody. Parenting as a team doesn't stop at separation. That's our expansion path."*
+
+
 ## Sources
 Synthesis document. Original URLs for every figure are in the four linked research files at the top: [us-parenting-culture-and-stages](research/us-parenting-culture-and-stages.md), [us-dating-marriage-divorce](research/us-dating-marriage-divorce.md), [us-buyer-segments](research/us-buyer-segments.md), [international-expansion](research/international-expansion.md).

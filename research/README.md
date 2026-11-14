@@ -28,10 +28,12 @@
 | R5 | [docs/research/us-buyer-segments.md](docs/research/us-buyer-segments.md) | Income, ability to pay, subscription habits, who buys, family-type segments |
 | R6 | [docs/research/international-expansion.md](docs/research/international-expansion.md) | UK, CA, AU, IE, NZ, DE, NL, Nordics: sizing, ARPU/CAC, free alternatives, localization |
 | R10 | [docs/research/unit-economics-benchmarks.md](docs/research/unit-economics-benchmarks.md) | Subscription and web-funnel benchmarks (RevenueCat, Adapty, FunnelFox), CAC, pricing, AI costs, fees: the sources behind the model |
+| R11 | [docs/research/us-family-structure-official-stats.md](docs/research/us-family-structure-official-stats.md) | Official stats: divorces (CDC/ACS), single mothers and fathers, custodial parents and child support, shared custody, non-resident father involvement, foster care |
 | R1 | [docs/research/competitors.md](docs/research/competitors.md) | Competitive landscape (~30 products), failures, gaps |
 | R2 | [docs/research/evidence-ai-mediation-psychology.md](docs/research/evidence-ai-mediation-psychology.md) | Evidence on AI mediation risks, parenting/couple programs, gamification, signaling psychology, privacy |
 | 🆚 | [ui/competitors.html](ui/competitors.html) | **Open first:** visual competitor map (Good Inside, Paired, Joon, Kinedu + 15 more), filterable table, the gaps we close |
 | 📊 | [ui/economics.html](ui/economics.html) | **Key metrics dashboard:** 4 scenarios, ARR chart, cost breakdown (AI/servers vs ads), word-of-mouth lever, market funnel |
+| 🛠️ | [docs/12-mvp-scope.md](docs/12-mvp-scope.md) | **What to build vs only mention:** the one key jury scenario, MUST/SHOULD/COULD/WON'T list, 3-person build plan, hour budget, definition-of-done checklist |
 | ✅ | [docs/11-decisions-standalone-pricing.md](docs/11-decisions-standalone-pricing.md) | **Decisions:** standalone is the primary pitch (Zimran = upside), and pricing = hybrid Family License membership (annual $149 anchor) with a 4-model comparison |
 | 📋 | [docs/10-official-faq-analysis.md](docs/10-official-faq-analysis.md) | **Official Zimran FAQ (150 answers) vs our idea:** what it confirms, what it changes (renewal > daily use, CAC by channel, screenshots not a live demo, two-window jury test, before/after proof), action checklist |
 | 🧪 | [docs/09-stress-test.md](docs/09-stress-test.md) | **Stress test:** 7 levers × 128 combinations. What breaks us, the 2 levers that must hold (CAC, retention), the stop rule capping the downside at ~$90K, and how to pitch it honestly |
