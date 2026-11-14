@@ -103,6 +103,16 @@ One loop, all working end-to-end, no login:
 - **Robustness line (true, from model/sensitivity.py):** *"Any one assumption can be a third worse than the market median, and AI can cost 4× more, and every customer still pays back. Inside Zimran's machine, everything can be 20% worse at once: payback is still 10 months."*
 - **Stress test (say this, it's honest and strong):** we tested 7 levers in all 128 combinations. We only need **CAC and retention at *median* benchmark level**. Even with referrals at 5%, refunds at 6% and AI costing 67% more, each household pays back in ~10 months (LTV/CAC 1.31). If even those two fail, a stop rule caps the loss at ~$90K. Details: [09-stress-test.md](09-stress-test.md). *Don't* claim "profitable in the worst case": with all 7 levers pessimistic, it isn't.
 
+**Optional robustness box for slide 8 (all true, from the model):**
+
+| If… | Each customer still pays back? |
+|---|---|
+| AI and servers cost **4×** our estimate | ✅ LTV/CAC 1.20 |
+| **Any one** assumption is **⅓ worse** than the market median | ✅ ≥ 1.08 |
+| Ad cost per customer is **60% higher** (~$96) | ✅ break-even |
+| **Everything 20% worse at once**, inside Zimran's ad machine | ✅ 1.23, payback 10 months |
+| Everything goes wrong at once | ❌, and our stop rule caps the loss at ~$90K |
+
 ---
 
 ## Slide 9: Competition and originality (10%)

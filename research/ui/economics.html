@@ -101,6 +101,23 @@ svg text{font-family:Inter,sans-serif}
   </div>
 
   <div class="panel">
+    <h2>Stress-tested: how wrong can we be?</h2>
+    <p class="note" style="margin:0 0 10px">LTV/CAC per customer when assumptions are made worse than the base case (market medians). Above 1.00 = each customer pays back. From <code>model/sensitivity.py</code> and <code>model/stress_test.py</code>.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Scenario</th><th>LTV/CAC</th><th>Payback</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>AI + server costs <b>4×</b> (+300%)</td><td>1.20</td><td>—</td><td class="pos">✓ pays back</td></tr>
+        <tr><td><b>Any one</b> assumption <b>33% worse</b> (worst lever: price)</td><td>≥ 1.08</td><td>—</td><td class="pos">✓ pays back</td></tr>
+        <tr><td>Ad cost per customer <b>+60%</b> (~$96)</td><td>1.00</td><td>—</td><td class="pos">✓ break-even</td></tr>
+        <tr><td><b>All six</b> levers 20% worse, <b>Inside Zimran</b></td><td>1.23</td><td>10 mo</td><td class="pos">✓ pays back</td></tr>
+        <tr><td>All six levers 25% worse, Inside Zimran</td><td>1.06</td><td>15 mo</td><td class="pos">✓ barely</td></tr>
+        <tr><td>All six levers 15% worse, standalone</td><td>1.02</td><td>19 mo</td><td>≈ break-even</td></tr>
+        <tr><td>All seven levers pessimistic</td><td>0.33</td><td>never</td><td class="neg">✗ stop rule caps the loss at ~$90K</td></tr>
+      </tbody></table></div>
+    <p class="note">Per-customer results. Company-level cash depends on ad pacing: ads scale only while payback stays within ~12 months.</p>
+  </div>
+
+  <div class="panel">
     <h2>Unit economics per paying household (24 months)</h2>
     <div class="tbl"><table id="ueTable"></table></div>
     <p class="note">Blended CAC = paid CAC × (1 − organic share) + AI cost of free users who try the app but don't buy. LTV = 24-month profit after payment fees, refunds, AI, servers and support. LTV/CAC above 1 means ads pay back; 3+ is healthy.</p>

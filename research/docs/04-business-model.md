@@ -154,6 +154,20 @@ Why a high organic share is plausible here:
 
 But **we only assume 15–25%** in the plan until real data proves more. Investors and the jury discount a model that *assumes* virality.
 
+## 5c. Robustness: how wrong can we be?
+Full analysis: [09-stress-test.md](09-stress-test.md) · scripts: `model/stress_test.py`, `model/sensitivity.py`.
+
+| Test (vs base = market medians) | Result (LTV/CAC per customer) |
+|---|---|
+| **AI + server costs 4× (+300%)** | 1.20 ✅. AI is not the risk |
+| **Any ONE assumption 33% worse** | ≥ 1.08 ✅ for every lever (price 1.08, renewal 1.11, CAC 1.19, churn 1.25) |
+| Single-lever break-even | Price −39% · renewal −41% · CAC +60% (~$96) · churn +73% · refunds, referrals and AI never break it |
+| **All six levers worse at once, standalone** | Breaks even at ≈ 16% worse (15% → 1.02, 19-month payback) |
+| **All six levers worse at once, Inside Zimran** | 15% → 1.42 (8 mo) · **20% → 1.23 (10 mo)** · 25% → 1.06 (15 mo) · breaks even at ≈ 28% |
+| All 7 levers pessimistic (stress test) | 0.33 ❌. Needs CAC and retention at median. A stop rule caps the loss at ~$90K |
+
+⚠️ These are **per-customer** results. If the aggressive ad budget stays unchanged while everything gets worse, the company burns more. That's why ads only scale while payback stays within ~12 months.
+
 ## 6. International upside (bonus; US stays the primary market)
 Based on [research/international-expansion.md](research/international-expansion.md) and [06-audience-culture-personas.md §6](06-audience-culture-personas.md):
 

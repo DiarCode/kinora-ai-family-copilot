@@ -42,6 +42,7 @@
 - Parents are ~2× as likely as other adults to say stress is overwhelming most days (48% vs 26%, Surgeon General 2024; general stress, not parenting-only). 29% find parenting itself stressful all or most of the time (Pew 2023) · 62% say parenting is harder than expected (Pew)
 - ~2/3 of couples see satisfaction drop after the first baby (Gottman)
 - Good Inside: ~$34M revenue in 2025, 100K+ subscribers → people pay for parenting education
+- **Robustness (model/sensitivity.py):** any one assumption can be a third worse than the market median, and AI can cost 4× more, and every customer still pays back. Inside Zimran, all six levers 20% worse at once → LTV/CAC 1.23, payback 10 mo. With all 7 levers pessimistic it does NOT work, so a stop rule caps the loss at ~$90K ([docs/09](docs/09-stress-test.md))
 - Couples wait ~6 years before seeking help (Gottman) · women initiate ~2/3 of divorces (Rosenfeld) · moms 7.5 vs dads 5.3 h/day of childcare for kids under 6 (Pew)
 - Able-to-pay core: ~9–11M partnered households with a kid under 12 and $100K+ income (est.) · International: US + Anglosphere ≈ 1.3× the US alone
 - Base case: CAC ~$52 blended, 24-month GM-LTV ~$82, LTV/CAC 1.6, 7-month payback. Optimistic: LTV/CAC 3.2 → **$107M ARR in Y5**. Inside Zimran: $84M ARR Y5, profitable from Y3
