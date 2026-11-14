@@ -82,3 +82,59 @@ The optimistic case (LTV/CAC 3.2) needs top-quartile retention, and we label it 
 1. It survives any Q&A follow-up.
 2. It shows Zimran we think like operators (stop rules, payback, lever ranking).
 3. It turns the risk into a product argument.
+
+---
+
+## Haircut test: base assumptions made 15% → 75% worse
+Reproduce: `python model/sensitivity.py` → [model/sensitivity_output.md](../model/sensitivity_output.md).
+
+"X% worse" means:
+- ad cost per customer **+X%**
+- free arrivals **−X%**
+- renewal after the intro month **−X%**
+- monthly churn **+X%**
+- refunds **+X%**
+- AI and server costs **+X%**
+
+The baseline is the **base case = market median benchmarks**.
+
+### A. One assumption worse, the rest at median (Base case)
+| Lever | 15% | 25% | 33% | 40% | 50% | 75% | Breaks even at |
+|---|---|---|---|---|---|---|---|
+| AI + server costs | 1.56 | 1.55 | 1.54 | 1.53 | 1.51 | 1.48 | **never**: even at **4× (+300%) LTV/CAC is 1.20** |
+| Refunds | 1.58 | 1.58 | 1.58 | 1.58 | 1.58 | 1.57 | never |
+| Free arrivals | 1.54 | 1.52 | 1.50 | 1.48 | 1.45 | 1.40 | never (even at 0%) |
+| Monthly churn | 1.41 | 1.32 | 1.25 | 1.20 | 1.13 | 0.99 | **73% worse** |
+| Ad cost per customer | 1.38 | 1.27 | 1.19 | 1.14 | 1.06 | 0.91 | **60% worse** (~$96) |
+| Renewal after intro | 1.37 | 1.22 | 1.11 | 1.01 | 0.86 | 0.50 | **41% worse** |
+| Price per 4 weeks | 1.35 | 1.20 | 1.08 | 0.97 | 0.82 | 0.44 | **39% worse** |
+
+### B. All six assumptions worse *at the same time*
+| X% worse | **Base case** (standalone) | **Inside Zimran** |
+|---|---|---|
+| 0% | 1.58 · payback 7 mo | 2.22 · 5 mo |
+| 15% | 1.02 · 19 mo (barely) | **1.42 · 8 mo** |
+| 20% | ❌ 0.89 | **1.23 · 10 mo** |
+| 25% | ❌ 0.77 | **1.06 · 15 mo** |
+| 33% | ❌ 0.61 | ❌ 0.84 |
+| Break-even | **≈ 16% worse** | **≈ 28% worse** |
+
+### C. Company-level warning
+LTV/CAC is about **each customer**. If we kept the same aggressive ad plan while everything is 15–20% worse, the company would burn much more ($20M+ standalone). That's why the **stop and scale rule** matters: ads only scale while payback stays within ~12 months. **Always say "each customer pays back", never "the company is profitable".**
+
+## ✅ Claims that are impressive AND true (pick 1–2 for slide 8)
+| # | Claim | Backed by | Strength |
+|---|---|---|---|
+| 1 | **"AI is not our risk. Even if AI and servers cost 4× our estimate, every customer still pays back (LTV/CAC 1.2)."** | Lever A: AI +300% → 1.20 | ⭐⭐⭐ Pre-empts the "AI is expensive" question |
+| 2 | **"Any single assumption can be a third worse than the market median, and every customer still pays back."** | At 33% worse, every lever ≥ 1.08 (price 1.08, renewal 1.11, CAC 1.19, churn 1.25) | ⭐⭐⭐ Clean and memorable. Holds up to ~39% |
+| 3 | **"Our ad cost per customer can be 60% above the market median, and we still break even."** | CAC breaks at +60% (~$96) | ⭐⭐ Speaks to Zimran's core skill (media buying) |
+| 4 | **"With Zimran's acquisition machine, *everything* can go 20% worse at once (CAC, retention, churn, referrals, refunds, AI), and each customer still pays back in 10 months."** | Inside Zimran, all six at 20% → 1.23, 10 mo (25% → 1.06, 15 mo) | ⭐⭐⭐ Best "flex" and the Zimran-fit argument in one line |
+| 5 | "Standalone, everything 15% worse at once still breaks even." | Base, all at 15% → 1.02, 19 mo | ⭐ Too thin to headline. Q&A only |
+
+**Don't claim:**
+- "Everything 50% worse and still profitable". False: 0.37.
+- "Company profitable in the worst case". False.
+- Anything with price cut as well beyond ~12% (base) or ~21% (Zimran) together.
+
+### Suggested slide-8 line
+> **"Stress-tested: any one assumption can be a third worse than the market median, and AI can cost 4× more, and every customer still pays back. Inside Zimran's acquisition machine, *everything* can be 20% worse at once: payback is still 10 months."**
