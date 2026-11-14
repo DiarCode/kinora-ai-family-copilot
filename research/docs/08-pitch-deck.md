@@ -80,11 +80,16 @@ One core flow, all working end-to-end, no login:
 ---
 
 ## Slide 7: What we sell + why people buy (Money, part 1)
+**The Family License membership (decision: hybrid, annual as the anchor; see [11-decisions-standalone-pricing.md](11-decisions-standalone-pricing.md)):**
+
 | Plan | Price |
 |---|---|
-| Household (both partners) | **$9.99 first 4 weeks → $24.99 / 4 weeks** |
-| Annual | **$149/yr** (≈ $12/mo) |
+| **Annual license** (default, both partners) | **$149/yr** (≈ $12.40/mo). "Licenses get renewed" |
+| 4-week plan (low-commitment entry) | $9.99 first 4 weeks → $24.99 / 4 weeks |
+| Learner's Permit (expecting couples) | $49 one-time |
 | Gift a License | $59 for 3 months (baby showers) |
+
+Why hybrid: renewal-based (FAQ Q30), sells a clear result (Q14), subscription not mandatory (Q51). Hybrid LTV/CAC ≈ 1.9 vs 1.6 for 4-week only. Projections still use the conservative 4-week base.
 
 - **Anchor:** less than **one couples-therapy session** ($100–300). About **half of Good Inside** ($279/yr per person). Proof people pay: **Good Inside ~$34M revenue, 100K+ members.**
 - **Transparent billing:** renewal price on the paywall, a reminder 3 days before, one-click cancel.
@@ -152,9 +157,10 @@ One core flow, all working end-to-end, no login:
   - Daycare codes and a **"Class Pack"** via room parents. The US has no parent committee, so we built one into the app.
   - Registry gifting + OB-GYN and doula referrals.
   - A separate **"Dad License"** funnel.
-- **Zimran fit:** the same playbook as Coursiv and Finelo (quiz funnel, 28-day challenge, streaks, AI), applied to a new vertical with an **18-year lifetime**. *"Your next niche: same machine, new audience."*
+- **Standalone first (decision):** *"Hearth stands on its own: a family-first brand, a new user (the parent team), a new mechanic (Pause → Repair)."*
+- **Upside, one line:** *"It also plugs into Zimran's machine as the next niche: the same playbook, an audience you don't serve yet, and customers who stay for years. Inside Zimran: $84M ARR in Y5, profitable from Y3."* (Don't present the funnel fit as originality: FAQ Q31.)
 - Team: names and roles, and what we shipped in 24 hours.
-- **Ask:** "Let's launch it as Zimran's family-skills niche."
+- **Ask:** "We'd love to build this, standalone or as Zimran's family-skills niche."
 
 ---
 

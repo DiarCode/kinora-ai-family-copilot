@@ -145,3 +145,44 @@ Payback at base: ~7 months (Inside Zimran ~5). Stress tests in [09-stress-test.m
 - [ ] Deck: **10 slides incl. title**, screenshots instead of a live demo, **renewal logic**, **CAC by channel**, sources (Q53, Q58, Q76)
 - [ ] 5–10 US parent interviews or a quick survey: put the quotes and numbers in the deck (Q39)
 - [ ] Link stays live until the end of the final, Nov 15 (Q73)
+
+
+---
+
+## Assumption register: each assumption checked against the FAQ
+Format: **according to Qx → assumption is ✅ fine / 🔄 needs changing / ➕ new**, and what we did.
+
+| # | Our assumption (before the FAQ) | According to… | Verdict | What we changed |
+|---|---|---|---|---|
+| 1 | Track = **Skills**, parenting as a team | **Q11** (Skills = what adults keep failing to master, incl. habits), **Q13** ("new parents" is an example segment) | ✅ Fine | — |
+| 2 | One user (couple with a first kid aged 0–6) and one pain | **Q10, Q62, Q80, Q101** ("one user, one main pain; a product about everything loses") | ✅ Fine for our narrowed concept · ⚠️ the Kinora repo description (AI counselor + child assessments) is two pains | Flagged to the captain |
+| 3 | The buyer is the parent; B2C only | **Q38, Q42, Q43** (whoever pays decides B2C; a parent paying for a kid's product = B2C) | ✅ Fine | — |
+| 4 | Employer benefits as a channel | **Q38** (employer pays = fail) · **Q129** (B2B only on the roadmap) | 🔄 Moved to "later roadmap" only | Deck: employer channel only on the roadmap line |
+| 5 | Daycare codes / "Class Pack" | **Q38, Q42** (each family pays itself) | ✅ Fine if each family buys its own plan | — |
+| 6 | Pitch retention as "why come back tomorrow" (daily streak) | **Q30** (renewal > DAU; weekly use renewed for 6 months beats a daily habit) | 🔄 **Changed** | Slide 6 → "Why they RENEW"; weekly Team Huddle is the core ritual |
+| 7 | The product = "a course" | **Q14** ("people pay for a clear result, not content") · **Q108** (an online school risks being a copy; a service people return to monthly scores well) | 🔄 **Changed** | Concrete 28-day result promise; "practice service", not "course" |
+| 8 | A subscription is required | **Q51** ("subscription isn't mandatory, any user-paid model") · **Q148** (annual or one-time fine if the return logic is clear) | 🔄 Re-evaluated | Compared 4 models → **hybrid, annual as anchor** ([11-decisions-standalone-pricing.md](11-decisions-standalone-pricing.md)) |
+| 9 | Blended CAC is enough | **Q58, Q81, Q142, Q143** (CAC **by channel**, price, retention, LTV) | 🔄 **Changed** | Added a CAC-by-channel table (blended ≈ $52) |
+| 10 | A full TAM/SAM/SOM slide | **Q81** ("full TAM/SAM/SOM not required") | 🔄 Shrunk | One line in the deck; details stay in docs |
+| 11 | Benchmarks from RevenueCat/Adapty/FunnelFox | **Q33** ("use public benchmarks, cite sources; the jury checks realism") | ✅ Fine | — |
+| 12 | Live two-laptop demo during the pitch | **Q76, Q121, Q145** (PDF can't play video → screenshots; the jury tests via link beforehand) | 🔄 **Changed** | Slide 4 = screenshot flow; live demo optional |
+| 13 | 10-slide deck with a separate title slide | **Q53, Q81** (10 slides **including** the title and appendix) | 🔄 Adjusted | Slide 1 = title + hook; no appendix; extras in the README |
+| 14 | The jury tests the partner flow in two browsers | **Q52** (two windows via links OK; instructions on the main page) | ✅ Fine + ⚠️ must add instructions | "For the jury: open link A, then link B" box |
+| 15 | Guest mode, localStorage / anonymous sessions | **Q35, Q54, Q65, Q92, Q135** | ✅ Fine | — |
+| 16 | Demo data for a quick walkthrough | **Q35, Q66, Q69, Q84, Q127** (OK if labeled and run through real logic; judges also type their own inputs, Q134) | ✅ Fine + ➕ "simulate a week" button | Added to the MVP scope |
+| 17 | 8 MVP features | **Q3, Q85, Q114** (only the key scenario, fully real; hide dead buttons) | 🔄 **Changed** | One core flow (quiz → plan → partner → Repair → Rehearsal → paywall) |
+| 18 | AI Rehearsal shows feedback | **Q125, Q126** ("fail → train → solve a new similar task" is strong evidence) | ➕ Upgraded | Before/after scores on a new scenario |
+| 19 | AI is the core, but no live mediator | **Q2, Q25** (AI only if it solves the problem) · **Q32, Q36, Q56, Q136** (must be more than a wrapper) | ✅ Fine | "Why not ChatGPT": the Repair summary uses **two people's** private inputs |
+| 20 | Code computes, LLM explains | **Q96** (counts as real) | ✅ Fine | Rule-based scoring + LLM feedback |
+| 21 | Sensitive topics (conflict, postpartum depression, DV) | **Q138, Q150, Q78** (depth of pain is a plus; no medical advice; minimal sensitive data) · **Q26** | ✅ Fine with care | Referral-only for postpartum depression, minimal child data, "coaching, not therapy" |
+| 22 | Intimacy topics in couple content | **Q5, Q113** (no 18+) | ⚠️ Keep PG | — |
+| 23 | Stripe test checkout | **Q20, Q37, Q55, Q67, Q95, Q137** (paywall = minimum; a test checkout the jury completes = stronger; show the test card) | ✅ Fine | Show "4242 4242 4242 4242" on screen |
+| 24 | Affiliate book links, registry listing | **Q83** (partner revenue OK as *additional*) | ✅ Fine | — |
+| 25 | Originality = couple-native + Pause → Repair + Zimran-funnel fit | **Q31** (a new acquisition channel alone is **not** a new angle) · **Q57** · **Q147** (a B2C version of a B2B-only product is a new angle) | 🔄 **Changed** | Funnel fit removed from originality; added "employer/facilitator-grade family coaching, now direct to couples" |
+| 26 | Pitch as "Zimran's next niche" | **Q31, Q57, Q12** (own angle; the product must stand alone) · criteria judge the product, not the fit | 🔄 **Changed** | **Standalone is primary**; Zimran fit only as upside on the last slide |
+| 27 | Research desk-only | **Q39, Q49, Q74, Q102, Q149** (interviews/surveys are a plus) | ➕ New | Do 5–10 US parent interviews or a survey |
+| 28 | English UI, US prices | **Q6, Q29, Q75** | ✅ Fine | — |
+| 29 | Responsive web / PWA | **Q40, Q60, Q87, Q103** | ✅ Fine | — |
+| 30 | The repo holds the full deployed code; built during the event | **Q46, Q64, Q93, Q98** (public repo with full source; commit history may be checked) | ⚠️ Must do | Product code goes in the captain's repo with commits during the event |
+| 31 | LLM API costs | **Q131** (the team pays) | ⚠️ Plan for it | Cheap model for scoring, rate limits on the demo |
+| 32 | Zimran's products = Coursiv, Finelo | **Q12, Q31** (also **Subpilot** and a trading simulator) · **Q14** (US and Europe users) | 🔄 Updated | Zimran research updated |

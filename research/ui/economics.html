@@ -144,7 +144,7 @@ const WOM=[[.15,52,1.58,29.4],[.30,43,1.91,35.7],[.45,34,2.42,45.4],[.60,25,3.29
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const $=id=>document.getElementById(id);
 const M=x=>{const a=Math.abs(x);const s=x<0?'−':'';return a>=1?`${s}$${a.toFixed(a>=10?0:1)}M`:`${s}$${Math.round(a*1000)}K`};
-let cur='zim';
+let cur='base';
 
 function tabs(){ $('tabs').innerHTML=S.map(s=>`<button class="tab" role="tab" aria-selected="${s.id===cur}" data-id="${s.id}"><span class="sw" style="background:var(${s.color})"></span>${s.name}</button>`).join('');
   document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.id;render()});}

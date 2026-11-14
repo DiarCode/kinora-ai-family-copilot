@@ -16,7 +16,8 @@
 | Gamify the kids' lives? | **No (not in v1).** Gamify the *parent's* skill growth. For kids, use real-life "connection missions", not points (overjustification risk, COPPA) |
 | Childbirth prep? | **Yes, as an entry level ("Learner's Permit"), not the headline.** Last cup's winner (Preggo) was a pregnancy app, so leading with pregnancy looks derivative |
 | The "brag" driver? | **Real and usable,** if we celebrate *effort and teamwork*, not superiority. Shareable license card plus "Gift a License". **No leaderboards ranking parents** |
-| Zimran integration or standalone? | **Build standalone, pitch as "Zimran-native".** Same funnel DNA, a separate trust-first brand |
+| Zimran integration or standalone? | **Standalone is primary** (decision after the FAQ: the funnel fit is not originality, Q31). Zimran integration = upside on the last slide |
+| Subscription or something else? | **Hybrid "Family License" membership:** annual $149 as the anchor + 4-week plan + one-time Learner's Permit and Gift ([11-decisions-standalone-pricing.md](11-decisions-standalone-pricing.md)) |
 
 ---
 

@@ -88,6 +88,8 @@ Other assumptions: payment fees 6%, refunds 3–6% on the first charge, **AI + h
 ### IRR (asked for, with a caveat)
 5-year IRR on annual cash flows: **Optimistic ≈ 500%**, **Inside Zimran ≈ 340%**. Base is negative without an exit. With a 3× ARR terminal value it is ≈ 220%. The numbers are huge because the upfront capital is tiny, which is typical for bootstrapped funnel businesses. They are not meaningful for comparison. **Pitch LTV/CAC and payback days instead. That's what Zimran itself runs on.**
 
+> **Decision (after the official FAQ):** pitch **standalone** as primary; show Zimran integration only as upside. Pricing = **hybrid Family License membership, annual as the anchor**. See [11-decisions-standalone-pricing.md](11-decisions-standalone-pricing.md).
+
 ## 5. Integration with Zimran vs standalone
 
 | Dimension | **Inside Zimran (new "Family Skills" niche)** | **Standalone startup** |
