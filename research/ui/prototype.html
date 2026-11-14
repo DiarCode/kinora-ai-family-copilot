@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth UI Draft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F1E8; --surface:#FFFDF9; --surface-2:#F1E8DB; --ink:#2A211C; --muted:#6F625A; --line:#E3D6C6;
+  --accent:#D2603A; --accent-ink:#fff; --accent-soft:#F8DFD3; --sage:#5E8A6A; --sage-soft:#DDEBDF;
+  --plum:#6C4E7E; --plum-soft:#E9DFF0; --warn:#B4472B; --shadow:0 1px 2px rgba(42,33,28,.06),0 8px 24px rgba(42,33,28,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1B1715; --surface:#241F1C; --surface-2:#2E2724; --ink:#F3ECE4; --muted:#B5A79C; --line:#3A322D;
+    --accent:#EE7A52; --accent-ink:#1B1715; --accent-soft:#4A2B20; --sage:#8DBA98; --sage-soft:#24352A;
+    --plum:#C2A3D6; --plum-soft:#352B3D; --warn:#F08A6B; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1B1715; --surface:#241F1C; --surface-2:#2E2724; --ink:#F3ECE4; --muted:#B5A79C; --line:#3A322D;
+  --accent:#EE7A52; --accent-ink:#1B1715; --accent-soft:#4A2B20; --sage:#8DBA98; --sage-soft:#24352A;
+  --plum:#C2A3D6; --plum-soft:#352B3D; --warn:#F08A6B; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.15;margin:0 0 .4em}
+h1{font-size:clamp(28px,4vw,40px)} h2{font-size:24px} h3{font-size:18px}
+p{margin:0 0 .8em}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 60px}
+header.top{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Fraunces,serif;font-size:22px;font-weight:700}
+.brand .mark{width:34px;height:34px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-size:18px}
+.tag{font-size:12px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr) 300px;gap:20px;align-items:start}
+nav.screens{position:sticky;top:16px;display:flex;flex-direction:column;gap:4px}
+nav.screens button{all:unset;cursor:pointer;padding:9px 12px;border-radius:10px;color:var(--muted);display:flex;gap:10px;align-items:center;font-weight:500}
+nav.screens button .n{font-size:11px;width:22px;height:22px;border-radius:6px;background:var(--surface-2);display:grid;place-items:center;color:var(--muted)}
+nav.screens button[aria-current="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+nav.screens button[aria-current="true"] .n{background:var(--accent);color:var(--accent-ink)}
+nav.screens button:focus-visible{outline:2px solid var(--accent)}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);min-height:640px;overflow:hidden;display:flex;flex-direction:column}
+.appbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);gap:10px;flex-wrap:wrap}
+.team{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff}
+.av.j{background:var(--accent)} .av.m{background:var(--sage);margin-left:-10px;border:2px solid var(--surface)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink)}
+.pill.fire{background:var(--accent-soft);color:var(--accent)}
+.pill.sage{background:var(--sage-soft);color:var(--sage)}
+.pill.plum{background:var(--plum-soft);color:var(--plum)}
+.screen{padding:24px 24px 28px;display:none;flex:1}
+.screen.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sage{background:var(--sage);color:#fff}
+.btn.big{padding:16px 22px;font-size:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+.hero .stat{font-family:Fraunces,serif;font-size:34px;font-weight:700;color:var(--accent)}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;color:var(--ink)}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.good{border-color:var(--sage);background:var(--sage-soft)}
+.opt.bad{border-color:var(--warn);opacity:.8}
+.progress{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.progress>i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+.feedback{margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--sage-soft);color:var(--ink);font-size:14px;display:none}
+.check{display:flex;gap:10px;align-items:flex-start}
+.check input{width:20px;height:20px;accent-color:var(--sage);margin-top:2px}
+.chat{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto;padding:4px}
+.msg{max-width:80%;padding:10px 13px;border-radius:14px;font-size:14px}
+.msg.ai{background:var(--surface-2);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.meter{display:grid;grid-template-columns:120px 1fr 34px;gap:8px;align-items:center;font-size:13px;margin-bottom:6px}
+.meter .progress>i{background:var(--sage)}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+textarea:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.pausebtn{width:200px;height:200px;border-radius:50%;border:0;background:var(--plum);color:#fff;font-family:Fraunces,serif;font-size:26px;font-weight:700;box-shadow:0 0 0 14px var(--plum-soft);margin:16px auto;display:grid;place-items:center}
+.timer{font-family:Fraunces,serif;font-size:56px;text-align:center;color:var(--plum)}
+.license{border-radius:20px;padding:22px;color:#fff;background:linear-gradient(135deg,#C2522E,#7A3E63 70%,#3E3555);position:relative;overflow:hidden;max-width:420px;aspect-ratio:1.586}
+.license .lt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.license .ln{font-family:Fraunces,serif;font-size:26px;font-weight:700;margin:6px 0 2px}
+.license .seal{position:absolute;right:18px;bottom:18px;width:70px;height:70px;border-radius:50%;border:2px dashed rgba(255,255,255,.7);display:grid;place-items:center;font-size:11px;text-align:center;line-height:1.1}
+.license .meta{position:absolute;left:22px;bottom:18px;font-size:12px;opacity:.9}
+.levels{display:flex;flex-direction:column;gap:8px}
+.lvl{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.lvl .dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--surface-2);color:var(--muted)}
+.lvl.done .dot{background:var(--sage);color:#fff} .lvl.now{border-color:var(--accent)} .lvl.now .dot{background:var(--accent);color:var(--accent-ink)}
+.price{border:1.5px solid var(--line);border-radius:16px;padding:18px;background:var(--bg);position:relative}
+.price.best{border-color:var(--accent)}
+.price .amt{font-family:Fraunces,serif;font-size:30px;font-weight:700}
+.badge{position:absolute;top:-11px;left:16px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.small{font-size:13px;color:var(--muted)}
+aside.notes{position:sticky;top:16px;background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:16px;font-size:13.5px}
+aside.notes h3{font-size:15px;font-family:Inter,sans-serif;font-weight:700}
+aside.notes ul{padding-left:18px;margin:.3em 0 .8em}
+aside.notes li{margin-bottom:4px}
+.real{color:var(--sage);font-weight:700} .stub{color:var(--warn);font-weight:700}
+.toggle{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:7px 10px;font-size:13px}
+.safety{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding:10px 20px}
+@media (max-width:1060px){.layout{grid-template-columns:1fr} nav.screens{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px} nav.screens button{white-space:nowrap} aside.notes{position:static}}
+@media (max-width:640px){.hero,.grid2,.grid3{grid-template-columns:1fr} .screen{padding:18px 16px} .meter{grid-template-columns:96px 1fr 30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true">✦</span>Hearth <span class="tag">· UI draft for Business Cup 2.0 · Skills track</span></div>
+    <button class="toggle" id="themeBtn" type="button">Toggle theme</button>
+  </header>
+
+  <div class="layout">
+    <nav class="screens" aria-label="Screens" id="nav"></nav>
+
+    <main class="stage">
+      <div class="appbar">
+        <div class="team"><span class="av j">J</span><span class="av m">M</span><span id="teamLabel">Team Jess &amp; Mike · Maya, 2y</span></div>
+        <div class="row">
+          <span class="pill fire" title="Shared team streak">🔥 <span id="streak">12</span>-day team streak</span>
+          <span class="pill sage">⭐ <span id="xp">340</span> XP</span>
+          <span class="pill plum">Class 2 · Calm Driver</span>
+        </div>
+      </div>
+
+      <!-- 1 LANDING -->
+      <section class="screen" data-s="landing">
+        <div class="hero">
+          <div>
+            <div class="kicker">The license nobody gave you</div>
+            <h1>You need a license to drive. Not to raise a human.</h1>
+            <p class="small" style="font-size:16px">Hearth teaches couples to <b>parent as one team</b>, 5 minutes a day. Practice real situations, rehearse hard talks, and learn to repair after a fight. Your kid feels the difference.</p>
+            <div class="row" style="margin-top:14px">
+              <button class="btn big" data-go="quiz">Take the 2-minute Family Quiz →</button>
+              <span class="small">No sign-up. Your partner joins free.</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="kicker">Why couples start</div>
+            <div class="stat">48%</div><p class="small">of US parents say stress is overwhelming most days (US Surgeon General, 2024)</p>
+            <div class="stat">~2 in 3</div><p class="small">couples see satisfaction drop after the first baby</p>
+            <div class="stat">1 thing</div><p class="small">kids need most: not parents who never fight, but parents who <b>repair</b>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 QUIZ -->
+      <section class="screen" data-s="quiz">
+        <div class="row" style="justify-content:space-between"><div class="kicker" id="qCount">Question 1 of 5</div><span class="small">≈ 2 min</span></div>
+        <div class="progress" style="margin-bottom:18px"><i id="qBar" style="width:20%"></i></div>
+        <h2 id="qText"></h2>
+        <div id="qOpts" style="max-width:560px"></div>
+      </section>
+
+      <!-- 3 PLAN -->
+      <section class="screen" data-s="plan">
+        <div class="kicker">Your Family Profile</div>
+        <h2 id="planTitle">Team Jess &amp; Mike: “The Tag-Team Toddler Parents”</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3>What we heard</h3>
+            <ul id="planHeard" style="padding-left:18px;margin:0"></ul>
+          </div>
+          <div class="card">
+            <h3>Your 28-day Team Plan</h3>
+            <div class="levels">
+              <div class="lvl now"><span class="dot">1</span><div><b>Week 1 · Same page</b><div class="small">Team rules, pause word, the 2-minute handoff</div></div></div>
+              <div class="lvl"><span class="dot">2</span><div><b>Week 2 · Calm limits</b><div class="small">One voice on discipline in front of your kid</div></div></div>
+              <div class="lvl"><span class="dot">3</span><div><b>Week 3 · Fight fair, repair</b><div class="small">Soft start-ups, repair, “show the repair”</div></div></div>
+              <div class="lvl"><span class="dot">4</span><div><b>Week 4 · Connection rituals</b><div class="small">Daily 10-minute kid missions that stick</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between">
+          <div><h3 style="margin:0">Invite your teammate</h3><p class="small" style="margin:0">Parenting is a team sport. Their seat is included free.</p></div>
+          <div class="row"><input type="text" id="invite" value="hearth.app/join/MAYA-7K2Q" readonly style="width:230px" aria-label="Invite link"><button class="btn sage" id="copyBtn">Copy link</button></div>
+        </div>
+        <div class="row" style="margin-top:16px"><button class="btn" data-go="today">Start Day 1 →</button></div>
+      </section>
+
+      <!-- 4 TODAY -->
+      <section class="screen" data-s="today">
+        <div class="row" style="justify-content:space-between"><div><div class="kicker">Day 12 · Week 2 · Calm limits</div><h2>Today’s 5 minutes</h2></div>
+          <div class="small"><span class="av j" style="display:inline-grid;width:22px;height:22px;font-size:10px">J</span> done ✓ &nbsp; <span class="av m" style="display:inline-grid;width:22px;height:22px;font-size:10px;margin:0">M</span> <span id="mikeStatus">not yet</span></div></div>
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card"><div class="kicker">① Learn · 90 sec</div><span class="pill sage" style="margin-bottom:6px">🟢 Experts agree · 🔬 RCT-backed</span><br><b>One voice, two people</b><p class="small">When you disagree on a limit, back each other up in the moment and debrief later, out of the kid’s earshot.</p></div>
+          <div class="card"><div class="kicker">② Practice · rep</div><b>Pick your move</b><p class="small">Answer the scenario below for +30 XP.</p></div>
+          <div class="card"><div class="kicker">③ Real life · 10 min</div><b>Kid mission</b><p class="small">“Floor is lava” after dinner. Both play, phones away.</p></div>
+        </div>
+        <div class="card">
+          <p><b>Scenario:</b> Maya (2) throws her spoon. Your partner says “No more yogurt then.” You think that’s too harsh. What do you do <i>right now</i>?</p>
+          <div id="rep"></div>
+          <div class="feedback" id="repFb"></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <label class="check"><input type="checkbox" id="mission"><span><b>We did the kid mission</b> <span class="small">· +40 XP for the team · log a 1-line memory (optional)</span></span></label>
+        </div>
+      </section>
+
+      <!-- 5 REHEARSAL -->
+      <section class="screen" data-s="rehearse">
+        <div class="kicker">AI Rehearsal · practice before the real talk</div>
+        <h2>Ask Mike to take over bedtime 3 nights a week</h2>
+        <p class="small">The AI plays your partner (tired, a bit defensive). You practice. It scores your <b>skills</b>, not who’s right.</p>
+        <div class="grid2">
+          <div class="card">
+            <div class="chat" id="chat"></div>
+            <div class="row" style="margin-top:10px;flex-wrap:nowrap">
+              <input type="text" id="say" placeholder="Try a soft start: “I feel… I need…”" aria-label="Your message">
+              <button class="btn" id="sendBtn">Send</button>
+            </div>
+            <div class="row" style="margin-top:8px" id="chips"></div>
+          </div>
+          <div class="card">
+            <h3>Skill scorecard</h3>
+            <div id="meters"></div>
+            <div class="feedback" id="coachTip" style="display:block;background:var(--plum-soft)">Tip: start with what you feel and need, not what he “never” does.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 PAUSE & REPAIR -->
+      <section class="screen" data-s="pause">
+        <div id="pause-a">
+          <div class="kicker">Pause &amp; Repair · your pre-agreed team rule</div>
+          <h2>Heated? Press pause. No AI talks during a fight.</h2>
+          <p class="small">When heart rate climbs, nobody can listen (Gottman calls it “flooding”). You both agreed: pause for 20 minutes, then come back.</p>
+          <button class="pausebtn" id="pauseBtn">Pause</button>
+          <p class="small" style="text-align:center">Mike gets: “Jess pressed Pause 🤍 Back at <span id="backAt"></span>. Breathe, walk, water.”</p>
+        </div>
+        <div id="pause-b" hidden>
+          <div class="timer" id="timer">20:00</div>
+          <p style="text-align:center" class="small">Breathe in 4 · hold 4 · out 6. Demo: <button class="btn ghost" id="skipBtn" style="padding:6px 10px">skip timer</button></p>
+        </div>
+        <div id="pause-c" hidden>
+          <div class="kicker">Repair Room · each of you answers privately</div>
+          <div class="grid2">
+            <div class="card">
+              <label><b>What I felt</b><textarea id="r1" rows="2">Alone and tired, like I'm the only one who notices the dishes.</textarea></label>
+              <label><b>What I needed</b><textarea id="r2" rows="2">To hear "I see it, I'll take the evening".</textarea></label>
+              <label><b>My part in it</b><textarea id="r3" rows="2">I started with "you never help".</textarea></label>
+              <button class="btn" id="repairBtn" style="margin-top:8px">Submit, then wait for Mike</button>
+            </div>
+            <div class="card" id="summary" style="opacity:.5">
+              <h3>Shared summary <span class="pill plum">neutral · both see the same</span></h3>
+              <p class="small">Unlocks when both of you have answered.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 HUDDLE -->
+      <section class="screen" data-s="huddle">
+        <div class="kicker">Sunday Team Huddle · 10 minutes</div>
+        <h2>State of the team</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3>This week, together</h3>
+            <div class="meter"><span>Kid missions</span><div class="progress"><i style="width:71%"></i></div><b>5/7</b></div>
+            <div class="meter"><span>Reps (Jess)</span><div class="progress"><i style="width:100%"></i></div><b>7/7</b></div>
+            <div class="meter"><span>Reps (Mike)</span><div class="progress"><i style="width:57%"></i></div><b>4/7</b></div>
+            <div class="meter"><span>Repairs</span><div class="progress"><i style="width:100%"></i></div><b>1/1</b></div>
+            <div class="meter"><span>Night shifts</span><div class="progress"><i style="width:57%"></i></div><b>4J·3M</b></div>
+            <div class="meter"><span>Noticed + did</span><div class="progress"><i style="width:62%"></i></div><b>62/38</b></div>
+            <p class="small" style="margin:6px 0 0">The invisible load counts too: “I noticed we’re out of diapers” earns credit, not only “I bought them”.</p>
+          </div>
+          <div class="card">
+            <h3>Appreciations (shared)</h3>
+            <p>💬 <b>Mike:</b> “Thanks for handling the daycare call.”</p>
+            <p>💬 <b>Jess:</b> “Loved how you made bath time a pirate show.”</p>
+            <h3 style="margin-top:12px">🟡 Experts differ, and so do you</h3><p class="small" style="margin:0 0 8px">Sleep training: Jess leans “responsive settling”, Mike leans “cry it out”. Experts disagree too. Pick your family’s approach in 10 minutes. <a href="#" onclick="return false" style="color:var(--accent)">See both sides →</a></p>
+            <h3 style="margin-top:12px">One goal for next week</h3>
+            <label class="check"><input type="checkbox" checked><span>Mike takes bedtime Mon / Wed / Fri</span></label>
+            <label class="check"><input type="checkbox"><span>Phones in the basket 6–7 pm</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 LICENSE -->
+      <section class="screen" data-s="license">
+        <div class="kicker">Your Family License</div>
+        <div class="grid2" style="align-items:start">
+          <div>
+            <div class="license" id="lic">
+              <div class="lt">Hearth · Family License</div>
+              <div class="ln">Jess &amp; Mike</div>
+              <div style="font-size:14px;opacity:.95">Licensed Team Parents · Class 2</div>
+              <div style="font-size:13px;opacity:.85;margin-top:6px">“We’re doing the work.”</div>
+              <div class="meta">60-day team streak · 14 repairs · 48 kid missions</div>
+              <div class="seal">CLASS<br><b style="font-size:20px">2</b>TEAM</div>
+            </div>
+            <div class="row" style="margin-top:12px"><button class="btn" id="shareBtn">Share card</button><button class="btn ghost" data-go="pricing">🎁 Gift a License</button></div>
+            <p class="small" style="margin-top:6px">It celebrates effort, never compares you with other parents.</p>
+          </div>
+          <div class="levels">
+            <div class="lvl done"><span class="dot">0</span><div><b>Learner’s Permit</b><div class="small">Expecting: prepare your relationship for the baby</div></div></div>
+            <div class="lvl done"><span class="dot">1</span><div><b>Class 1 · Night Shift</b><div class="small">0–1 yr · sleep, load-sharing, handoffs</div></div></div>
+            <div class="lvl now"><span class="dot">2</span><div><b>Class 2 · Calm Driver</b><div class="small">1–3 yrs · tantrums, one-voice limits · 68% complete</div><div class="progress" style="margin-top:6px"><i style="width:68%"></i></div></div></div>
+            <div class="lvl"><span class="dot">3</span><div><b>Class 3 · School Zone</b><div class="small">3–6 yrs · pre-K, kindergarten, routines</div></div></div>
+            <div class="lvl"><span class="dot">4</span><div><b>Class 4 · Open Road</b><div class="small">6–12 yrs · school, sports, first phone</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 PRICING -->
+      <section class="screen" data-s="pricing">
+        <div class="kicker">One plan, two parents</div>
+        <h2>Less than one couples-therapy session. For both of you.</h2>
+        <div class="grid3" style="margin-top:14px">
+          <div class="price best"><span class="badge">Most popular</span><b>Household · 4 weeks</b><div class="amt">$9.99</div><div class="small">first 4 weeks, then <b>$24.99 every 4 weeks</b>. 2 seats. Cancel in 1 click. We remind you 3 days before renewal.</div><button class="btn" style="margin-top:12px;width:100%">Start (test mode)</button></div>
+          <div class="price"><b>Household · Annual</b><div class="amt">$149</div><div class="small">≈ $12.40/mo · 2 seats · all license classes</div><button class="btn ghost" style="margin-top:12px;width:100%">Choose annual</button></div>
+          <div class="price"><b>🎁 Gift a License</b><div class="amt">$59</div><div class="small">3 months for expecting or new parents. The registry gift they’ll actually use.</div><button class="btn ghost" style="margin-top:12px;width:100%">Send a gift</button></div>
+        </div>
+        <p class="small" style="margin-top:12px">Stripe test mode in the demo · no real charges · cards: 4242 4242 4242 4242</p>
+      </section>
+
+      <div class="safety">Hearth is skills coaching and education, <b>not therapy</b>. AI features are labeled as AI. Not for relationships with abuse or fear: National DV Hotline 1-800-799-7233 · Crisis: call or text 988.</div>
+    </main>
+
+    <aside class="notes" id="notes" aria-live="polite"></aside>
+  </div>
+</div>
+
+<script>
+const SCREENS = [
+  {id:'landing', name:'Landing', notes:{goal:'Hook + promise. Matches the paid-social creative.', real:['CTA → quiz, no login (rule: jury must use it without sign-up)'], stub:['Stats are static copy (sourced in docs/03)'], why:'15% "Who do we sell to?" · clear user and pain'}},
+  {id:'quiz', name:'Family Quiz', notes:{goal:'Zimran-style quiz funnel: personalization plus email capture in prod.', real:['Answers saved (localStorage/Supabase anon session)','Answers drive the plan text & first week'], stub:['Email capture skipped in demo'], why:'Shows we understand Zimran’s funnel DNA'}},
+  {id:'plan', name:'Plan + Invite', notes:{goal:'Personalized 28-day plan plus the partner invite (viral loop).', real:['Plan built from quiz answers','Invite link → 2nd browser joins same team (Supabase realtime)'], stub:['LLM-written profile name optional'], why:'20% retention: partner = accountability. Lowers blended CAC'}},
+  {id:'today', name:'Today', notes:{goal:'Daily loop: learn (90s) → rep (scenario) → real-life kid mission.', real:['XP, team streak, completion persisted','7 days of real content','Partner status updates live'], stub:['Content for days 8–28 written post-hackathon'], why:'40% “does it work” plus 20% “why come back tomorrow”'}},
+  {id:'rehearse', name:'AI Rehearsal', notes:{goal:'Practice a hard conversation; AI role-plays the partner and scores skills.', real:['Claude API call (claude-sonnet-5-5) with role-play system prompt','Skill scoring JSON (claude-haiku-5-5)','Anti-sycophancy rules: never judges who is right'], stub:['In this HTML the replies are scripted'], why:'Answers “why not ChatGPT?”: structured, scored, two-sided'}},
+  {id:'pause', name:'Pause & Repair', notes:{goal:'Replaces the live AI mediator (evidence: flooding, sycophancy, legal).', real:['Pause → realtime notification to partner','20-min timer','Repair Room: both answer privately → AI neutral summary + 1 agreement'], stub:['Summary in this HTML is prewritten'], why:'Signature demo: 2 laptops on stage. Originality 10%'}},
+  {id:'huddle', name:'Team Huddle', notes:{goal:'Weekly 10-min ritual: stats, appreciations, one goal.', real:['Aggregates the week’s data','Shared goal checklist'], stub:['Night-shift tracker = simple counter'], why:'Weekly retention ritual. Gottman “state of the union” lite'}},
+  {id:'license', name:'License', notes:{goal:'Gamification with meaning: license classes by kid age. Shareable card = the brag driver.', real:['Card rendered to PNG (canvas) for IG stories','Level progress from real XP'], stub:['Gift flow in v2'], why:'Identity / “gym membership” effect, with no parent leaderboards'}},
+  {id:'pricing', name:'Pricing', notes:{goal:'What we sell: household plan, annual, gift.', real:['Stripe Checkout in test mode','Transparent renewal, 1-click cancel'], stub:['Gift redemption code'], why:'20% “what do we sell” + 15% money. Transparent billing builds trust'}},
+];
+const nav = document.getElementById('nav'), notes = document.getElementById('notes');
+SCREENS.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span class="n">${i+1}</span>${s.name}`;b.onclick=()=>go(s.id);b.dataset.id=s.id;nav.appendChild(b)});
+function go(id){
+  document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('on',el.dataset.s===id));
+  nav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.id===id));
+  const n=SCREENS.find(s=>s.id===id).notes;
+  notes.innerHTML=`<h3>Build notes · ${SCREENS.find(s=>s.id===id).name}</h3><p>${n.goal}</p>
+  <div class="real">Must be real in MVP</div><ul>${n.real.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="stub">OK to stub / later</div><ul>${n.stub.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="kicker" style="margin-top:8px">Jury criterion</div><p>${n.why}</p>`;
+  try{localStorage.setItem('hearth-screen',id)}catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(t)go(t.dataset.go)});
+
+/* theme */
+document.getElementById('themeBtn').onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark'};
+
+/* XP */
+let xp=340; const addXp=n=>{xp+=n;document.getElementById('xp').textContent=xp};
+
+/* quiz */
+const Q=[
+  {q:'Who’s on your parenting team?',o:['Me + my partner (married or not)','Just me: solo parent','Me + my co-parent (we’re separated)','Me + grandparent / nanny / “village”']},
+  {q:'How old is your youngest?',o:['Expecting 🤰','0–12 months','1–3 years','3–6 years','6–12 years']},
+  {q:'Anything special about your family?',o:['One child','3 or more kids','Adopted or fostered child','Blended / stepfamily','Neurodivergent child (ADHD, autism…)','None of these']},
+  {q:'Where do you two clash most?',o:['Who does more (chores, night wakes)','Discipline: one strict, one soft','Screens & routines','We don’t clash, we drift apart']},
+  {q:'How do your arguments usually end?',o:['Someone walks off, nothing resolved','We go silent for a day','We make up, but the same fight returns','We actually talk it through']},
+  {q:'What kind of parents do you want to be?',o:['Calm, not yelling','A real team, one voice','Present, with less phone time','The parents we wish we had']},
+];
+let qi=0; const ans=[];
+function renderQ(){
+  document.getElementById('qCount').textContent=`Question ${qi+1} of ${Q.length}`;
+  document.getElementById('qBar').style.width=`${(qi+1)/Q.length*100}%`;
+  document.getElementById('qText').textContent=Q[qi].q;
+  const box=document.getElementById('qOpts');box.innerHTML='';
+  Q[qi].o.forEach(o=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent=o;b.onclick=()=>{b.classList.add('sel');ans[qi]=o;setTimeout(()=>{if(qi<Q.length-1){qi++;renderQ()}else{buildPlan();go('plan')}},220)};box.appendChild(b)});
+}
+function buildPlan(){
+  const CLASS={'Expecting 🤰':'Learner’s Permit','0–12 months':'Class 1 · Night Shift','1–3 years':'Class 2 · Calm Driver','3–6 years':'Class 3 · School Zone','6–12 years':'Class 4 · Open Road'};
+  const PACK={'One child':'Only-child pack: empathy & sharing missions (myth-busting “only child syndrome”)','3 or more kids':'Big-family pack: sibling fairness, 1:1 time per kid','Adopted or fostered child':'Trauma-informed pack: connection before correction, adoption-story scripts','Blended / stepfamily':'Blended pack: step-parent role, co-parent boundaries','Neurodivergent child (ADHD, autism…)':'ND pack: strengths-based routines, meltdown plans (not medical advice)'};
+  const SEAT={'Just me: solo parent':'Solo mode + optional “village” seat (grandparent, friend)','Me + my co-parent (we’re separated)':'Co-parent seat: low-conflict messaging & shared rules','Me + grandparent / nanny / “village”':'Village seat for your helper'};
+  const heard=[`Team: <b>${ans[0]||'partner'}</b>`,`Youngest: <b>${ans[1]||'1–3 years'}</b> → <b>${CLASS[ans[1]]||'Class 2 · Calm Driver'}</b>`,`Main friction: <b>${ans[3]||'who does more'}</b>`,`Fights end: <b>${ans[4]||'unresolved'}</b>`,`Your goal: <b>${ans[5]||'a real team'}</b>`];
+  if(PACK[ans[2]])heard.push(`Added: <b>${PACK[ans[2]]}</b>`);
+  if(SEAT[ans[0]])heard.push(`Seat: <b>${SEAT[ans[0]]}</b>`);
+  document.getElementById('planHeard').innerHTML=heard.map(h=>`<li>${h}</li>`).join('');
+  const names={'Who does more (chores, night wakes)':'The Tag-Team Parents','Discipline: one strict, one soft':'The Good-Cop/Bad-Cop Team','Screens & routines':'The Routine Builders','We don’t clash, we drift apart':'The Reconnectors'};
+  const team=ans[0]==='Just me: solo parent'?'Team Jess':'Team Jess & Mike';
+  document.getElementById('planTitle').textContent=`${team}: “${names[ans[3]]||'The Tag-Team Parents'}”`;
+}
+renderQ();
+document.getElementById('copyBtn').onclick=e=>{const i=document.getElementById('invite');i.select();try{navigator.clipboard.writeText(i.value)}catch(_){};e.target.textContent='Copied ✓';setTimeout(()=>{document.getElementById('mikeStatus').textContent='joined, doing today’s rep…'},600)};
+
+/* rep */
+const REP=[
+  {t:'Contradict them on the spot: “It’s fine, sweetie, have your yogurt.”',ok:false,f:'Undercutting in front of a toddler teaches her the limit is negotiable and splits the team. Save it for the debrief.'},
+  {t:'Back them up calmly now (“Spoons stay on the table”) and talk about the consequence later.',ok:true,f:'Nice: one voice in the moment, debrief later. Tonight, try: “Can we pick consequences together for throwing?” +30 XP'},
+  {t:'Say nothing and look annoyed.',ok:false,f:'Kids read faces fast. Silent disapproval still splits the team. Try backing up the limit, then debrief.'},
+];
+const rep=document.getElementById('rep');
+REP.forEach(r=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent=r.t;b.onclick=()=>{rep.querySelectorAll('.opt').forEach((x,i)=>{x.disabled=true;x.classList.add(REP[i].ok?'good':'bad')});const fb=document.getElementById('repFb');fb.style.display='block';fb.textContent=r.f;if(r.ok)addXp(30)};rep.appendChild(b)});
+document.getElementById('mission').onchange=e=>{if(e.target.checked){addXp(40);const s=document.getElementById('streak');s.textContent=+s.textContent+1}};
+
+/* rehearsal */
+const chat=document.getElementById('chat');
+const say=(t,who)=>{const d=document.createElement('div');d.className='msg '+who;d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight};
+say('(Mike, after a long day) Hey… what’s up?','ai');
+const skills={'Soft start':20,'“I” statements':10,'Specific ask':10,'Validation':5};
+function renderMeters(){document.getElementById('meters').innerHTML=Object.entries(skills).map(([k,v])=>`<div class="meter"><span>${k}</span><div class="progress"><i style="width:${v}%"></i></div><b>${v}</b></div>`).join('')}
+renderMeters();
+const CHIPS=['You never do bedtime.','I feel worn out by 8pm, and I miss having evenings with you.','Could you take bedtime Mon, Wed and Fri?','I know work is brutal right now too.'];
+const chipBox=document.getElementById('chips');
+CHIPS.forEach(c=>{const b=document.createElement('button');b.className='pill';b.type='button';b.textContent=c;b.style.border='0';b.onclick=()=>{document.getElementById('say').value=c};chipBox.appendChild(b)});
+function reply(t){
+  const s=t.toLowerCase(); let r, tip;
+  if(/never|always|you don.?t/.test(s)){r='That’s not fair, I did bath on Sunday. Why are you attacking me?';tip='“Never/always” triggers defensiveness. Try describing your feeling and need instead.';skills['Soft start']=Math.max(5,skills['Soft start']-10)}
+  else if(/i feel|i'm|i am|i miss/.test(s)){r='Yeah… I didn’t realize evenings were that rough. What would help?';tip='Great soft start. Now make one specific, doable ask.';skills['Soft start']=85;skills['“I” statements']=90}
+  else if(/could you|would you|mon|wed|fri/.test(s)){r='Mon and Wed I can do. Friday I have the late call. Thursday instead?';tip='Specific ask landed. Negotiating is a win, not a loss.';skills['Specific ask']=90}
+  else if(/i know|i get|makes sense|brutal/.test(s)){r='Thanks. It’s been a lot. Okay, let’s figure it out together.';tip='Validation lowers defenses. You’ve got a full skill set.';skills['Validation']=88}
+  else {r='Hmm. What do you mean exactly?';tip='Be concrete: a feeling, a need, one ask.'}
+  setTimeout(()=>{say(r,'ai');renderMeters();document.getElementById('coachTip').textContent='Coach: '+tip;addXp(10)},500);
+}
+const send=()=>{const i=document.getElementById('say');if(!i.value.trim())return;say(i.value,'me');reply(i.value);i.value=''};
+document.getElementById('sendBtn').onclick=send;document.getElementById('say').onkeydown=e=>{if(e.key==='Enter')send()};
+
+/* pause & repair */
+const back=new Date(Date.now()+20*60000);document.getElementById('backAt').textContent=back.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+let tInt;
+document.getElementById('pauseBtn').onclick=()=>{document.getElementById('pause-a').hidden=true;document.getElementById('pause-b').hidden=false;let left=1200;tInt=setInterval(()=>{left--;document.getElementById('timer').textContent=`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;if(left<=0)endPause()},1000)};
+function endPause(){clearInterval(tInt);document.getElementById('pause-b').hidden=true;document.getElementById('pause-c').hidden=false}
+document.getElementById('skipBtn').onclick=endPause;
+document.getElementById('repairBtn').onclick=e=>{e.target.textContent='Mike answered ✓ · generating summary…';e.target.disabled=true;setTimeout(()=>{const s=document.getElementById('summary');s.style.opacity=1;s.innerHTML=`<h3>Shared summary <span class="pill plum">neutral · both see the same</span></h3>
+<p><b>Jess</b> felt alone with the evening chores and needed to hear that Mike sees it.</p>
+<p><b>Mike</b> felt blamed the moment he walked in and needed a minute to land after work.</p>
+<p><b>You both</b> want evenings to feel like a team again. Each of you named your own part (“you never”, walking away).</p>
+<div class="card" style="background:var(--sage-soft);border:0"><b>One small agreement to try:</b> a 10-minute landing time after work, then Mike takes dishes and bedtime on Mon / Wed.</div>
+<p class="small" style="margin-top:8px">👶 <b>Show the repair</b> to Maya (1 min): “Mommy and Daddy had big feelings. We talked and fixed it. We love each other.”</p>
+<div class="row"><button class="btn sage" onclick="this.textContent='Agreed by both ✓';addXp(50)">We both agree</button><span class="small">AI never decides who’s right. Your answers are deleted after 30 days.</span></div>`},900)};
+
+/* share */
+document.getElementById('shareBtn').onclick=e=>{e.target.textContent='PNG ready for Stories ✓'};
+
+/* init */
+let start='landing';try{start=localStorage.getItem('hearth-screen')||'landing'}catch(e){}
+if(!SCREENS.some(s=>s.id===start))start='landing';
+go(start);
+</script>
+</body>
+</html>

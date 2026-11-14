@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth Key Metrics</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F1E8;--surface:#FFFDF9;--surface-2:#F1E8DB;--ink:#2A211C;--muted:#6F625A;--line:#E3D6C6;--grid:#EAE0D2;--accent:#D2603A;--accent-soft:#F8DFD3;--good:#2E7D3E;--bad:#B3261E;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--shadow:0 1px 2px rgba(42,33,28,.06),0 8px 24px rgba(42,33,28,.08)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1B1715;--surface:#241F1C;--surface-2:#2E2724;--ink:#F3ECE4;--muted:#B5A79C;--line:#3A322D;--grid:#332C28;--accent:#EE7A52;--accent-soft:#4A2B20;--good:#6CC27C;--bad:#F08A80;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#1B1715;--surface:#241F1C;--surface-2:#2E2724;--ink:#F3ECE4;--muted:#B5A79C;--line:#3A322D;--grid:#332C28;--accent:#EE7A52;--accent-soft:#4A2B20;--good:#6CC27C;--bad:#F08A80;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0 0 .4em}
+h1{font-size:clamp(26px,4vw,38px)}h2{font-size:22px}h3{font-size:16px;font-family:Inter,sans-serif;font-weight:700}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 64px}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.links a{color:var(--accent);font-weight:600;margin-right:14px;text-decoration:none}
+.lead{color:var(--muted);max-width:860px;font-size:16px}
+.toggle{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 18px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
+.tile .k{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.tile .v{font-family:Fraunces,serif;font-size:30px;font-weight:700;margin:2px 0}
+.tile .s{font-size:13px;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:13.5px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--surface-2)}
+.tbl{overflow-x:auto}
+.neg{color:var(--bad)}.pos{color:var(--good)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:6px 0 4px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+svg text{font-family:Inter,sans-serif}
+.chart{position:relative}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:10px;padding:8px 10px;font-size:12.5px;opacity:0;transition:opacity .12s;min-width:150px;z-index:2}
+.tip b{font-weight:700}
+.funnel{display:flex;flex-direction:column;gap:8px}
+.frow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-size:14px}
+.fwrap{display:flex;align-items:center;gap:8px;min-width:0}.fbar{height:26px;border-radius:4px;background:var(--s1);flex:none}.fval{font-size:13px;font-weight:600;min-width:0}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
+.callout{background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media (max-width:520px){.tiles{grid-template-columns:1fr}.frow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="links"><a href="prototype.html">← UI prototype</a><a href="competitors.html">Competitors →</a></div>
+    <button class="toggle" id="themeBtn" type="button">Toggle theme</button>
+  </div>
+  <h1>Hearth: key metrics</h1>
+  <p class="lead">A 5-year cohort model in 4 scenarios. Pricing: <b>$9.99 for the first 4 weeks → $24.99 every 4 weeks</b> per household (both partners), or $149/yr. All numbers come from <code>model/financial_model.py</code>; assumptions are estimates anchored to 2026 subscription-app benchmarks (RevenueCat, Adapty, FunnelFox).</p>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>ARR by year, all scenarios</h2>
+      <div class="legend" id="arrLegend"></div>
+      <div class="chart" id="arrChart"></div>
+    </div>
+    <div class="panel">
+      <h2>Where the money goes (Y5)</h2>
+      <p class="note" style="margin:0 0 8px" id="costNote"></p>
+      <div class="legend" id="costLegend"></div>
+      <div class="chart" id="costChart"></div>
+      <div class="callout" style="margin-top:12px"><b>AI + servers ≈ 5–10% of revenue. Ads ≈ 60% of all costs.</b> The business is won on acquisition cost, not AI cost. Lessons are pre-written; only Rehearsal, Repair summaries and personalization call an LLM (~$0.45/household/mo), and infra (hosting, DB, email) adds ~$0.30–0.50.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 id="yrTitle">5-year plan</h2>
+    <div class="tbl"><table id="yrTable"></table></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Word of mouth is the biggest lever</h2>
+      <p class="note" style="margin:0 0 8px">Base scenario, same ad budget. Only the share of customers who arrive free changes (partner invites, mom-to-mom recommendations, shared license cards, gifts).</p>
+      <div class="chart" id="womChart"></div>
+      <p class="note">We plan with only 15–25% organic until real data proves more. A model that <i>assumes</i> virality gets discounted.</p>
+    </div>
+    <div class="panel">
+      <h2>US market</h2>
+      <div class="funnel" id="funnel"></div>
+      <p class="note">$100M ARR ≈ 460K paying households ≈ 4–5% of the able-to-pay pool. International: + UK/CA/AU/IE/NZ ≈ 1.3×, + DE/NL/Nordics ≈ 1.5× (estimates).</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Unit economics per paying household (24 months)</h2>
+    <div class="tbl"><table id="ueTable"></table></div>
+    <p class="note">Blended CAC = paid CAC × (1 − organic share) + AI cost of free users who try the app but don't buy. LTV = 24-month profit after payment fees, refunds, AI, servers and support. LTV/CAC above 1 means ads pay back; 3+ is healthy.</p>
+  </div>
+</div>
+
+<script>
+const S=[
+ {id:'cons',name:'Conservative',color:'--s1',cac:120,org:.05,bcac:116,r1:.40,churn:.20,life:3.0,ltv:47,lc:.41,pb:'> 24 mo',peak:'$2.1M burn',
+  arr:[.030,.077,.156,.263,.372],rev:[.016,.053,.113,.199,.296],profit:[-.127,-.258,-.410,-.590,-.761],cum:[-.127,-.385,-.795,-1.4,-2.1],ads:[.06,.15,.3,.5,.7],act:[180,460,925,1550,2184],
+  cost:{ads:.7,fixed:.3,fees:.023,ai:.042,support:.015},note:'Ads don\'t pay back, so stop paid ads and grow only via referrals.'},
+ {id:'base',name:'Base',color:'--s2',cac:60,org:.15,bcac:52,r1:.50,churn:.14,life:4.5,ltv:82,lc:1.58,pb:'7 mo',peak:'$9.5M burn',
+  arr:[.324,2.0,6.9,16.1,29.4],rev:[.157,1.1,4.2,10.7,21.0],profit:[-.262,-.914,-2.1,-3.0,-3.3],cum:[-.262,-1.2,-3.2,-6.2,-9.5],ads:[.2,1.2,4,9,16],act:[1685,10347,35153,80769,146191],
+  cost:{ads:16,fixed:6,fees:1.441,ai:1.618,support:.629},note:'Healthy, but needs ~$9.5M of venture funding to scale.'},
+ {id:'zim',name:'Inside Zimran',color:'--s3',cac:45,org:.20,bcac:37,r1:.50,churn:.14,life:4.5,ltv:82,lc:2.22,pb:'5 mo',peak:'$0.8M burn',
+  arr:[1.4,9.5,25.0,51.3,84.4],rev:[.669,5.2,16.2,35.4,62.3],profit:[-.264,-.320,2.4,8.0,18.2],cum:[-.264,-.584,1.8,9.8,28.0],ads:[.6,4,10,20,32],act:[7163,48749,126189,256489,418145],
+  cost:{ads:32,fixed:5.5,fees:4.4,ai:4.689,support:1.9},note:'Same product, Zimran\'s ad machine (−25% CAC). Profitable from Y3.'},
+ {id:'opt',name:'Optimistic',color:'--s4',cac:45,org:.25,bcac:34,r1:.55,churn:.11,life:5.7,ltv:112,lc:3.24,pb:'4 mo',peak:'$0.5M burn',
+  arr:[1.2,7.7,25.9,60.9,106.9],rev:[.542,4.1,15.5,40.0,76.9],profit:[-.202,.096,2.9,12.2,30.7],cum:[-.202,-.106,2.8,15.0,45.7],ads:[.4,2.5,8,18,30],act:[5739,37117,122880,285181,493148],
+  cost:{ads:30,fixed:11,fees:5.166,ai:3.622,support:1.5},note:'Partner invites, gifting and word of mouth work. Crosses $100M ARR in Y5.'},
+];
+const COST=[['ads','Ads (paid marketing)','--s1'],['fixed','Team & fixed (salaries, content, tools, legal)','--s2'],['fees','Payment fees + refunds','--s3'],['ai','AI + servers (LLM, hosting, DB, free users)','--s4'],['support','Support','--s5']];
+const WOM=[[.15,52,1.58,29.4],[.30,43,1.91,35.7],[.45,34,2.42,45.4],[.60,25,3.29,62.4]];
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $=id=>document.getElementById(id);
+const M=x=>{const a=Math.abs(x);const s=x<0?'−':'';return a>=1?`${s}$${a.toFixed(a>=10?0:1)}M`:`${s}$${Math.round(a*1000)}K`};
+let cur='zim';
+
+function tabs(){ $('tabs').innerHTML=S.map(s=>`<button class="tab" role="tab" aria-selected="${s.id===cur}" data-id="${s.id}"><span class="sw" style="background:var(${s.color})"></span>${s.name}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.id;render()});}
+
+function tilesR(s){ $('tiles').innerHTML=[
+  ['Y5 ARR',M(s.arr[4]),`${s.act[4].toLocaleString()} paying households`],
+  ['LTV / CAC',s.lc.toFixed(2),`LTV $${s.ltv} vs blended CAC $${s.bcac}`],
+  ['Payback',s.pb,`Renew after month 1: ${Math.round(s.r1*100)}% · churn ${Math.round(s.churn*100)}%/mo`],
+  ['Funding need',s.peak,`5-yr cumulative: ${M(s.cum[4])}`]
+ ].map(t=>`<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="s">${t[2]}</div></div>`).join('');}
+
+function yrTable(s){ $('yrTitle').textContent=`5-year plan: ${s.name}`;
+  const row=(l,a,f)=>`<tr><td>${l}</td>${a.map(v=>`<td class="${f&&v<0?'neg':f&&v>0?'pos':''}">${typeof v==='number'&&l.includes('households')?v.toLocaleString():M(v)}</td>`).join('')}</tr>`;
+  $('yrTable').innerHTML=`<thead><tr><th></th>${[1,2,3,4,5].map(y=>`<th>Y${y}</th>`).join('')}</tr></thead><tbody>
+  ${row('Paid ads',s.ads)}${row('Paying households (end)',s.act)}${row('Net revenue',s.rev)}${row('ARR (end of year)',s.arr)}${row('Profit / loss',s.profit,1)}${row('Cumulative cash',s.cum,1)}</tbody>`;}
+
+function ueTable(){ $('ueTable').innerHTML=`<thead><tr><th>Scenario</th><th>Paid CAC</th><th>Organic share</th><th>Blended CAC</th><th>Renew after 1st month</th><th>Monthly churn</th><th>Avg paid months</th><th>24-mo LTV</th><th>LTV/CAC</th><th>Payback</th></tr></thead><tbody>${S.map(s=>`<tr${s.id===cur?' style="background:var(--accent-soft);font-weight:600"':''}><td><span class="sw" style="background:var(${s.color});margin-right:6px"></span>${s.name}</td><td>$${s.cac}</td><td>${Math.round(s.org*100)}%</td><td>$${s.bcac}</td><td>${Math.round(s.r1*100)}%</td><td>${Math.round(s.churn*100)}%</td><td>${s.life}</td><td>$${s.ltv}</td><td><b>${s.lc.toFixed(2)}</b></td><td>${s.pb}</td></tr>`).join('')}</tbody>`;}
+
+/* ARR line chart */
+function arrChart(){
+  const el=$('arrChart'),W=Math.max(320,el.clientWidth||600),H=300,p={l:52,r:150,t:12,b:30};
+  const max=120,x=i=>p.l+i*(W-p.l-p.r)/4,y=v=>p.t+(1-v/max)*(H-p.t-p.b);
+  let g='';[0,25,50,75,100].forEach(t=>{g+=`<line x1="${p.l}" x2="${W-p.r}" y1="${y(t)}" y2="${y(t)}" stroke="${css('--grid')}" stroke-width="1"/><text x="${p.l-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="${css('--muted')}">$${t}M</text>`});
+  [0,1,2,3,4].forEach(i=>g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="${css('--muted')}">Y${i+1}</text>`);
+  // $100M target line
+  g+=`<line x1="${p.l}" x2="${W-p.r}" y1="${y(100)}" y2="${y(100)}" stroke="${css('--muted')}" stroke-dasharray="4 4" stroke-width="1"/><text x="${p.l+4}" y="${y(100)-6}" font-size="11" fill="${css('--muted')}">$100M ARR target</text>`;
+  const ends=S.map(s=>({s,yv:y(s.arr[4])})).sort((a,b)=>a.yv-b.yv);for(let i=1;i<ends.length;i++)if(ends[i].yv-ends[i-1].yv<14)ends[i].yv=ends[i-1].yv+14;
+  S.forEach(s=>{const c=css(s.color),w=s.id===cur?3:2,o=s.id===cur?1:.55;
+    g+=`<polyline fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round" opacity="${o}" points="${s.arr.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}"/>`;
+    s.arr.forEach((v,i)=>g+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${c}" stroke="${css('--surface')}" stroke-width="2" opacity="${o}"/>`);
+    const e=ends.find(e=>e.s===s);g+=`<text x="${x(4)+10}" y="${e.yv+4}" font-size="12" font-weight="600" fill="${css('--ink')}">${s.name} ${M(s.arr[4])}</text>`;});
+  g+=`<line id="xh" x1="0" x2="0" y1="${p.t}" y2="${H-p.b}" stroke="${css('--muted')}" stroke-width="1" opacity="0"/><rect x="${p.l}" y="${p.t}" width="${W-p.l-p.r}" height="${H-p.t-p.b}" fill="transparent" id="hit"/>`;
+  el.innerHTML=`<svg width="${W}" height="${H}" role="img" aria-label="ARR by year for four scenarios">${g}</svg><div class="tip" id="tip1"></div>`;
+  $('arrLegend').innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s.color})"></i>${s.name}</span>`).join('');
+  const hit=el.querySelector('#hit'),xh=el.querySelector('#xh'),tip=$('tip1');
+  hit.onmousemove=e=>{const r=hit.getBoundingClientRect();const i=Math.max(0,Math.min(4,Math.round((e.clientX-r.left)/(r.width/4))));xh.setAttribute('x1',x(i));xh.setAttribute('x2',x(i));xh.setAttribute('opacity',.6);
+    tip.innerHTML=`<b>Year ${i+1} · ARR</b><br>`+[...S].sort((a,b)=>b.arr[i]-a.arr[i]).map(s=>`<span class="sw" style="background:var(${s.color})"></span> ${s.name}: <b>${M(s.arr[i])}</b>`).join('<br>');
+    tip.style.opacity=1;tip.style.left=Math.min(x(i)+12,W-170)+'px';tip.style.top='20px';};
+  hit.onmouseleave=()=>{tip.style.opacity=0;xh.setAttribute('opacity',0)};
+}
+
+/* Cost stacked bar (one bar per scenario, Y5, as share of total costs) */
+function costChart(){
+  const el=$('costChart'),W=Math.max(300,el.clientWidth||460),rowH=34,gap=14,lab=110,H=S.length*(rowH+gap)+4;
+  let g='';
+  S.forEach((s,ri)=>{const tot=Object.values(s.cost).reduce((a,b)=>a+b,0);let xx=lab;const yy=ri*(rowH+gap);const bw=W-lab-8;
+    g+=`<text x="0" y="${yy+rowH/2+4}" font-size="12.5" font-weight="${s.id===cur?700:500}" fill="${css('--ink')}">${s.name}</text>`;
+    COST.forEach(([k,l,c],ci)=>{const w=Math.max(0,s.cost[k]/tot*bw-2);if(w<=0)return;
+      g+=`<rect class="seg" data-t="${s.name} · ${l}: ${M(s.cost[k])} (${Math.round(s.cost[k]/tot*100)}% of costs)" x="${xx}" y="${yy}" width="${w}" height="${rowH}" rx="3" fill="${css(c)}" opacity="${s.id===cur?1:.6}"/>`;
+      if(w>40)g+=`<text x="${xx+6}" y="${yy+rowH/2+4}" font-size="11" fill="#fff" font-weight="600" pointer-events="none">${Math.round(s.cost[k]/tot*100)}%</text>`;
+      xx+=w+2;});});
+  el.innerHTML=`<svg width="${W}" height="${H}" role="img" aria-label="Year-5 cost breakdown by scenario">${g}</svg><div class="tip" id="tip2"></div>`;
+  $('costLegend').innerHTML=COST.map(([k,l,c])=>`<span><i class="sw" style="background:var(${c})"></i>${l}</span>`).join('');
+  const tip=$('tip2');el.querySelectorAll('.seg').forEach(r=>{r.onmousemove=e=>{const b=el.getBoundingClientRect();tip.textContent=r.dataset.t;tip.style.opacity=1;tip.style.left=Math.min(e.clientX-b.left+10,W-170)+'px';tip.style.top=(e.clientY-b.top-40)+'px'};r.onmouseleave=()=>tip.style.opacity=0});
+  const s=S.find(s=>s.id===cur);$('costNote').textContent=`${s.name}: ${s.note}`;
+}
+
+/* WOM bars */
+function womChart(){
+  const el=$('womChart'),W=Math.max(300,el.clientWidth||460),rowH=30,gap=12,lab=120,H=WOM.length*(rowH+gap);
+  let g='';WOM.forEach(([o,c,lc,arr],i)=>{const yy=i*(rowH+gap),bw=(W-lab-150)*(arr/65);
+    g+=`<text x="0" y="${yy+rowH/2+4}" font-size="12.5" fill="${css('--ink')}">${Math.round(o*100)}% arrive free</text>`;
+    g+=`<rect class="seg" data-t="Organic ${Math.round(o*100)}%: blended CAC $${c}, LTV/CAC ${lc}, Y5 ARR $${arr}M" x="${lab}" y="${yy}" width="${bw}" height="${rowH}" rx="3" fill="${css('--s2')}" opacity="${0.45+i*0.18}"/>`;
+    g+=`<text x="${lab+bw+8}" y="${yy+rowH/2+4}" font-size="12" fill="${css('--ink')}"><tspan font-weight="700">$${arr}M</tspan> · LTV/CAC ${lc}</text>`;});
+  el.innerHTML=`<svg width="${W}" height="${H}" role="img" aria-label="Y5 ARR by organic share">${g}</svg><div class="tip" id="tip3"></div>`;
+  const tip=$('tip3');el.querySelectorAll('.seg').forEach(r=>{r.onmousemove=e=>{const b=el.getBoundingClientRect();tip.textContent=r.dataset.t;tip.style.opacity=1;tip.style.left=Math.min(e.clientX-b.left+10,W-170)+'px';tip.style.top=(e.clientY-b.top-40)+'px'};r.onmouseleave=()=>tip.style.opacity=0});
+}
+
+function funnel(){const F=[['TAM: partnered parents 25–44 + expecting','≈17M households · $2.6–3.5B',100],['Able-to-pay (kid <12, income ≥$100K)','≈9–11M households',60],['SAM (overwhelmed + expecting)','≈9M households · $1.1–1.35B',53],['$100M ARR goal','≈460K households',14],['3-year SOM','18–45K households · $2.7–6.8M ARR',6]];
+  $('funnel').innerHTML=F.map(([l,v,w])=>`<div class="frow"><div>${l}</div><div class="fwrap"><div class="fbar" style="width:${Math.max(w*0.4,3)}%;opacity:${0.55+w/220}"></div><span class="fval">${v}</span></div></div>`).join('');}
+
+function render(){tabs();tilesR(S.find(s=>s.id===cur));yrTable(S.find(s=>s.id===cur));ueTable();arrChart();costChart();womChart();funnel();}
+render();
+addEventListener('resize',()=>{clearTimeout(window._r);window._r=setTimeout(render,150)});
+$('themeBtn').onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark';render()};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',render);
+</script>
+</body>
+</html>
