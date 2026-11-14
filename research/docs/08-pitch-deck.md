@@ -100,6 +100,7 @@ One loop, all working end-to-end, no login:
 - **Costs, itemized:** AI + servers ≈ **8% of revenue**; ads ≈ **60% of costs**. We win on acquisition, not AI cost.
 - **Word of mouth is the lever:** if 45% of customers arrive free (partner invites, referrals, gifts), base LTV/CAC rises from 1.6 to 2.4 and Y5 ARR from $29M to $45M with the same ad budget.
 - **$100M ARR ≈ 460K paying households ≈ 4–5% of the able-to-pay pool.** Expansion to UK/CA/AU adds ~1.3×.
+- **Stress test (say this, it's honest and strong):** we tested 7 levers in all 128 combinations. We only need **CAC and retention at *median* benchmark level**. Even with referrals at 5%, refunds at 6% and AI costing 67% more, each household pays back in ~10 months (LTV/CAC 1.31). If even those two fail, a stop rule caps the loss at ~$90K. Details: [09-stress-test.md](09-stress-test.md). *Don't* claim "profitable in the worst case": with all 7 levers pessimistic, it isn't.
 
 ---
 

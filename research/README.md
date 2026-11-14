@@ -32,6 +32,7 @@
 | R2 | [docs/research/evidence-ai-mediation-psychology.md](docs/research/evidence-ai-mediation-psychology.md) | Evidence on AI mediation risks, parenting/couple programs, gamification, signaling psychology, privacy |
 | 🆚 | [ui/competitors.html](ui/competitors.html) | **Open first:** visual competitor map (Good Inside, Paired, Joon, Kinedu + 15 more), filterable table, the gaps we close |
 | 📊 | [ui/economics.html](ui/economics.html) | **Key metrics dashboard:** 4 scenarios, ARR chart, cost breakdown (AI/servers vs ads), word-of-mouth lever, market funnel |
+| 🧪 | [docs/09-stress-test.md](docs/09-stress-test.md) | **Stress test:** 7 levers × 128 combinations. What breaks us, the 2 levers that must hold (CAC, retention), the stop rule capping the downside at ~$90K, and how to pitch it honestly |
 | 🎤 | [docs/08-pitch-deck.md](docs/08-pitch-deck.md) | **10-slide pitch deck points + speaker notes + Q&A**, the "proud parent" social-signaling driver, and how to cite the 48% stress stat correctly |
 | UI | [ui/prototype.html](ui/prototype.html) | Clickable UI draft of the MVP screens with build notes (open in a browser) |
 | $ | [model/financial_model.py](model/financial_model.py) → [model/output.md](model/output.md) | Reproducible cohort model (`python model/financial_model.py`) |
