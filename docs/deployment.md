@@ -1,5 +1,7 @@
 # Deployment
 
+**Production: https://kinora-swart.vercel.app** — project `begisbayev7-1091/kinora`.
+
 Kinora runs on **Vercel** (Next.js 16, Node.js 24) with:
 
 - **Supabase** for durable state (`DATA_BACKEND=supabase`)
