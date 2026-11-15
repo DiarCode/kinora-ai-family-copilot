@@ -1,0 +1,179 @@
+{
+  "title": "The evening handoff",
+  "subtitle": "Couples session · 2 participants",
+  "problem": "We keep having the same fight about work and phones. Michael says Lucy takes over; Lucy says Michael disappears after work.",
+  "introMs": 1200,
+  "tailMs": 2200,
+  "endCardMs": 4000,
+  "sharedNeed": "Rest, recognition, and a teammate who assumes good intent.",
+  "agreement": [
+    "When either of you is flooded: say “pause” and name a return time.",
+    "The first ten minutes after Michael gets home are device-free."
+  ],
+  "journey": {
+    "michael": ["Frustrated", "Guarded", "Honest", "Seen", "Sorry", "Heard"],
+    "lucy": ["Hurt", "Angry", "Honest", "Seen", "Softening", "Heard"]
+  },
+  "lines": [
+    {
+      "speaker": "kinora",
+      "phase": 0,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "warm, professional, unhurried",
+      "text": "Thank you both for making this time. I’m Kinora. I’m here to understand the loop you’re stuck in, not to decide who’s right. Michael, what happened last night?"
+    },
+    {
+      "speaker": "michael",
+      "phase": 0,
+      "isQuestion": false,
+      "gapAfterMs": 400,
+      "delivery": "frustrated, clipped, contained anger",
+      "text": "I walked in after a ten-hour day, and before I even put my bag down, Lucy was already on me about my phone. I hadn’t even sat down."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 0,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "calm, reflective",
+      "text": "I’m listening for the moment, not the verdict. Lucy, what did that look like from your side?"
+    },
+    {
+      "speaker": "lucy",
+      "phase": 0,
+      "isQuestion": false,
+      "gapAfterMs": 450,
+      "delivery": "sharp, hurt, fast",
+      "text": "I’d been with the kids since six. He walks in, sits down, starts scrolling, like the house isn’t on fire. I don’t need a helper. I need a partner."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 1,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "warm, curious",
+      "text": "Two experiences can both be true. Underneath the frustration, Michael, what were you protecting?"
+    },
+    {
+      "speaker": "michael",
+      "phase": 1,
+      "isQuestion": false,
+      "gapAfterMs": 400,
+      "delivery": "defensive, then honest",
+      "text": "My one quiet minute. Work has been brutal. If I stop moving, it all catches up with me. And when she comes at me like that, I shut down."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 1,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "soft, invitational",
+      "text": "Lucy, when Michael shuts down, what do you wish he understood?"
+    },
+    {
+      "speaker": "lucy",
+      "phase": 1,
+      "isQuestion": false,
+      "gapAfterMs": 450,
+      "delivery": "hurt, honest, close to tears",
+      "text": "That I disappear too. I’m holding all of it, and when he goes quiet, I’m suddenly alone with it. I get loud because quiet doesn’t get me heard."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 2,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "steady, narrowing",
+      "text": "What did each of you need in that moment that you didn’t get? Lucy, start with the need under the anger."
+    },
+    {
+      "speaker": "lucy",
+      "phase": 2,
+      "isQuestion": false,
+      "gapAfterMs": 400,
+      "delivery": "vulnerable, quiet",
+      "text": "To be seen. Not fixed, seen. And to know I’m not doing this by myself."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 2,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "gentle, direct",
+      "text": "Michael, when Lucy says she doesn’t want to do this by herself, what happens inside you?"
+    },
+    {
+      "speaker": "michael",
+      "phase": 2,
+      "isQuestion": false,
+      "gapAfterMs": 450,
+      "delivery": "vulnerable, slower",
+      "text": "I feel like I’m failing. No matter how hard I work, I’m still the one letting her down. I need her to know I’m not checked out. I’m just running on empty."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 3,
+      "isQuestion": true,
+      "gapAfterMs": 400,
+      "delivery": "clear, connecting, professional",
+      "text": "I hear a shared need: rest, recognition, and a teammate who assumes good intent. You’re both asking for the same thing in different languages. Does that feel fair to each of you?"
+    },
+    {
+      "speaker": "michael",
+      "phase": 3,
+      "isQuestion": false,
+      "gapAfterMs": 300,
+      "delivery": "quiet realization",
+      "text": "Yeah. I didn’t see it like that."
+    },
+    {
+      "speaker": "lucy",
+      "phase": 3,
+      "isQuestion": false,
+      "gapAfterMs": 400,
+      "delivery": "quiet realization",
+      "text": "Me neither. I thought he just didn’t care."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 4,
+      "isQuestion": true,
+      "gapAfterMs": 450,
+      "delivery": "practical, warm",
+      "text": "So here’s one small agreement. When either of you is flooded, you say pause and name a return time. And the first ten minutes after Michael gets home are device-free. Does that feel doable?"
+    },
+    {
+      "speaker": "lucy",
+      "phase": 4,
+      "isQuestion": false,
+      "gapAfterMs": 300,
+      "delivery": "firm, but collaborative",
+      "text": "Ten minutes I can do. But I need him to actually put the phone down."
+    },
+    {
+      "speaker": "michael",
+      "phase": 4,
+      "isQuestion": false,
+      "gapAfterMs": 350,
+      "delivery": "sincere, apologetic",
+      "text": "I can do that. And Lucy... I’m sorry. I didn’t realize the quiet was landing as disappearing."
+    },
+    {
+      "speaker": "lucy",
+      "phase": 4,
+      "isQuestion": false,
+      "gapAfterMs": 400,
+      "delivery": "softening, honest",
+      "text": "I’m sorry too. For coming in hot before you even sat down. I’ll try the pause thing."
+    },
+    {
+      "speaker": "kinora",
+      "phase": 5,
+      "isQuestion": false,
+      "gapAfterMs": 0,
+      "delivery": "warm, closing, professional",
+      "text": "That’s a real agreement, not a resolution of everything. I’ll save it to your summary with one next step: this week, try the five-minute course, Repair After the Storm, together. Thank you both. This was a conversation, not a verdict."
+    }
+  ]
+}

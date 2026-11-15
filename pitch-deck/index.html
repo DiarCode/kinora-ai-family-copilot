@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kinora — Seed 2026</title>
+<style>
+  @font-face {
+    font-family: "Instrument Serif";
+    src: url("assets/fonts/instrument-serif-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Instrument Serif";
+    src: url("assets/fonts/instrument-serif-italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Inter Tight";
+    src: url("assets/fonts/inter-tight-latin.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: block;
+  }
+
+  :root {
+    --ink: #0a0a0b;
+    --paper: #ffffff;
+    --muted: #6d6d76;
+    --faint: #9b9ba4;
+    --lav: #c9b8ff;
+    --lav-2: #8b5cf6;
+    --lav-3: #f2edff;
+    --lav-4: #e4d9ff;
+    --line: #e7e3ee;
+    --gray: #f5f4f7;
+    --serif: "Instrument Serif", Georgia, serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f7f6f9; color: var(--ink); }
+  body {
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  img { display: block; }
+  a { color: inherit; }
+
+  #stage { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+  .slide {
+    position: absolute; inset: 0;
+    background: var(--paper);
+    display: none;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .slide.active { display: block; }
+
+  /* ---------- shared chrome ---------- */
+  .topbar {
+    position: absolute; left: 56px; right: 56px; top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 10px; border-bottom: 1px solid var(--line);
+    z-index: 4;
+  }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .brand-orb {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 28%, #fff 0 12%, #d6c7fe 30%, #8b5cf6 68%, #4c22b8 100%);
+    box-shadow: 0 0 0 1px rgba(76,34,184,.08);
+  }
+  .brand-name { font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  .top-meta { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .top-meta b { color: var(--ink); font-weight: 700; }
+
+  .slide-body { position: absolute; left: 56px; right: 56px; top: 60px; bottom: 46px; z-index: 2; }
+  .footer {
+    position: absolute; left: 56px; right: 56px; bottom: 18px;
+    display: flex; justify-content: flex-start; align-items: flex-end; gap: 24px;
+    font-size: 10.5px; line-height: 1.35; color: #6d6d76; z-index: 4;
+  }
+  .footer .source { max-width: 860px; }
+  .footer .pageno { display: none; }
+  .top-num { color: var(--faint); margin-left: 8px; font-weight: 600; letter-spacing: .1em; }
+  .watermark {
+    position: absolute; right: 20px; bottom: -24px;
+    font-family: var(--serif); font-size: 170px; line-height: 1;
+    color: #f4f0fc; z-index: 0; pointer-events: none; user-select: none;
+  }
+
+  /* ---------- type ---------- */
+  .eyebrow {
+    font-size: 10.5px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 12px;
+  }
+  .eyebrow .dot { color: var(--lav-2); }
+  h1, h2, h3, p { margin: 0; }
+  .headline {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 64px; line-height: 1.0; letter-spacing: -.018em;
+  }
+  .headline.xl { font-size: 74px; }
+  .headline.sm { font-size: 54px; }
+  .lede { font-size: 19px; line-height: 1.38; color: #3f3f47; letter-spacing: -.008em; }
+  .lede.sm { font-size: 16.5px; line-height: 1.42; }
+  .highlight {
+    background-image: linear-gradient(180deg, transparent 56%, var(--lav) 56%, var(--lav) 96%, transparent 96%);
+    padding: 0 .09em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  }
+  .highlight-soft {
+    background-image: linear-gradient(180deg, transparent 58%, var(--lav-4) 58%, var(--lav-4) 96%, transparent 96%);
+    padding: 0 .09em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  }
+  .muted { color: var(--muted); }
+  .tiny { font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+  .kicker { font-family: var(--serif); font-style: italic; font-size: 27px; line-height: 1.15; letter-spacing: -.01em; }
+
+  /* ---------- utility layout ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .split-58 { display: grid; grid-template-columns: 1.32fr .92fr; gap: 56px; }
+  .split-64 { display: grid; grid-template-columns: 1.55fr .85fr; gap: 48px; }
+  .row { display: flex; align-items: center; }
+  .between { justify-content: space-between; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 10px; font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
+    background: #fff; color: #3d3d45; white-space: nowrap;
+  }
+  .pill.lav { background: var(--lav-3); border-color: #ded2ff; color: #4c22b8; }
+  .pill svg { width: 12px; height: 12px; }
+  .tag {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .13em;
+    text-transform: uppercase; color: #6d3ee0;
+  }
+  .rule { border-top: 1px solid var(--line); }
+
+  /* ---------- phones ---------- */
+  .phone {
+    position: relative; width: var(--pw, 230px); aspect-ratio: 430 / 932;
+    background: #0b0b0c; border-radius: 34px; padding: 7px;
+    box-shadow: 0 26px 54px -30px rgba(40, 25, 80, .48), 0 2px 0 rgba(255,255,255,.18) inset;
+    flex: 0 0 auto;
+  }
+  .phone-screen { position: relative; width: 100%; height: 100%; border-radius: 28px; overflow: hidden; background: #fff; }
+  .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .phone-cap { margin-top: 14px; }
+  .phone-cap .n { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+  .phone-cap .d { font-size: 12.5px; line-height: 1.35; color: var(--muted); margin-top: 3px; }
+
+  /* ---------- stat blocks ---------- */
+  .stat-value { font-size: 62px; font-weight: 700; line-height: .9; letter-spacing: -.06em; }
+  .stat-value.sm { font-size: 44px; }
+  .stat-label { font-size: 13.5px; line-height: 1.4; color: #47474f; margin-top: 7px; }
+  .stat-row { padding: 13px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; }
+  .stat-row:last-child { border-bottom: 1px solid var(--line); }
+
+  /* ---------- charts ---------- */
+  .bars-wrap { display: flex; align-items: flex-end; gap: 54px; height: 258px; padding-left: 18px; border-bottom: 1.5px solid var(--ink); }
+  .bar-col { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; width: 128px; }
+  .bar-val { font-size: 52px; font-weight: 700; letter-spacing: -.055em; line-height: .9; margin-bottom: 8px; }
+  .bar { width: 100%; background: var(--lav); border-radius: 2px 2px 0 0; }
+  .bar.dim { background: #e8e4ee; }
+  .bar-label { font-size: 13px; color: #46464e; margin-top: 10px; line-height: 1.3; }
+  .bar-label b { color: var(--ink); font-weight: 700; }
+
+  .market-row { display: grid; grid-template-columns: 156px 1fr 100px; gap: 16px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
+  .market-row:last-child { border-bottom: 1px solid var(--line); }
+  .market-num { font-size: 31px; font-weight: 700; letter-spacing: -.045em; line-height: 1; }
+  .market-num small { font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+  .market-bar { height: 11px; background: var(--lav); width: var(--w); border-radius: 1px; }
+  .market-bar.dim { background: #ece9f2; }
+  .market-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: right; }
+  .market-label { font-size: 12.5px; line-height: 1.35; color: #46464e; }
+  .market-label b { color: var(--ink); }
+
+  .quad { position: relative; height: 392px; border-left: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); margin-left: 26px; }
+  .quad .mid-x { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed #cfc9db; }
+  .quad .mid-y { position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1px dashed #cfc9db; }
+  .quad .shade { position: absolute; right: 0; top: 0; width: 50%; height: 50%; background: var(--lav-3); border: 1px solid var(--lav-4); }
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    font-size: 12px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap;
+    padding: 5px 8px; border: 1px solid var(--line); background: #fff; color: #3f3f47; border-radius: 2px;
+  }
+  .node.kinora { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 700; font-size: 11.5px; padding: 6px 10px; }
+  .axis-x { position: absolute; bottom: 8px; right: 10px; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .axis-origin { position: absolute; left: 8px; bottom: 8px; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .axis-y-low { position: absolute; left: -32px; bottom: 0; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); }
+  .axis-y { position: absolute; left: -32px; top: 0; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); }
+
+  .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .loop-step { border-top: 2px solid var(--ink); padding-top: 11px; }
+  .loop-step .n { font-size: 10px; font-weight: 700; color: var(--lav-2); letter-spacing: .1em; }
+  .loop-step h4 { font-size: 15.5px; font-weight: 700; letter-spacing: -.02em; margin: 5px 0 4px; }
+  .loop-step p { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+  .loop-back { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 8px; font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+
+  .cac-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; }
+  .cac-row > span:first-child { width: 120px; flex: 0 0 120px; }
+  .cac-bar { height: 8px; background: var(--lav); width: var(--w); border-radius: 1px; }
+  .cac-row.paid .cac-bar { background: #d9d5e0; }
+  .cac-val { color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 2px; }
+
+  /* ---------- cards / blocks ---------- */
+  .price-block { border: 1px solid #ded2ff; background: var(--lav-3); padding: 24px 26px 22px; border-radius: 3px; }
+  .price-block .plan { font-size: 9.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #4c22b8; }
+  .price-block .price { font-size: 68px; font-weight: 700; letter-spacing: -.06em; line-height: .95; margin-top: 10px; }
+  .price-block .price small { font-size: 15px; font-weight: 500; letter-spacing: 0; color: #4a4a52; }
+  .price-block .desc { font-size: 13px; line-height: 1.42; color: #3f3f47; margin-top: 10px; }
+  .price-block .fine { font-size: 11px; line-height: 1.4; color: var(--muted); margin-top: 12px; border-top: 1px solid #ded2ff; padding-top: 10px; }
+
+  .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 34px; }
+  .metric { padding: 10px 0; border-top: 1px solid var(--line); }
+  .metric:last-child, .metric:nth-last-child(2) { border-bottom: 1px solid var(--line); }
+  .metric .v { font-size: 37px; font-weight: 700; letter-spacing: -.05em; line-height: 1; }
+  .metric .l { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .metric .s { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+
+  .pillar { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .pillar .ico { width: 18px; height: 18px; color: var(--lav-2); margin-top: 1px; }
+  .pillar h4 { font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
+  .pillar p { font-size: 12.5px; line-height: 1.42; color: var(--muted); margin-top: 3px; }
+
+  .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: start; }
+  .proof-grid .phone { --pw: 127px; border-radius: 23px; padding: 5px; }
+  .proof-grid .phone-screen { border-radius: 19px; }
+  .proof-grid .cap { font-size: 10.5px; line-height: 1.3; color: var(--muted); margin-top: 8px; }
+  .proof-grid .cap b { display: block; color: var(--ink); font-size: 10px; margin-bottom: 1px; }
+
+  .funds { display: flex; height: 13px; width: 100%; margin-top: 10px; }
+  .funds span { height: 100%; border-right: 2px solid #fff; }
+  .funds span:last-child { border-right: 0; }
+  .funds-key { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 9.5px; color: var(--muted); }
+  .funds-key i { display: inline-block; width: 8px; height: 8px; margin-right: 5px; }
+
+  /* ---------- appendix ---------- */
+  .appendix .headline { font-size: 44px; }
+  .table { width: 100%; border-collapse: collapse; font-size: 9.5px; line-height: 1.35; }
+  .table th { text-align: left; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 7px 8px; border-bottom: 1px solid var(--ink); }
+  .table td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table td b { font-weight: 700; }
+  .two-col-list { columns: 2; column-gap: 42px; font-size: 11px; line-height: 1.5; }
+  .two-col-list li { margin-bottom: 7px; break-inside: avoid; }
+
+  /* ---------- presentation UI ---------- */
+  .deck-ui {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+    background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 999px;
+    box-shadow: 0 12px 30px -18px rgba(40,25,80,.35); backdrop-filter: blur(10px);
+    font-size: 11px; color: var(--muted); z-index: 50; opacity: 0; transition: opacity .2s ease;
+  }
+  body:hover .deck-ui, .deck-ui:focus-within { opacity: 1; }
+  .deck-ui button { border: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer; padding: 4px 6px; border-radius: 6px; }
+  .deck-ui button:hover { background: var(--lav-3); }
+  .deck-ui .sep { width: 1px; height: 14px; background: var(--line); }
+  .deck-ui .count { font-variant-numeric: tabular-nums; min-width: 52px; text-align: center; }
+
+  /* ---------- print ---------- */
+  @page { size: 13.333in 7.5in; margin: 0; }
+  @media print {
+    html, body { background: #fff; display: block; overflow: visible; min-height: 0; }
+    #stage { width: auto; height: auto; transform: none !important; }
+    .slide { position: relative; display: block !important; width: 1280px; height: 720px; page-break-after: always; break-after: page; }
+    .slide:last-child { page-break-after: auto; break-after: auto; }
+    .deck-ui { display: none !important; }
+    .watermark { color: #f4f0fc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============================================================ 01 COVER -->
+<section class="slide active" data-title="Cover">
+  <div class="watermark">01</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Seed round · 2026 · <b>Confidential</b><span class="top-num">01</span></div>
+  </div>
+  <div class="slide-body" style="top:78px;">
+    <div style="display:grid; grid-template-columns: 1.12fr .88fr; gap: 36px; align-items:center; height: 100%;">
+      <div>
+        <p class="eyebrow">The family copilot <span class="dot">·</span> for the parent team</p>
+        <h1 class="headline xl" style="margin-top:4px;">Parenting is a<br><span class="highlight">team sport.</span></h1>
+        <p class="lede" style="margin-top:24px; max-width:520px;">Kinora makes sure you play it together. Five minutes a day. Both parents. One shared plan.</p>
+        <div class="row" style="gap:10px; margin-top:28px;">
+          <span class="pill lav">Seed · $2.5M</span>
+          <span class="pill">Working product</span>
+          <span class="pill">US · parents 25–45</span>
+        </div>
+        <div style="margin-top:38px; display:flex; align-items:center; gap:14px;">
+          <div style="width:32px; height:32px; border-radius:50%; background:var(--lav-3); display:grid; place-items:center; font-size:11px; font-weight:700;">DB</div>
+          <div>
+            <div style="font-size:12px; font-weight:700;">Diar Begisbayev</div>
+            <div style="font-size:10px; color:var(--muted);">Founder &amp; CEO · designed and shipped Kinora end-to-end</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+        <div class="phone" style="--pw:260px; position:relative;">
+          <div class="phone-screen"><img src="assets/screens/home-moods.png" alt="Kinora home screen with moods" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">The family copilot for the parent team. Built on family-systems research. Coaching, not therapy.</div>
+    <div class="pageno">01 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 02 PROBLEM -->
+<section class="slide" data-title="Problem">
+  <div class="watermark">02</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>The problem</b><span class="top-num">02</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:940px;">Parents are running a two-person job with <span class="highlight">no shared operating system.</span></h1>
+    <div style="display:grid; grid-template-columns: 1.12fr .88fr; gap:54px; margin-top:28px; align-items:start;">
+      <div>
+        <div class="bars-wrap">
+          <div class="bar-col">
+            <div class="bar-val">48%</div>
+            <div class="bar" style="height:212px;"></div>
+            <div class="bar-label"><b>Parents</b><br>say stress is completely overwhelming most days</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val" style="color:var(--muted);">26%</div>
+            <div class="bar dim" style="height:115px;"></div>
+            <div class="bar-label"><b>Other adults</b><br>same question, no kids at home</div>
+          </div>
+          <div style="padding-bottom:6px; background:#fff; position:relative; z-index:1;">
+            <div style="font-family:var(--serif); font-style:italic; font-size:42px; line-height:.95; letter-spacing:-.02em;">~1.8×</div>
+            <div style="font-size:10px; color:var(--muted); line-height:1.3; margin-top:5px;">more likely to be<br>overwhelmed</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:2px;">
+        <div class="stat-row">
+          <div class="stat-value sm">29%</div>
+          <div class="stat-label">say parenting itself is stressful all or most of the time. Mothers 33%; fathers 24%.<br><span class="muted">Pew Research Center, 2023.</span></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-value sm">~6 yrs</div>
+          <div class="stat-label">is how long couples typically wait before seeking help.<br><span class="muted">Gottman.</span></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-value sm">71%</div>
+          <div class="stat-label">of household mental-load tasks are carried by mothers, vs 45% reported by fathers.<br><span class="muted">European Sociological Review, 2025.</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:22px; max-width:1060px;">The help exists — but it arrives late, costs $100–300 per therapy session, and was never built for the 9pm kitchen table.</p>
+  </div>
+  <div class="footer">
+    <div class="source">Self-reported general stress, not parenting-only: 62% say parenting is harder than expected. Sources: U.S. Surgeon General, <i>Parents Under Pressure</i> (2024), citing APA <i>Stress in America</i> 2023; Pew Research Center (2023); Gottman et al. (43-couple study); European Sociological Review (2025). Full citations in appendix.</div>
+    <div class="pageno">02 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 03 WHY NOW -->
+<section class="slide" data-title="Why now">
+  <div class="watermark">03</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Why now</b><span class="top-num">03</span></div>
+  </div>
+  <div class="slide-body">
+    <div style="display:grid; grid-template-columns: 1.02fr .98fr; gap:64px;">
+      <div>
+        <h1 class="headline">The science exists.<br><span class="highlight">The delivery doesn't.</span></h1>
+        <p class="lede" style="margin-top:22px; max-width:470px;">Parents have never had more advice — or less of it in the moment that matters. The gap is not information. It is a workflow.</p>
+        <div style="margin-top:26px; padding:18px 20px; border-left:2px solid var(--lav-2); background:var(--lav-3); max-width:480px;">
+          <p class="tag">Product principle</p>
+          <p class="kicker" style="margin-top:6px;">The winning product is not a chatbot. It is a workflow that turns evidence into a ten&#8209;second habit.</p>
+        </div>
+        <p class="tiny" style="margin-top:18px; max-width:450px; font-size:11px;"><b style="color:var(--ink);">38%</b> of parents who use online parenting communities say those spaces make them feel <b style="color:var(--ink);">more overwhelmed</b> — not less. <span class="muted">Pew Research Center, 2025.</span></p>
+      </div>
+      <div style="padding-top:4px;">
+        <div class="stat-row" style="grid-template-columns:78px 1fr;">
+          <div class="tag" style="padding-top:5px;">2020</div>
+          <div>
+            <h4 style="font-size:16.5px; font-weight:700; letter-spacing:-.02em;">Online parenting programs work without a clinician.</h4>
+            <p style="font-size:12.5px; line-height:1.42; color:var(--muted); margin-top:4px;">Meta-analysis: <b style="color:var(--ink);">g ≈ 0.32</b> on child behavior problems; no difference between supported and self-directed.</p>
+          </div>
+        </div>
+        <div class="stat-row" style="grid-template-columns:78px 1fr;">
+          <div class="tag" style="padding-top:5px;">2024</div>
+          <div>
+            <h4 style="font-size:16.5px; font-weight:700; letter-spacing:-.02em;">The U.S. Surgeon General makes parental stress a public&#8209;health priority.</h4>
+            <p style="font-size:12.5px; line-height:1.42; color:var(--muted); margin-top:4px;"><i>Parents Under Pressure</i> documents the gap — and a care system that arrives years late.</p>
+          </div>
+        </div>
+        <div class="stat-row" style="grid-template-columns:78px 1fr;">
+          <div class="tag" style="padding-top:5px;">2026</div>
+          <div>
+            <h4 style="font-size:16.5px; font-weight:700; letter-spacing:-.02em;">AI can now hold a structured, two-sided conversation with memory.</h4>
+            <p style="font-size:12.5px; line-height:1.42; color:var(--muted); margin-top:4px;">It can track whose turn it is, remember agreements, and stay neutral — in a 15-minute session. <span class="muted">Kinora build, 2026.</span></p>
+          </div>
+        </div>
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill lav">16% of US adults already use AI for emotional well-being</span>
+          <span class="pill">62% of users trust it</span>
+        </div>
+        <p class="tiny" style="margin-top:8px;">KFF tracking poll, 2026. Users, not all adults.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Sources: meta-analysis of online parenting programs (2020); U.S. Surgeon General, <i>Parents Under Pressure</i> (2024); Kinora financial model (2026); KFF health-information tracking poll (2026). Full citations in appendix.</div>
+    <div class="pageno">03 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 04 SOLUTION -->
+<section class="slide" data-title="Product">
+  <div class="watermark">04</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>The product</b><span class="top-num">04</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline sm">One calm place for the <span class="highlight">parent team.</span></h1>
+    <p class="lede sm" style="margin-top:8px; max-width:760px;">Not another content library. A daily operating system for the family.</p>
+    <div style="display:grid; grid-template-columns: 200px 200px 1fr; gap:28px; margin-top:16px; align-items:start;">
+      <div>
+        <div class="phone" style="--pw:200px;"><div class="phone-screen"><img src="assets/screens/home-moods.png" alt="Daily mood check-in" /></div></div>
+        <div class="phone-cap"><div class="n">Check in.</div><div class="d">Ten seconds each. Private by default.</div></div>
+      </div>
+      <div>
+        <div class="phone" style="--pw:200px;"><div class="phone-screen"><img src="assets/screens/session-room.png" alt="Two-sided coaching session" /></div></div>
+        <div class="phone-cap"><div class="n">Talk.</div><div class="d">Both sides. One agreement.</div></div>
+      </div>
+      <div style="padding-top:4px;">
+        <p class="tag">Also inside</p>
+        <div style="border-top:1px solid var(--line); margin-top:8px; padding-top:10px;">
+          <h4 style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Ask.</h4>
+          <p style="font-size:12.5px; line-height:1.4; color:var(--muted); margin-top:3px;">Answers grounded in your family's memory, with the memories cited.</p>
+        </div>
+        <div style="border-top:1px solid var(--line); margin-top:10px; padding-top:10px;">
+          <h4 style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Understand.</h4>
+          <p style="font-size:12.5px; line-height:1.4; color:var(--muted); margin-top:3px;">An age-banded strengths map for each child, not a label.</p>
+        </div>
+        <div style="border-top:1px solid var(--line); margin-top:10px; padding-top:10px;">
+          <h4 style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Practice.</h4>
+          <p style="font-size:12.5px; line-height:1.4; color:var(--muted); margin-top:3px;">Five-minute courses that end with a real-life rep.</p>
+        </div>
+        <p class="tiny" style="margin-top:12px;">Plus: family profile, voice rooms, scheduling, and Kinora Plus.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Screenshots from the working Kinora app, captured in a 430×932 mobile viewport. Demo family: Michael &amp; Lucy Bennett, and Sophie (6).</div>
+  </div>
+</section>
+
+<!-- ============================================================ 05 TRUST -->
+<section class="slide" data-title="Trust">
+  <div class="watermark">05</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Trust</b><span class="top-num">05</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline sm" style="max-width:1040px;">When it gets hard, Kinora hears both sides<br>— and <span class="highlight">never picks a winner.</span></h1>
+    <div style="display:grid; grid-template-columns: 238px 1fr; gap:44px; margin-top:16px; align-items:start;">
+      <div>
+        <div class="phone" style="--pw:215px;"><div class="phone-screen"><img src="assets/screens/session-voice.png" alt="Kinora voice session, both partners present" /></div></div>
+      </div>
+      <div>
+        <p class="kicker" style="font-size:31px; max-width:640px;">“I'm hearing two experiences that can both be true.”</p>
+        <p class="tiny" style="margin-top:5px;">Kinora, in a live session</p>
+        <div class="pillar" style="margin-top:10px;">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h6a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h6z"/></svg>
+          <div><h4>Evidence-informed, not evidence-washed.</h4><p>Built on Gottman, PREP, Family Foundations, and the online-parenting evidence base — in our own words.</p></div>
+        </div>
+        <div class="pillar">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.9L3 21l1.9-4.6A8.4 8.4 0 1 1 21 11.5z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
+          <div><h4>Anti-sycophancy by design.</h4><p>No verdicts. No one-sided validation. A 2026 <i>Science</i> study (N=2,405) found flattering AI makes repair less likely.</p></div>
+        </div>
+        <div class="pillar">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div><h4>Safety before coaching.</h4><p>Crisis language stops the session and surfaces 988, 911, and the DV hotline immediately.</p></div>
+        </div>
+        <div class="row" style="gap:8px; margin-top:14px; flex-wrap:wrap;">
+          <span class="pill lav">Coaching, not therapy</span>
+          <span class="pill">20-minute pause protocol</span>
+          <span class="pill">No diagnosis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Evidence: Gottman; PREP; Family Foundations RCT; meta-analysis of online parenting programs (2020); Cheng et al., <i>Science</i> (2026); Cummings &amp; Davies, emotional-security theory. Kinora is skills education and coaching, not psychotherapy. Full citations in appendix.</div>
+    <div class="pageno">05 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 06 MARKET -->
+<section class="slide" data-title="Market">
+  <div class="watermark">06</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Market</b><span class="top-num">06</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:980px;">A <span class="highlight">$1.2B entry market</span><br>hiding in the 9pm kitchen table.</h1>
+    <div style="display:grid; grid-template-columns: 1.35fr .85fr; gap:54px; margin-top:18px; align-items:start;">
+      <div>
+        <div class="market-row">
+          <div class="market-num">92.0M</div>
+          <div class="market-label"><b>U.S. adults aged 25–44.</b> The core demographic.<div class="market-bar" style="--w:100%; height:5px; margin-top:4px; background:var(--lav-4);"></div></div>
+          <div class="market-tag">Population</div>
+        </div>
+        <div class="market-row">
+          <div class="market-num">~63M</div>
+          <div class="market-label"><b>Parents living with children.</b> The user pool.<div class="market-bar" style="--w:68%; height:5px; margin-top:4px; background:var(--lav-4);"></div></div>
+          <div class="market-tag">Parents</div>
+        </div>
+        <div class="market-row">
+          <div class="market-num">17M</div>
+          <div class="market-label"><b>Partnered households with kids under 12.</b> The household unit. <span class="muted">Est.</span><div class="market-bar" style="--w:18%; height:5px; margin-top:4px; background:var(--lav);"></div></div>
+          <div class="market-tag">TAM · ~$2.5B</div>
+        </div>
+        <div class="market-row">
+          <div class="market-num">8.2M</div>
+          <div class="market-label"><b>Households where parents are overwhelmed most days.</b> 48% filter.<div class="market-bar" style="--w:9%; height:5px; margin-top:4px; background:var(--lav-2);"></div></div>
+          <div class="market-tag">SAM · ~$1.2B</div>
+        </div>
+        <div class="market-row">
+          <div class="market-num">18K–45K</div>
+          <div class="market-label"><b>Paying households by Year 3.</b> 0.2–0.6% of SAM.<div class="market-bar" style="--w:0.05%; min-width:3px; height:5px; margin-top:4px; background:var(--lav-2);"></div></div>
+          <div class="market-tag">SOM · $2.7–6.7M</div>
+        </div>
+        <p class="tiny" style="margin-top:10px; max-width:700px;">Bottom-up, not a vendor report. 62.7M parents × ~70% aged 25–44 × 73% partnered ≈ 32M people ≈ 16M households; +2.6M expecting ≈ 17M. TAM 17M × $149 = $2.5B. SAM = 48% overwhelmed ≈ 8.2M × $149 = $1.2B. SOM 18K–45K = 0.2–0.6% of SAM. Sources: Census 2024, Pew 2023, CDC 2024, Fortune 2026. Vendor reports are not used.</p>
+      </div>
+      <div style="padding-top:2px;">
+        <div style="border-left:2px solid var(--lav-2); padding-left:18px;">
+          <p class="tag">Proof parents pay</p>
+          <p style="font-size:38px; font-weight:700; letter-spacing:-.05em; line-height:1; margin-top:6px;">$34M</p>
+          <p style="font-size:12px; line-height:1.4; color:var(--muted); margin-top:4px;">Good Inside revenue in 2025, with <b style="color:var(--ink);">100K+ subscribers</b> and ~$340/yr blended revenue per subscriber. Only ~$10.5M raised.</p>
+        </div>
+        <div style="margin-top:20px; border-top:1px solid var(--line); padding-top:14px;">
+          <p class="tag">Start here</p>
+          <p style="font-size:13px; font-weight:600; line-height:1.4; margin-top:5px;"><span style="color:var(--muted); font-weight:500;">Est.</span> 9–11M partnered households with kids under 12 and $100K+ income.</p>
+          <p class="tiny" style="margin-top:4px;">A single household plan at $149/yr is ~0.1% of median household income.</p>
+        </div>
+        <div style="margin-top:18px; border-top:1px solid var(--line); padding-top:14px;">
+          <p class="tag">Expand · roadmap</p>
+          <p style="font-size:13px; font-weight:600; line-height:1.4; margin-top:5px;">Expecting parents · single parents · co-parents across two homes.</p>
+          <p class="tiny" style="margin-top:4px;">The same product, four team modes over time. The parent team is whoever raises the kid with you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Sources: U.S. Census Bureau, 2024 population estimates and CPS ASEC 2024; HHS Surgeon General, <i>Parents Under Pressure</i> (2024); CDC/NCHS births 2024; Fortune (2026). TAM/SAM/SOM are our estimates, with assumptions shown. Full math in appendix.</div>
+    <div class="pageno">06 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 07 BUSINESS MODEL -->
+<section class="slide" data-title="Business model">
+  <div class="watermark">07</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Business model</b><span class="top-num">07</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:980px;">One household price. Two parents.<br><span class="highlight">Less than one therapy session.</span></h1>
+    <div style="display:grid; grid-template-columns: 430px 1fr; gap:54px; margin-top:18px; align-items:start;">
+      <div>
+        <div class="price-block">
+          <p class="plan">Family license</p>
+          <p class="price">$149 <small>/ year</small></p>
+          <p class="desc"><b>Both partners. All courses. Unlimited sessions.</b> One shared family memory, from expecting through age 12.</p>
+          <p class="fine">Also: $24.99 / 4 weeks after a $9.99 intro · $59 gift license · $49 expecting edition.<br><br>Transparent billing: renewal price on the paywall, a reminder 3 days before, one-click cancel.</p>
+        </div>
+        <p class="tiny" style="margin-top:10px;">Anchor: $100–300 per couples-therapy session. About half of Good Inside's $279/yr per person.</p>
+      </div>
+      <div>
+        <div class="metric-grid">
+          <div class="metric"><div class="v">$67</div><div class="l">Blended CAC · annual</div><div class="s">+30% vs monthly; benchmark $30–90</div></div>
+          <div class="metric"><div class="v">$155</div><div class="l">24-month LTV · annual</div><div class="s">80% gross margin, annual plan</div></div>
+          <div class="metric"><div class="v">2.3×</div><div class="l">LTV / CAC · annual</div><div class="s">1.4× on the monthly floor</div></div>
+          <div class="metric"><div class="v">7 mo</div><div class="l">CAC payback · annual</div><div class="s">At 80% gross margin</div></div>
+        </div>
+        <p class="tiny" style="margin-top:8px;">Annual is the default. Monthly floor: $52 CAC · $72 LTV · 1.4×.</p>
+        <div style="margin-top:12px; padding:14px 16px; background:var(--lav-3); border-left:2px solid var(--lav-2);">
+          <p style="font-size:11.5px; line-height:1.45;"><b>Stress-tested:</b> AI 4× and any one assumption a third worse still pay back on the model's contribution-margin basis. At 80% gross margin, the annual anchor is 2.3×. A stop rule caps the downside at ~$90K.</p>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="pill">80% gross margin</span>
+          <span class="pill">AI + hosting ≈ 8% (incl. capped voice)</span>
+          <span class="pill">Ads ≈ 60% of costs</span>
+        </div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:20px; max-width:1080px;">AI is not the business risk. <b>Acquisition and retention are.</b> That is why the product is built as a two-person habit, not a one-person content library.</p>
+  </div>
+  <div class="footer">
+    <div class="source">Kinora cohort model, 2026. Annual anchor at 80% gross margin: $149 upfront, 30% year-1 renewal, $67 CAC, $155 LTV, 2.3×, 7-month payback. Monthly floor: $52 CAC, $72 LTV, 1.4×. AI + hosting ~8%, including a capped voice allowance. Gross-margin bridge in appendix.</div>
+    <div class="pageno">07 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 08 PATH -->
+<section class="slide" data-title="Path">
+  <div class="watermark">08</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>The path</b><span class="top-num">08</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:1000px;">A $29.4M base case.<br>A <span class="highlight">$106.9M optimistic case.</span></h1>
+    <div style="display:grid; grid-template-columns: 1.5fr .8fr; gap:46px; margin-top:12px; align-items:start;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+          <span class="tag">Annual recurring revenue · $M</span>
+          <div style="display:flex; gap:14px; font-size:10px; color:var(--muted);">
+            <span><i style="display:inline-block;width:8px;height:8px;background:var(--ink);margin-right:5px;"></i>Base</span>
+            <span><i style="display:inline-block;width:8px;height:8px;background:var(--lav);margin-right:5px;"></i>Optimistic</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 720 360" style="width:100%; height:auto;" role="img" aria-label="ARR projection: base case $29.4M and optimistic $106.9M by Year 5">
+          <line x1="60" y1="300" x2="700" y2="300" stroke="#0a0a0b" stroke-width="1.2"/>
+          <line x1="60" y1="235" x2="700" y2="235" stroke="#e7e3ee" stroke-width="1"/>
+          <line x1="60" y1="170" x2="700" y2="170" stroke="#e7e3ee" stroke-width="1"/>
+          <line x1="60" y1="105" x2="700" y2="105" stroke="#e7e3ee" stroke-width="1"/>
+          <line x1="60" y1="40" x2="700" y2="40" stroke="#e7e3ee" stroke-width="1"/>
+          <line x1="60" y1="83.3" x2="700" y2="83.3" stroke="#c9b8ff" stroke-width="1.2" stroke-dasharray="4 4"/>
+          <text x="54" y="303" text-anchor="end" font-family="Inter Tight" font-size="12" fill="#6d6d76">0</text>
+          <text x="54" y="238" text-anchor="end" font-family="Inter Tight" font-size="12" fill="#6d6d76">30</text>
+          <text x="54" y="173" text-anchor="end" font-family="Inter Tight" font-size="12" fill="#6d6d76">60</text>
+          <text x="54" y="108" text-anchor="end" font-family="Inter Tight" font-size="12" fill="#6d6d76">90</text>
+          <text x="54" y="43" text-anchor="end" font-family="Inter Tight" font-size="12" fill="#6d6d76">120</text>
+          <text x="64" y="77" font-family="Inter Tight" font-size="12" font-weight="700" fill="#6d3ee0">$100M ARR</text>
+          <path d="M70,300 L70,297.4 L225,283.3 L380,243.9 L535,168.1 L690,68.4 L690,300 Z" fill="#f2edff"/>
+          <polyline points="70,297.4 225,283.3 380,243.9 535,168.1 690,68.4" fill="none" stroke="#c9b8ff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,299.3 225,295.7 380,285.1 535,265.1 690,236.3" fill="none" stroke="#0a0a0b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="690" cy="68.4" r="4.5" fill="#8b5cf6"/>
+          <circle cx="690" cy="236.3" r="4.5" fill="#0a0a0b"/>
+          <text x="682" y="59" text-anchor="end" font-family="Inter Tight" font-size="18" font-weight="700" fill="#0a0a0b">$106.9M</text>
+          <text x="682" y="227" text-anchor="end" font-family="Inter Tight" font-size="18" font-weight="700" fill="#0a0a0b">$29.4M</text>
+          <text x="70" y="324" text-anchor="middle" font-family="Inter Tight" font-size="12" fill="#6d6d76">Y1</text>
+          <text x="225" y="324" text-anchor="middle" font-family="Inter Tight" font-size="12" fill="#6d6d76">Y2</text>
+          <text x="380" y="324" text-anchor="middle" font-family="Inter Tight" font-size="12" fill="#6d6d76">Y3</text>
+          <text x="535" y="324" text-anchor="middle" font-family="Inter Tight" font-size="12" fill="#6d6d76">Y4</text>
+          <text x="690" y="324" text-anchor="middle" font-family="Inter Tight" font-size="12" fill="#6d6d76">Y5</text>
+        </svg>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; border-top:1px solid var(--line); padding-top:8px;">
+          <p style="font-size:10px; color:var(--muted);">Base: Y1 $0.3M · Y3 $6.9M · <b style="color:var(--ink);">Y5 $29.4M</b></p>
+          <p style="font-size:10px; color:var(--muted);">Optimistic: Y1 $1.2M · Y3 $25.9M · <b style="color:var(--ink);">Y5 $106.9M</b></p>
+        </div>
+        <p class="tiny" style="margin-top:7px;">Base case requires ~$9.5M cumulative capital to $29.4M ARR. This seed funds the first $2.5M.</p>
+      </div>
+      <div>
+        <div style="border-top:1px solid var(--line); padding-top:12px;">
+          <p style="font-size:38px; font-weight:700; letter-spacing:-.05em; line-height:1;">460K</p>
+          <p style="font-size:11px; color:var(--muted); margin-top:4px;">paying households to reach $100M ARR at ~$219 blended net/yr (annual + monthly + gifting)</p>
+        </div>
+        <div style="border-top:1px solid var(--line); padding-top:12px; margin-top:14px;">
+          <p style="font-size:38px; font-weight:700; letter-spacing:-.05em; line-height:1;">5.6%</p>
+          <p style="font-size:11px; color:var(--muted); margin-top:4px;">of SAM households (8.2M overwhelmed)</p>
+        </div>
+        <div style="border-top:1px solid var(--line); padding-top:12px; margin-top:14px;">
+          <p style="font-size:38px; font-weight:700; letter-spacing:-.05em; line-height:1;">4.6×</p>
+          <p style="font-size:11px; color:var(--muted); margin-top:4px;">Good Inside's 100K+ subscriber base</p>
+        </div>
+        <div style="border-top:1px solid var(--line); padding-top:12px; margin-top:14px;">
+          <p style="font-size:38px; font-weight:700; letter-spacing:-.05em; line-height:1;">1.3×</p>
+          <p style="font-size:11px; color:var(--muted); margin-top:4px;">English-speaking expansion; upside not in the $106.9M</p>
+        </div>
+        <p class="tiny" style="margin-top:14px;">Levers: the free partner seat, gifting, life-stage continuity, and expansion to Canada, the UK, and Australia.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Kinora five-year cohort model, 2026. Base case uses market-median CAC and retention and needs ~$9.5M cumulative capital; optimistic uses top-quartile retention. The $100M path is the optimistic case, not the base. This is a model, not a forecast. Assumptions and sensitivity tests are in appendix.</div>
+    <div class="pageno">08 / 12</div>
+  </div>
+</section>
+
+
+<!-- ============================================================ 09 COMPETITION -->
+<section class="slide" data-title="Competition">
+  <div class="watermark">09</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Competition</b><span class="top-num">09</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="font-size:50px; max-width:1120px;">Everyone sells content or crisis care. Nobody owns the <span class="highlight">everyday team.</span></h1>
+    <div style="display:grid; grid-template-columns: 1.32fr .78fr; gap:42px; margin-top:14px; align-items:start;">
+      <div>
+        <div class="quad">
+          <div class="shade"></div>
+          <div class="mid-x"></div>
+          <div class="mid-y"></div>
+          <div class="node kinora" style="left:82%; top:17%;">Kinora</div>
+          <div class="node" style="left:28%; top:34%;">Good Inside</div>
+          <div class="node" style="left:20%; top:48%;">ChatGPT</div>
+          <div class="node" style="left:66%; top:54%;">Paired</div>
+          <div class="node" style="left:12%; top:64%;">Calm / Headspace</div>
+          <div class="node" style="left:18%; top:81%;">BetterHelp / Talkspace</div>
+          <div class="node" style="left:42%; top:82%;">Huckleberry</div>
+          <div class="node" style="left:78%; top:80%;">Cozi / Fambot</div>
+          <div class="node" style="left:52%; top:70%;">Joon</div>
+          <div class="axis-x">Whole family →</div>
+          <div class="axis-y">Continuous copilot ↑</div>
+          <div class="axis-origin">Individual</div>
+          <div class="axis-y-low">Point solution</div>
+        </div>
+      </div>
+      <div>
+        <p class="tag">The moat</p>
+        <p class="tag" style="display:block; margin-top:10px; color:var(--muted);">Memory</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:3px;">A shared family memory that compounds with every check-in, session, and course.</p>
+        <p class="tag" style="display:block; margin-top:10px; color:var(--muted);">Switching cost</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:3px;">Two seats make switching costly — once both partners are in.</p>
+        <p class="tag" style="display:block; margin-top:10px; color:var(--muted);">Trust</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:3px;">We publish what we don't claim.</p>
+        <div style="border-top:1px solid var(--line); margin-top:14px; padding-top:12px;">
+          <p class="tag">Why not ChatGPT?</p>
+          <p style="font-size:11.5px; line-height:1.45; color:var(--muted); margin-top:5px;">Our repair summary is built from two people's private answers — which ChatGPT never sees. Plus a structured curriculum, shared history, weekly ritual, and outcome data.</p>
+          <p style="font-size:11.5px; line-height:1.45; color:var(--muted); margin-top:6px;"><b style="color:var(--ink);">The threat is real:</b> OpenAI or Google can add family memory. They cannot easily ship a two-person private workflow, a clinical evidence base, and a trust brand overnight.</p>
+        </div>
+        <div style="border-top:1px solid var(--line); margin-top:12px; padding-top:10px;">
+          <p class="tag">12-month defensibility</p>
+          <p style="font-size:11.5px; line-height:1.45; color:var(--muted); margin-top:4px;">Proprietary content · clinical evidence · daycare/OB-GYN distribution · shared-memory data network.</p>
+        </div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:14px; font-size:19px;">Good Inside is a library. BetterHelp is a crisis. <b>Kinora is the daily operating system.</b></p>
+  </div>
+  <div class="footer">
+    <div class="source">Positions are qualitative, based on public product positioning and pricing as of November 2026. Competitor names are trademarks of their owners; no affiliation or endorsement is implied.</div>
+    <div class="pageno">09 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 10 GTM -->
+<section class="slide" data-title="Go-to-market">
+  <div class="watermark">10</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Go-to-market</b><span class="top-num">10</span></div>
+  </div>
+  <div class="slide-body" style="display:flex; flex-direction:column;">
+    <h1 class="headline" style="max-width:1060px;">Every customer brings a second seat —<br>and a <span class="highlight">third family.</span></h1>
+    <div style="display:grid; grid-template-columns: 1.2fr .8fr; gap:48px; margin-top:18px; align-items:start;">
+      <div>
+        <div class="loop">
+          <div class="loop-step"><div class="n">01</div><h4>One parent starts</h4><p>A three-minute family profile, then one useful next step.</p></div>
+          <div class="loop-step"><div class="n">02</div><h4>Invite the partner</h4><p>A free second seat. Shared memory, shared streak, no nagging.</p></div>
+          <div class="loop-step"><div class="n">03</div><h4>Use it together</h4><p>The daily loop becomes the retention loop: check in → act → talk → practice.</p></div>
+          <div class="loop-step"><div class="n">04</div><h4>Gift or refer</h4><p>Baby showers, parent communities, daycare codes. A new family enters.</p></div>
+        </div>
+        <div class="loop-back"><span>↺ New family: every gift and referral restarts the loop.</span><span>Activation: both partners in 14 days</span></div>
+        <div style="margin-top:20px; padding:14px 16px; background:var(--lav-3); border-left:2px solid var(--lav-2);">
+          <p style="font-size:12.5px; line-height:1.45;"><b>The US has no parent committee.</b> We built one into the app: the parent team. First channels: partner invite, gift, daycare / OB-GYN, plus a <b>Dad License</b> test — <b>not paid social first.</b></p>
+        </div>
+      </div>
+      <div>
+        <div class="row between" style="margin-bottom:6px;">
+          <span class="tag">CAC by channel</span>
+          <span style="font-size:11px; color:var(--muted);">Blended monthly <b style="color:var(--ink);">$52</b></span>
+        </div>
+        <div class="cac-row paid"><span>Meta</span><div class="cac-bar" style="--w:130px"></div><span class="cac-val">$65</span></div>
+        <div class="cac-row paid"><span>Pinterest / YouTube</span><div class="cac-bar" style="--w:110px"></div><span class="cac-val">$55</span></div>
+        <div class="cac-row"><span>Referrals</span><div class="cac-bar" style="--w:50px"></div><span class="cac-val">$25</span></div>
+        <div class="cac-row"><span>Parent communities</span><div class="cac-bar" style="--w:40px"></div><span class="cac-val">$20</span></div>
+        <div class="cac-row"><span>Daycare codes</span><div class="cac-bar" style="--w:30px"></div><span class="cac-val">$15</span></div>
+        <div class="cac-row"><span>Gift a license</span><div class="cac-bar" style="--w:2px"></div><span class="cac-val">$0</span></div>
+        <p class="tiny" style="margin-top:10px;">Paid social is the most expensive channel. The product loop is designed to make it the smallest. Base model assumes 15% organic; the plan is to move it to 30–45% by Year 3.</p>
+        <p class="tiny" style="margin-top:6px;">Mix: Meta 50% · Pinterest/YouTube 10% · referrals 10% · communities 8% · daycare 7% · gifts 5% · other 10% → blended $52.</p>
+      </div>
+    </div>
+    <div style="margin-top:auto; margin-bottom:24px; border-top:1px solid var(--line); padding-top:12px; display:grid; grid-template-columns:repeat(3,1fr); gap:26px;">
+      <div><p class="tag">0–3 months</p><p style="font-size:11.5px; line-height:1.45; margin-top:3px;">100 design partners; the 1,000-family pilot begins. Both-partner activation ≥ 60%.</p></div>
+      <div><p class="tag">3–6 months</p><p style="font-size:11.5px; line-height:1.45; margin-top:3px;">1,000-family pilot; daycare and OB-GYN; gift-a-license at baby showers.</p></div>
+      <div><p class="tag">6–12 months</p><p style="font-size:11.5px; line-height:1.45; margin-top:3px;">Referral loop; paid social only while payback stays under 12 months.</p></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">CAC estimates are planning assumptions, not measured results. Benchmarks: Adapty Q3 2026 median cost per paying user $43–82; RevenueCat 2026. Channel mix and full model in appendix.</div>
+    <div class="pageno">10 / 12</div>
+  </div>
+</section>
+
+<!-- ============================================================ 11 PROOF / MILESTONES -->
+<section class="slide" data-title="Proof">
+  <div class="watermark">11</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Proof &amp; plan</b><span class="top-num">11</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:1020px;">The product is real.<br>The <span class="highlight">next 24 months</span> prove the loop.</h1>
+    <div style="display:grid; grid-template-columns: 1.06fr .94fr; gap:44px; margin-top:14px; align-items:start;">
+      <div style="display:grid; grid-template-columns: 206px 1fr; gap:26px; align-items:start;">
+        <div>
+          <div class="phone" style="--pw:200px;"><div class="phone-screen"><img src="assets/screens/safety-pause.png" alt="Safety pause and crisis resources" /></div></div>
+        </div>
+        <div>
+          <p class="tag">Shipped</p>
+          <div class="metric-grid" style="grid-template-columns:1fr 1fr; gap:0 20px; margin-top:4px;">
+            <div class="metric"><div class="v" style="font-size:32px;">6</div><div class="l">modules</div></div>
+            <div class="metric"><div class="v" style="font-size:32px;">73</div><div class="l">unit tests</div></div>
+            <div class="metric"><div class="v" style="font-size:32px;">29</div><div class="l">e2e tests</div></div>
+            <div class="metric"><div class="v" style="font-size:32px;">3</div><div class="l">age bands</div></div>
+          </div>
+          <p class="tiny" style="margin-top:7px;">Live voice rooms · crisis routing · 430px–desktop · Docker + health check.</p>
+        </div>
+      </div>
+      <div>
+        <p class="tag">What we've de-risked</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:4px;"><b>Product depth.</b> Six modules, three age bands, live voice, and a working safety path.</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:4px;"><b>Clinical framework.</b> Evidence-informed, two-sided, explicitly non-diagnostic.</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:4px;"><b>Unit economics.</b> 2.3× LTV/CAC on the annual anchor; 7-month payback.</p>
+        <div style="border-top:1px solid var(--line); margin-top:12px; padding-top:10px;">
+          <p class="tag">The gating risk</p>
+          <p style="font-size:12.5px; line-height:1.45; margin-top:4px;">Both-partner activation. Retention at scale. Willingness to pay in the US.</p>
+        </div>
+        <div style="margin-top:10px; padding:12px 14px; background:var(--lav-3); border-left:2px solid var(--lav-2);">
+          <p class="tag">The next milestone</p>
+          <p style="font-size:12.5px; font-weight:700; margin-top:3px;">A 1,000-family pilot.</p>
+          <p style="font-size:11.5px; line-height:1.4; margin-top:3px;">Measure partner-invite conversion, 14-day both-partner activation, D30 retention, and WTP.</p>
+          <p style="font-size:11.5px; line-height:1.4; margin-top:4px;"><b>If activation &lt;40%:</b> launch solo-parent mode at $79/yr; keep the team mode as the upsell.</p>
+          <p class="tag" style="margin-top:8px;">Pre-revenue · product shipped</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Screenshots from the working Kinora build, November 2026. Test counts from the repository: 73 Vitest tests and 29 Playwright tests. The 24-month milestones are on the next slide; they are a plan, not results.</div>
+  </div>
+</section>
+
+<!-- ============================================================ 12 TEAM / ASK -->
+<section class="slide" data-title="Team & ask">
+  <div class="watermark">12</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta"><b>Team &amp; ask</b><span class="top-num">12</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline" style="max-width:1020px;">Built by a founder who ships.<br>Backed by a plan to prove it.</h1>
+    <div style="display:grid; grid-template-columns: 1.02fr .98fr; gap:48px; margin-top:16px; align-items:start;">
+      <div>
+        <p class="tag">Founder</p>
+        <div style="display:flex; align-items:center; gap:14px; margin-top:6px;">
+          <div style="width:64px; height:64px; border-radius:50%; background:var(--lav-3); display:grid; place-items:center; font-size:20px; font-weight:700;">DB</div>
+          <div>
+            <p style="font-size:34px; font-weight:700; letter-spacing:-.045em; line-height:1;">Diar Begisbayev</p>
+            <p style="font-size:12px; color:var(--muted); margin-top:4px;">Founder &amp; CEO</p>
+          </div>
+        </div>
+        <p class="lede sm" style="margin-top:12px; max-width:450px;">Designed, built, tested, and shipped Kinora end-to-end: the product, the engine, the safety path, the voice rooms, and the demo that runs today.</p>
+        <p style="font-size:12.5px; line-height:1.45; margin-top:9px; max-width:450px;"><b>Why me:</b> I shipped the hardest part alone. I am hiring the clinical leadership this category requires.</p>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="pill">6 modules</span><span class="pill">73 unit tests</span><span class="pill">29 e2e</span><span class="pill">live voice</span><span class="pill">crisis routing</span>
+        </div>
+        <p class="tiny" style="margin-top:10px;">Hiring: clinical lead, growth lead. Clinical advisory board in formation; counsel opinion before launch.</p>
+      </div>
+      <div>
+        <p class="tag">The ask</p>
+        <p style="font-size:60px; font-weight:700; letter-spacing:-.06em; line-height:.95; margin-top:4px;">$2.5M <span style="font-size:17px; font-weight:500; letter-spacing:0; color:var(--muted);">seed</span></p>
+        <p style="font-size:11.5px; color:var(--muted); margin-top:4px;">24 months · milestones to Series A</p>
+        <div class="funds">
+          <span style="width:35%; background:var(--ink);"></span>
+          <span style="width:30%; background:var(--lav-2);"></span>
+          <span style="width:25%; background:var(--lav);"></span>
+          <span style="width:10%; background:#cfc9db;"></span>
+        </div>
+        <div class="funds-key">
+          <span><i style="background:var(--ink);"></i>Growth 35%</span>
+          <span><i style="background:var(--lav-2);"></i>Product &amp; AI 30%</span>
+          <span><i style="background:var(--lav);"></i>Clinical &amp; content 25%</span>
+          <span><i style="background:#cfc9db;"></i>Ops 10%</span>
+        </div>
+        <p class="tag" style="margin-top:14px;">24-month milestones</p>
+        <div class="metric-grid" style="grid-template-columns:1fr 1fr; gap:0 20px; margin-top:4px;">
+          <div class="metric"><div class="v" style="font-size:28px;">6,000</div><div class="l">paying households</div></div>
+          <div class="metric"><div class="v" style="font-size:28px;">$900K</div><div class="l">ARR at ~$150 ARPU</div></div>
+          <div class="metric"><div class="v" style="font-size:28px;">45%</div><div class="l">D30 retention</div></div>
+          <div class="metric"><div class="v" style="font-size:28px;">60%</div><div class="l">both-partner activation</div></div>
+        </div>
+        <p class="tiny" style="margin-top:8px;">First: the 1,000-family pilot. Paid scale only while payback stays under 12 months.</p>
+      </div>
+    </div>
+    <div style="margin-top:18px; border-top:1px solid var(--line); padding-top:14px; display:flex; justify-content:space-between; align-items:flex-end; gap:24px;">
+      <p style="font-family:var(--serif); font-size:48px; line-height:1; letter-spacing:-.02em;">Every parent deserves a <span class="highlight">teammate.</span></p>
+      <p style="font-size:11px; color:var(--muted); text-align:right;">Diar Begisbayev · Founder &amp; CEO<br>Kinora · Seed 2026</p>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">The round is priced as a seed on a post-money SAFE. Use of funds and milestones are a plan, not a promise. Detailed model, assumptions, and sources in appendix.</div>
+  </div>
+</section>
+
+<!-- ============================================================ APPENDIX A1 EVIDENCE -->
+<section class="slide appendix" data-title="Appendix — Evidence">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A1</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Evidence</b><span class="top-num">A1</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">Evidence, with the caveats attached.</h1>
+    <p class="lede sm" style="margin-top:6px; max-width:760px;">Every number on the deck has a source, a measure, and a limit. This is the table we would want a diligence partner to read.</p>
+    <table class="table" style="margin-top:14px;">
+      <thead><tr><th style="width:32%;">Claim used</th><th style="width:38%;">What it actually measures</th><th style="width:30%;">Source</th></tr></thead>
+      <tbody>
+        <tr><td><b>48% of parents vs 26% of other adults</b> say stress is completely overwhelming most days.</td><td>Self-reported <b>general</b> stress, not parenting-only. APA <i>Stress in America</i> 2023.</td><td>U.S. Surgeon General, <i>Parents Under Pressure</i> (2024)</td></tr>
+        <tr><td><b>29%</b> say parenting itself is stressful all or most of the time.</td><td>Self-report; parents of children under 18. Mothers 33%, fathers 24%.</td><td>Pew Research Center, <i>Parenting in America Today</i> (2023)</td></tr>
+        <tr><td>Couples wait <b>~6 years</b> before seeking help.</td><td>Clinical observation / provider estimate, not a population survey.</td><td>Gottman</td></tr>
+        <tr><td>Mothers report <b>71%</b> of mental-load tasks; fathers report <b>45%</b>.</td><td>Self-reported task responsibility; 3,000 US parents. Shares do not sum to 100%.</td><td><i>European Sociological Review</i> (2025)</td></tr>
+        <tr><td>Online parenting programs: <b>g ≈ 0.32</b>.</td><td>Meta-analysis; moderate effect on child behavior problems; no difference between supported and self-directed.</td><td>Meta-analysis (2020)</td></tr>
+        <tr><td>Family Foundations: <b>d = 0.40–0.98</b> at 5–7 years.</td><td>RCT; <b>small sample and high attrition.</b> Promising, not settled.</td><td>Penn State, Family Foundations</td></tr>
+        <tr><td>One sycophantic AI interaction reduced repair (<b>N=2,405</b>).</td><td>Three experiments; measured willingness to take responsibility and repair a conflict.</td><td>Cheng et al., <i>Science</i> (2026)</td></tr>
+        <tr><td><b>38%</b> of parents in online parenting communities say those spaces make them feel more overwhelmed.</td><td>Self-report; parents of children ≤12 who visit online communities. Not all parents.</td><td>Pew Research Center (2025)</td></tr>
+        <tr><td><b>16%</b> of U.S. adults used AI for emotional well-being; <b>62%</b> of users trust it.</td><td>Self-report; users, not all adults. Privacy concern is high (77%).</td><td>KFF tracking poll (2026)</td></tr>
+        <tr><td>Good Inside: <b>$34M revenue, 100K+ subscribers</b>.</td><td>Private company; revenue reported via Fortune, not audited. ~$340/yr blended revenue per subscriber. Used as a willingness-to-pay signal, not a market-size input.</td><td>Fortune (2026)</td></tr>
+      </tbody>
+    </table>
+    <p class="tiny" style="margin-top:6px;">We do not claim clinical outcomes, diagnosis, or treatment. Kinora is coaching and skills education. Sources: hhs.gov/sites/default/files/parents-under-pressure.pdf · pewresearch.org/social-trends/2023/01/24/parenting-in-america-today · gottman.com/blog/bringing-baby-home-the-research · academic.oup.com/esr/article/42/3/372/8235651 · pubmed.ncbi.nlm.nih.gov/31697102 · prevention.psu.edu/projects/perinatal-intervention-and-long-term-outcomes-family-foundations · pewresearch.org/data-labs/2025/11/12/how-parents-use-online-communities · kff.org/public-opinion/kff-tracking-poll-on-health-information-and-trust-use-of-ai-for-health-information-and-advice · fortune.com/2026/02/27/dr-becky-kennedy-good-inside-revenue-leadership-playbook-for-parenting-34-million-a-year-business · psypost.org/artificial-intelligence-flatters-users-into-bad-behavior</p>
+  </div>
+  <div class="footer">
+    <div class="source">Caveats are part of the claim. Where a study is small or a number is an estimate, the deck says so.</div>
+    <div class="pageno">A1 / A6</div>
+  </div>
+</section>
+
+<!-- ============================================================ APPENDIX A2 MODEL -->
+<section class="slide appendix" data-title="Appendix — Model">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A2</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Model</b><span class="top-num">A2</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">The model, with the assumptions exposed.</h1>
+    <div style="display:grid; grid-template-columns:1.15fr .85fr; gap:44px; margin-top:12px;">
+      <div>
+        <p class="tiny" style="margin-bottom:6px;"><b>Annual anchor (deck headline):</b> $67 CAC · $155 LTV · 2.3× · 7-month payback at 80% GM. The table below is the monthly floor, the company plan, and the stress model.</p>
+        <table class="table">
+          <thead><tr><th>Metric</th><th>Base</th><th>Optimistic</th><th>Stress · one lever −33%</th></tr></thead>
+          <tbody>
+            <tr><td>Monthly floor CAC</td><td><b>$52</b></td><td>$34</td><td>$96 (+60%)</td></tr>
+            <tr><td>Monthly floor 24-mo LTV · 91% contribution</td><td><b>$82</b></td><td>$112</td><td>$77</td></tr>
+            <tr><td>Monthly floor 24-mo LTV · 80% gross margin</td><td><b>$72</b></td><td>$100</td><td>$68</td></tr>
+            <tr><td>Monthly floor LTV/CAC · 91% contribution</td><td><b>1.6×</b></td><td>3.2×</td><td>1.05×</td></tr>
+            <tr><td>Monthly floor LTV/CAC · 80% gross margin</td><td><b>1.4×</b></td><td>2.9×</td><td>0.7×</td></tr>
+            <tr><td>Company ARR · Year 1</td><td><b>$0.3M</b></td><td>$1.2M</td><td>—</td></tr>
+            <tr><td>Company ARR · Year 3</td><td><b>$6.9M</b></td><td>$25.9M</td><td>—</td></tr>
+            <tr><td>Company ARR · Year 5</td><td><b>$29.4M</b></td><td>$106.9M</td><td>—</td></tr>
+            <tr><td>Gross margin</td><td><b>80% deck / 91% model</b></td><td>80% / 91%</td><td>80% / 91%</td></tr>
+          </tbody>
+        </table>
+        <p class="tiny" style="margin-top:8px;">Monthly floor basis (91% contribution margin, AI + infra only). Base: $9.99 intro → $24.99 / 4 weeks; 50% renewal after intro; 14% monthly churn; $52 CAC. Optimistic requires top-quartile retention. Stress: price $19.99, 40% renewal, 20% churn, 6% refunds, 5% organic, $2.00 AI + infra. Annual anchor: $149 upfront, 30% year-1 renewal → $155 LTV / 2.3× at 80% GM; payback 7 months.</p>
+      </div>
+      <div>
+        <p class="tag">What we can honestly say</p>
+        <p style="font-size:12px; line-height:1.45; margin-top:5px;"><b>On the model's 91% contribution basis, any one assumption a third worse</b> than the market median still pays back (LTV/CAC ≥ 1.05). At the deck's 80% gross margin, the annual anchor is 2.3× and the monthly floor is 1.4×; the stress case is below 1, which is why the stop rule exists.</p>
+        <p style="font-size:12px; line-height:1.45; margin-top:6px;"><b>AI and hosting 4×:</b> LTV/CAC 1.20. AI is not the risk.</p>
+        <p style="font-size:12px; line-height:1.45; margin-top:6px;"><b>All seven levers pessimistic:</b> LTV/CAC 0.33 at 91% contribution (0.29 at 80% GM) — every paid customer loses money. Our stop rule caps the loss at ~$90K after a $50K ad test.</p>
+        <p style="font-size:12px; line-height:1.45; margin-top:6px;"><b>Not claimed:</b> “profitable in the worst case.” The company needs funding while it grows because ads are paid before customers pay back.</p>
+        <div style="margin-top:12px; padding:12px 14px; background:var(--lav-3); border-left:2px solid var(--lav-2);">
+          <p style="font-size:11px; line-height:1.45;"><b>The two must-hold levers are the product design:</b> retention at median (two seats, shared memory, weekly ritual) and CAC at median (free partner seat, gifting, referrals).</p>
+        </div>
+        <div style="margin-top:12px; border-top:1px solid var(--line); padding-top:10px;">
+          <p class="tag">Gross-margin bridge · annual plan</p>
+          <p style="font-size:10px; line-height:1.55; margin-top:4px;">Revenue $149.00 − payment fees 6% ($8.94) − refunds 4.5% ($6.71) − AI + infra 8% ($11.92) − support 3% ($4.47) = <b>~$117 gross profit (78.5%)</b>. At 80% GM: LTV $155, CAC $67, 2.3×, 7-month payback. LTV = $119.20 first-year gross profit + 30% renewal × $119.20 = $155. Monthly floor: $72 LTV, $52 CAC, 1.4×.</p>
+          <p style="font-size:10px; line-height:1.55; margin-top:5px;"><b>Voice:</b> capped at 10 min/month; ~$0.30–0.60 per 10 min; included in the AI + infra 8% (base $1.20, conservative $2.00 per household per month). <b>36-month LTV:</b> ~$105 monthly / ~$166 annual at 30% renewal (est.).</p>
+        </div>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:10px;">Benchmarks: RevenueCat <i>State of Subscription Apps</i> 2025/2026 (median trial-to-paid 34.8%, annual year-1 retention 44.1%); Adapty Q3 2026 (median cost per paying user $43–82); FunnelFox 2026 (web-funnel LTV). Model scripts: <span style="font-family:monospace;">research/model/</span>.</p>
+  </div>
+  <div class="footer">
+    <div class="source">This is a model, not a forecast. Full 128-combination stress test and sensitivity tables are in <span style="font-family:monospace;">research/docs/09-stress-test.md</span>.</div>
+    <div class="pageno">A2 / A6</div>
+  </div>
+</section>
+
+<!-- ============================================================ APPENDIX A3 SAFETY -->
+<section class="slide appendix" data-title="Appendix — Safety & regulation">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A3</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Safety &amp; regulation</b><span class="top-num">A3</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">Trust is architecture, not a disclaimer.</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:32px; margin-top:14px;">
+      <div>
+        <p class="tag">Today</p>
+        <ul style="margin:8px 0 0 16px; padding:0; font-size:10.5px; line-height:1.5; color:#3f3f47;">
+          <li>Coaching and skills education — explicitly not therapy.</li>
+          <li>Two-sided sessions; no verdicts, no one-sided validation.</li>
+          <li>Crisis language stops the session: 988, 911, DV hotline.</li>
+          <li>Minimal child data: first name, birth date, observations.</li>
+          <li>No child accounts under 13. No ad-tech sharing.</li>
+          <li>Private moods by default; shared only when chosen.</li>
+          <li>Safety screening runs before generation.</li>
+        </ul>
+        <p class="tag" style="margin-top:10px;">Before launch</p>
+        <ul style="margin:6px 0 0 16px; padding:0; font-size:10.5px; line-height:1.5; color:#3f3f47;">
+          <li>One-click delete; short retention; data-flow map.</li>
+          <li>Counsel opinion on the coaching classification.</li>
+          <li>Clinical advisory board named; clinical lead hired.</li>
+          <li>Crisis false-negative testing and human escalation protocol.</li>
+          <li>COPPA parental-consent review; no child data in model training.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="tag">What we don’t claim</p>
+        <ul style="margin:8px 0 0 16px; padding:0; font-size:10.5px; line-height:1.5; color:#3f3f47;">
+          <li>“Therapy,” “treatment,” “diagnosis,” “cure.”</li>
+          <li>“Clinically proven” or “science-backed outcomes.”</li>
+          <li>“HIPAA-compliant” — we are not a covered entity.</li>
+          <li>“Prevents divorce” or “saves marriages.”</li>
+          <li>“AI therapist” or “replaces a clinician.”</li>
+          <li>“Detects emotions” or mental states.</li>
+          <li>“COPPA-compliant” without full amended-rule compliance.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="tag">The regulatory map</p>
+        <ul style="margin:8px 0 0 16px; padding:0; font-size:10.5px; line-height:1.5; color:#3f3f47;">
+          <li><b>Illinois WOPR Act</b> (2025): only licensed professionals may provide therapy; AI may not directly interact in “therapeutic communication”; self-help/education exception; up to $10K/violation.</li>
+          <li><b>Nevada AB 406</b> (2025): AI may not provide professional mental/behavioral care; self-help exception; up to $15K/violation.</li>
+          <li><b>~20 state laws</b> across 16 states in 2026; more in 2027.</li>
+          <li><b>FTC 6(b)</b> inquiry into companion chatbots; state AG warning.</li>
+          <li><b>COPPA amended rule</b> full compliance April 22, 2026.</li>
+          <li><b>FTC Health Breach Notification Rule</b> covers health apps.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:8px;">Legal position: coaching and skills education under the self-help/education exception. Before launch: counsel opinion, clinical advisory board, COPPA review, crisis false-negative testing, and a human escalation protocol. State-by-state launch sequencing. This page is not legal advice.</p>
+  </div>
+  <div class="footer">
+    <div class="source">Sources: Illinois Public Act 104-0054; Nevada AB 406; Baker Botts state-law survey (Oct 2026); FTC 6(b) resolution; Federal Register COPPA rule (2025); FTC HBNR (2024).</div>
+    <div class="pageno">A3 / A6</div>
+  </div>
+</section>
+
+
+<!-- ============================================================ APPENDIX A4 MARKET MATH -->
+<section class="slide appendix" data-title="Appendix — Market math">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A4</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Market math</b><span class="top-num">A4</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">The arithmetic behind the market slide.</h1>
+    <div style="display:grid; grid-template-columns:1.15fr .85fr; gap:44px; margin-top:14px;">
+      <div>
+        <table class="table">
+          <thead><tr><th>Layer</th><th>Arithmetic</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><b>TAM</b></td><td>17M partnered households with kids under 12 × $149/yr</td><td><b>~$2.5B</b> ceiling</td></tr>
+            <tr><td><b>SAM</b></td><td>8.2M households overwhelmed most days (48% filter) × $149/yr</td><td><b>~$1.2B</b></td></tr>
+            <tr><td><b>SOM (Y3)</b></td><td>18K–45K paying households × $149/yr</td><td><b>$2.7–6.7M ARR</b></td></tr>
+            <tr><td><b>$100M path</b></td><td>460K paying households × ~$219 blended net/yr</td><td><b>5.6%</b> of SAM households</td></tr>
+          </tbody>
+        </table>
+        <p class="tiny" style="margin-top:8px;">Assumptions: 17M partnered households with kids under 12 and householder 25–44 (derived from Census/Pew; our estimate). 48% overwhelmed filter from the Surgeon General/APA 2023. $149 annual plan. No international expansion; no B2B2C. The TAM is a ceiling, not current revenue. Vendor reports are order-of-magnitude and are not used for the math.</p>
+      </div>
+      <div>
+        <p class="tag">Sensitivity: SAM at different filters</p>
+        <table class="table" style="margin-top:6px;">
+          <thead><tr><th>Filter</th><th>SAM at $149/yr</th></tr></thead>
+          <tbody>
+            <tr><td>30% willing to pay (conservative)</td><td><b>$760M</b></td></tr>
+            <tr><td>48% overwhelmed (base)</td><td><b>$1.2B</b></td></tr>
+            <tr><td>60% overwhelmed</td><td><b>$1.5B</b></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px; border-top:1px solid var(--line); padding-top:12px;">
+          <p class="tag">Reality check</p>
+          <p style="font-size:11px; line-height:1.45; margin-top:5px;">Good Inside: <b>$34M</b> revenue, <b>100K+</b> subscribers, ~$340/yr blended revenue per subscriber, ~$10.5M raised. It took ~5 years. Our base case reaches <b>$29.4M ARR</b> in Year 5.</p>
+        </div>
+        <div style="margin-top:12px; border-top:1px solid var(--line); padding-top:12px;">
+          <p class="tag">What would change the math</p>
+          <p style="font-size:11px; line-height:1.45; margin-top:5px;">A filter below 30% turns this into a smaller, community-led business. That is why the 1,000-family pilot measures willingness to pay before paid scale. The $100M path needs 5.6% of the overwhelmed SAM.</p>
+        </div>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:9px;">Sources: U.S. Census Bureau, 2024 population estimates and CPS ASEC 2024; HHS Surgeon General (2024); Pew Research Center (2023); CDC/NCHS births (2024); Fortune (2026). Full source URLs in <span style="font-family:monospace;">research/docs/03-us-market.md</span>.</p>
+  </div>
+  <div class="footer">
+    <div class="source">We show our arithmetic, not a borrowed TAM. The 48% overwhelmed filter is sourced; the 17M household count is an estimate. Both are on this page.</div>
+  </div>
+</section>
+
+<!-- ============================================================ APPENDIX A5 GALLERY -->
+<section class="slide appendix" data-title="Appendix — Screens">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A5</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Screens</b><span class="top-num">A5</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">The full product, screen by screen.</h1>
+    <p class="lede sm" style="margin-top:5px;">Captured from the working app in a 430×932 mobile viewport. No mockups, no dead ends.</p>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:12px; align-items:start;">
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/home-moods.png" alt="Home mood check-in" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Home</b>Mood check-in</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/assistant-memory.png" alt="Memory-aware assistant" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Assistant</b>Family memory</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/session-room.png" alt="Two-sided text session" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Session</b>Both sides</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/session-voice.png" alt="Voice session" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Voice</b>Turn-based room</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/session-summary.png" alt="Session summary" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Summary</b>Agreements</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/child-question.png" alt="Child discovery question" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Discovery</b>Age-banded</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/child-profile.png" alt="Child strengths map" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Strengths</b>Not a label</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/course-slide.png" alt="Course slide" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Courses</b>5-minute practice</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/course-quiz.png" alt="Course quiz" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Quiz</b>One rep</div></div>
+      <div><div class="phone" style="--pw:105px;"><div class="phone-screen"><img src="assets/screens/safety-pause.png" alt="Safety pause and resources" /></div></div><div class="cap" style="font-size:9px; color:var(--muted); margin-top:6px;"><b style="display:block; color:var(--ink);">Safety</b>Crisis routing</div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Also in the build: family profile sheet, Kinora Plus pricing, scheduling, two-phone LiveKit room, landing page. Screenshots: Kinora build, November 2026. Demo family: Michael &amp; Lucy Bennett, Sophie (6). No real family data.</div>
+    <div class="pageno">A5 / A6</div>
+  </div>
+</section>
+
+<!-- ============================================================ APPENDIX A6 ARCHITECTURE -->
+<section class="slide appendix" data-title="Appendix — Architecture">
+  <div class="watermark" style="font-size:120px; bottom:-8px;">A6</div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-orb"></span><span class="brand-name">Kinora</span></div>
+    <div class="top-meta">Appendix <b>· Architecture</b><span class="top-num">A6</span></div>
+  </div>
+  <div class="slide-body">
+    <h1 class="headline">What is real today — and what comes next.</h1>
+    <div style="display:grid; grid-template-columns:1.1fr .9fr; gap:44px; margin-top:14px;">
+      <div>
+        <p class="tag">Shipped</p>
+        <ul style="margin:7px 0 0 16px; padding:0; font-size:11px; line-height:1.55; color:#3f3f47;">
+          <li>Next.js 16 App Router, React 19, TypeScript, Tailwind 4, shadcn/ui.</li>
+          <li>File store + Supabase JSONB adapter; typed API routes with Zod.</li>
+          <li>Deterministic Kinora Engine + optional AI SDK 7 LLM with fallback.</li>
+          <li>LiveKit token route and two-phone voice room.</li>
+          <li>Six modules: moods, assistant, sessions, children, courses, profile.</li>
+          <li>Safety screening before coaching; crisis routing in both surfaces.</li>
+          <li>73 Vitest tests, 29 Playwright tests, Docker image, health check.</li>
+        </ul>
+        <div style="margin-top:12px; padding:12px 14px; background:var(--gray); border-left:2px solid var(--lav-2);">
+          <p style="font-size:11px; line-height:1.45;"><b>The demo is the product, not a mockup.</b> The flow in this deck runs end-to-end: mood → next action → session → summary → saved agreements → child map → course quiz.</p>
+        </div>
+      </div>
+      <div>
+        <p class="tag">Next 24 months</p>
+        <ul style="margin:7px 0 0 16px; padding:0; font-size:11px; line-height:1.55; color:#3f3f47;">
+          <li>Native iOS and Android clients; push notifications.</li>
+          <li>Auth, multi-tenancy, family invitations, per-family RLS.</li>
+          <li>Stripe billing and transparent renewal flows.</li>
+          <li>Clinical advisory board and content review.</li>
+          <li>Independent outcomes study with pre-registered measures.</li>
+          <li>Employer / payer pilots as a second channel (not the wedge).</li>
+          <li>Spanish localization after US English product-market fit.</li>
+        </ul>
+        <div style="margin-top:12px; border-top:1px solid var(--line); padding-top:10px;">
+          <p class="tag">Architecture, in one line</p>
+          <p style="font-size:11px; line-height:1.5; margin-top:4px;">Client (Next.js) → typed API → family store → Kinora Engine / LLM → LiveKit voice. Safety runs before generation; memory is cited; nothing is a black box.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="gap:8px; margin-top:14px; flex-wrap:wrap;">
+      <span class="pill">Next.js 16</span><span class="pill">React 19</span><span class="pill">TypeScript</span><span class="pill">Supabase</span><span class="pill">AI SDK 7</span><span class="pill">LiveKit</span><span class="pill">Docker</span>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">Repository: working Next.js application with unit, integration, and Playwright coverage. Architecture detail and screenshots are available in the data room.</div>
+    <div class="pageno">A6 / A6</div>
+  </div>
+</section>
+
+<!-- SLIDES_CONTINUE -->
+
+</div>
+<div class="deck-ui" aria-label="Presentation controls">
+  <button type="button" data-prev aria-label="Previous slide">←</button>
+  <span class="count">01 / 12</span>
+  <button type="button" data-next aria-label="Next slide">→</button>
+  <span class="sep"></span>
+  <button type="button" data-print>Print / PDF</button>
+  <button type="button" data-full>Fullscreen</button>
+</div>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let index = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.replace('#',''), 10) || 1) - 1));
+  function show(i) {
+    index = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, n) => s.classList.toggle('active', n === index));
+    location.hash = String(index + 1);
+    const count = document.querySelector('.deck-ui .count');
+    if (count) count.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  }
+  function fit() {
+    const stage = document.getElementById('stage');
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720, 1.25);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  addEventListener('resize', fit);
+  addEventListener('hashchange', () => show((parseInt(location.hash.replace('#',''), 10) || 1) - 1));
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); show(index + 1); }
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); show(index - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+    if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
+    if (e.key.toLowerCase() === 'p') { window.print(); }
+  });
+  document.querySelector('[data-prev]')?.addEventListener('click', () => show(index - 1));
+  document.querySelector('[data-next]')?.addEventListener('click', () => show(index + 1));
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+  document.querySelector('[data-full]')?.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else document.documentElement.requestFullscreen?.();
+  });
+  show(index);
+  fit();
+</script>
+</body>
+</html>
