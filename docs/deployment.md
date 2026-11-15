@@ -1,6 +1,7 @@
 # Deployment
 
 **Production: https://kinora-swart.vercel.app** — project `begisbayev7-1091/kinora`.
+Push-to-deploy verified 2026-11-15 (GitHub Actions run 43686979177 → Vercel Ready in 26s).
 
 Kinora runs on **Vercel** (Next.js 16, Node.js 24) with:
 
