@@ -1,79 +1,79 @@
 1
-00:00:01,200 --> 00:00:13,107
+00:00:01,200 --> 00:00:11,577
 Kinora: Thank you both for making this time. I’m Kinora. I’m here to understand the loop you’re stuck in, not to decide who’s right. Michael, what happened last night?
 
 2
-00:00:13,257 --> 00:00:23,164
+00:00:11,727 --> 00:00:20,200
 Michael: I walked in after a ten-hour day, and before I even put my bag down, Lucy was already on me about my phone. I hadn’t even sat down.
 
 3
-00:00:23,264 --> 00:00:30,385
+00:00:20,300 --> 00:00:26,498
 Kinora: I’m listening for the moment, not the verdict. Lucy, what did that look like from your side?
 
 4
-00:00:30,535 --> 00:00:41,514
+00:00:26,648 --> 00:00:37,211
 Lucy: I’d been with the kids since six. He walks in, sits down, starts scrolling, like the house isn’t on fire. I don’t need a helper. I need a partner.
 
 5
-00:00:41,664 --> 00:00:49,071
+00:00:37,361 --> 00:00:44,488
 Kinora: Two experiences can both be true. Underneath the frustration, Michael, what were you protecting?
 
 6
-00:00:49,221 --> 00:00:59,485
+00:00:44,638 --> 00:00:52,368
 Michael: My one quiet minute. Work has been brutal. If I stop moving, it all catches up with me. And when she comes at me like that, I shut down.
 
 7
-00:00:59,585 --> 00:01:04,564
+00:00:52,468 --> 00:00:56,948
 Kinora: Lucy, when Michael shuts down, what do you wish he understood?
 
 8
-00:01:04,714 --> 00:01:15,478
+00:00:57,098 --> 00:01:07,336
 Lucy: That I disappear too. I’m holding all of it, and when he goes quiet, I’m suddenly alone with it. I get loud because quiet doesn’t get me heard.
 
 9
-00:01:15,628 --> 00:01:23,607
+00:01:07,486 --> 00:01:14,845
 Kinora: What did each of you need in that moment that you didn’t get? Lucy, start with the need under the anger.
 
 10
-00:01:23,757 --> 00:01:29,307
+00:01:14,995 --> 00:01:21,518
 Lucy: To be seen. Not fixed, seen. And to know I’m not doing this by myself.
 
 11
-00:01:29,407 --> 00:01:36,243
+00:01:21,618 --> 00:01:27,259
 Kinora: Michael, when Lucy says she doesn’t want to do this by herself, what happens inside you?
 
 12
-00:01:36,393 --> 00:01:47,943
+00:01:27,409 --> 00:01:35,882
 Michael: I feel like I’m failing. No matter how hard I work, I’m still the one letting her down. I need her to know I’m not checked out. I’m just running on empty.
 
 13
-00:01:48,093 --> 00:02:01,357
+00:01:36,032 --> 00:01:48,128
 Kinora: I hear a shared need: rest, recognition, and a teammate who assumes good intent. You’re both asking for the same thing in different languages. Does that feel fair to each of you?
 
 14
-00:02:01,457 --> 00:02:04,293
+00:01:48,228 --> 00:01:50,850
 Michael: Yeah. I didn’t see it like that.
 
 15
-00:02:04,293 --> 00:02:07,843
+00:01:50,850 --> 00:01:54,494
 Lucy: Me neither. I thought he just didn’t care.
 
 16
-00:02:07,943 --> 00:02:21,993
+00:01:54,594 --> 00:02:08,408
 Kinora: So here’s one small agreement. When either of you is flooded, you say pause and name a return time. And the first ten minutes after Michael gets home are device-free. Does that feel doable?
 
 17
-00:02:22,143 --> 00:02:27,550
+00:02:08,558 --> 00:02:12,759
 Lucy: Ten minutes I can do. But I need him to actually put the phone down.
 
 18
-00:02:27,550 --> 00:02:34,743
+00:02:12,759 --> 00:02:19,328
 Michael: I can do that. And Lucy... I’m sorry. I didn’t realize the quiet was landing as disappearing.
 
 19
-00:02:34,793 --> 00:02:41,343
+00:02:19,378 --> 00:02:25,297
 Lucy: I’m sorry too. For coming in hot before you even sat down. I’ll try the pause thing.
 
 20
-00:02:41,443 --> 00:02:58,407
+00:02:25,397 --> 00:02:41,372
 Kinora: That’s a real agreement, not a resolution of everything. I’ll save it to your summary with one next step: this week, try the five-minute course, Repair After the Storm, together. Thank you both. This was a conversation, not a verdict.

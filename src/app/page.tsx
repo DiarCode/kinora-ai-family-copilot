@@ -369,6 +369,45 @@ export default function LandingPage() {
               </Link>
             </div>
 
+            <div
+              id="demo-video"
+              className="mt-14 scroll-mt-24 overflow-hidden rounded-[28px] border border-white/10 bg-[#1b0e36] shadow-[0_50px_120px_-60px_rgba(46,21,96,0.65)]"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4 sm:px-7">
+                <div className="flex items-center gap-3">
+                  <span className="h-2 w-2 rounded-full bg-kinora-400" />
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/80">
+                    Session demo
+                  </p>
+                </div>
+                <p className="text-[12px] font-medium text-white/45">
+                  2:48 · Simulated · Sound on
+                </p>
+              </div>
+              <video
+                className="aspect-video w-full bg-black"
+                width={1920}
+                height={1080}
+                controls
+                playsInline
+                preload="metadata"
+                poster="/images/kinora-session-demo-poster.jpg"
+                aria-label="Kinora couples session demo with Michael and Lucy"
+              >
+                <source
+                  src="/videos/kinora-session-demo.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p className="mt-4 max-w-[900px] text-[13px] leading-normal text-neutral-500">
+              A full simulated session: Michael and Lucy start with the same
+              fight and leave with one small agreement, with Kinora asking one
+              question at a time. Kinora is coaching and skills practice, not
+              therapy.
+            </p>
+
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {useCases.map((item) => (
                 <UseCaseCard key={item.id} item={item} />

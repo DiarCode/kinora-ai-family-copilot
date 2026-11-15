@@ -42,12 +42,19 @@ if (!KEY) {
 const headers = { "xi-api-key": KEY, "Content-Type": "application/json" };
 
 async function api(pathname, init) {
-  const res = await fetch(`${API}${pathname}`, { headers, ...init });
-  if (!res.ok) {
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(`${API}${pathname}`, { headers, ...init });
+    if (res.ok) return res;
     const body = await res.text();
+    const retryable = res.status === 429 || res.status >= 500;
+    if (retryable && attempt < 3) {
+      const waitMs = 1500 * 2 ** attempt;
+      console.warn(`  ${res.status} from ElevenLabs — retrying in ${waitMs}ms…`);
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      continue;
+    }
     throw new Error(`${init?.method || "GET"} ${pathname} → ${res.status}\n${body}`);
   }
-  return res;
 }
 
 if (process.argv.includes("--voices")) {
