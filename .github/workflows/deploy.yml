@@ -1,0 +1,56 @@
+name: Deploy Production
+
+# Push-to-deploy to Vercel. Requires the repository secret VERCEL_TOKEN
+# (https://vercel.com/account/tokens). The project/org IDs are public
+# identifiers, not credentials.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_1twcQXMg7dnkN8xfq69TAdhk
+  VERCEL_PROJECT_ID: prj_jPQ98AYqfW05JlOz9iabssU3dRJJ
+
+jobs:
+  deploy:
+    name: Build, test, deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+
+      - name: Check for deploy token
+        id: token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::notice::VERCEL_TOKEN is not configured; skipping deploy."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to Vercel (production)
+        if: steps.token.outputs.present == 'true'
+        run: npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

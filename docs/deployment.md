@@ -78,21 +78,32 @@ dashboard) because values are captured at build time.
 ## 3. CI/CD pipeline
 
 ```
-feature branch ──► pull request
-                     ├─ GitHub Actions: typecheck, lint, vitest, Playwright
-                     └─ Vercel: Preview deployment + preview URL on the PR
-main merge/push ──► GitHub Actions: same checks
-                     └─ Vercel: Production deployment (aliased domain)
+pull request ──► GitHub Actions: typecheck, lint, vitest, Playwright
+main push    ──► GitHub Actions Deploy: same checks, then `vercel deploy --prod`
+                 └─ Vercel builds remotely and updates the production domain
 ```
 
 - **CI** — `.github/workflows/ci.yml`
   - `quality`: `npm ci`, `npm run typecheck`, `npm run lint`, `npm test`
-  - `e2e`: production build + Playwright with the deterministic file backend
-- **CD** — Vercel Git integration. No deploy token or GitHub secret is needed;
-  Vercel builds from the repo itself.
-- **Fast path** — after the one-time link, `vercel --prod` deploys the working
-  tree directly (useful for hotfixes and for CI environments that already have
-  `VERCEL_TOKEN`).
+  - `e2e`: Playwright (its config builds and starts the app with the
+    deterministic file backend)
+- **CD** — `.github/workflows/deploy.yml`. On every push to `main` it re-runs
+  typecheck/lint/unit tests and then deploys with the Vercel CLI. It needs the
+  repository secret `VERCEL_TOKEN`; project and org IDs are in the workflow.
+  Without the secret the deploy step is skipped with a notice, so CI stays green.
+- **Setting the token without pasting it into chat**:
+
+  ```bash
+  # create a token at https://vercel.com/account/tokens (name: kinora-github-actions)
+  ./scripts/set-vercel-token.sh     # hidden prompt, uses your stored git credential
+  ```
+
+- **Alternative** — Vercel's native Git integration. Connect GitHub at
+  <https://vercel.com/account/settings/connections>, then run
+  `vercel git connect https://github.com/DiarCode/kinora-ai-family-copilot.git`.
+  Vercel then builds on every push with no token. If you enable it, disable the
+  Actions deploy job to avoid two production builds per commit.
+- **Fast path** — `vercel --prod` deploys the working tree directly.
 
 Promote or roll back from **Vercel → Project → Deployments**: any earlier
 production deployment can be re-promoted instantly.
