@@ -5,13 +5,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   AudioLines,
-  BookOpen,
   Check,
   ChevronDown,
-  Cloud,
-  Compass,
-  MessageCircle,
-  ScanFace,
   ShieldCheck,
 } from "lucide-react";
 import { KinoraLogo } from "@/components/brand/kinora-logo";
@@ -29,15 +24,6 @@ export const metadata: Metadata = {
   title: { absolute: "Kinora: the family copilot for parents" },
   description:
     "Kinora gives both parents one calm place to check in, talk through hard moments, and leave with one small next step. Five minutes at a time.",
-};
-
-const useCaseIcons: Record<UseCase["icon"], typeof Cloud> = {
-  mood: Cloud,
-  compass: Compass,
-  chat: MessageCircle,
-  voice: AudioLines,
-  child: ScanFace,
-  book: BookOpen,
 };
 
 const container = "mx-auto max-w-[1200px] px-6 lg:px-8";
@@ -87,38 +73,33 @@ function Nav() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[15px] font-medium text-kinora-800">{children}</p>
+    <p className="text-[15px] font-medium text-kinora-800 ">{children}</p>
   );
 }
 
 function UseCaseCard({ item }: { item: UseCase }) {
-  const Icon = useCaseIcons[item.icon];
   return (
-    <article className="flex h-full flex-col rounded-[20px] border border-neutral-200 bg-white p-7 lg:p-8">
-      <span className="grid h-11 w-11 place-items-center rounded-[14px] bg-neutral-100 text-kinora-800">
-        <Icon className="h-5 w-5" strokeWidth={1.8} />
-      </span>
-      <h3 className="mt-6 text-[20px] font-semibold leading-normal text-neutral-950 sm:text-[21px]">
-        {item.title}
-      </h3>
-      <p className="mt-3 text-[15px] leading-normal text-neutral-800">
-        {item.description}
-      </p>
-      <ul className="mt-6 space-y-2.5 border-t border-neutral-200 pt-5">
-        {item.bullets.map((bullet) => (
-          <li
-            key={bullet}
-            className="flex gap-2.5 text-[15px] leading-normal text-neutral-800"
-          >
-            <Check
-              className="mt-0.5 h-4 w-4 shrink-0 text-kinora-800"
-              strokeWidth={2.2}
-            />
-            {bullet}
-          </li>
-        ))}
-      </ul>
-    </article>
+    <Link
+      href={item.href}
+      className="group overflow-hidden rounded-[20px] border border-neutral-200 bg-white transition-colors hover:border-neutral-300"
+    >
+      <div className="aspect-[4/3] overflow-hidden border-b border-neutral-200 bg-neutral-100">
+        <Image
+          src={item.image}
+          alt={item.imageAlt}
+          width={780}
+          height={585}
+          sizes="(min-width: 1024px) 370px, (min-width: 768px) 45vw, 100vw"
+          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+        />
+      </div>
+      <div className="flex items-center justify-between gap-4 p-6">
+        <h3 className="text-[19px] font-semibold leading-normal text-neutral-950">
+          {item.title}
+        </h3>
+        <ArrowUpRight className="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-kinora-800" />
+      </div>
+    </Link>
   );
 }
 
@@ -169,7 +150,7 @@ function SessionMock() {
       </div>
 
       <div className="mt-5 rounded-[18px] border border-kinora-200 bg-kinora-50 p-4">
-        <p className="text-[13px] font-semibold text-kinora-800">
+        <p className="text-[15px] font-medium text-kinora-800">
           Proposed agreement
         </p>
         <p className="mt-1.5 text-[15px] leading-normal text-neutral-800">
@@ -269,9 +250,12 @@ export default function LandingPage() {
         <section className="pt-20 pb-24 sm:pt-28 lg:pt-32 lg:pb-36">
           <div className={container}>
             <div className="mx-auto max-w-[860px] text-center">
-              <h1 className="text-balance text-[38px] font-semibold leading-normal text-neutral-950 sm:text-[54px] lg:text-[68px]">
+              <h1
+                className="text-balance text-[38px] font-semibold text-neutral-950 sm:text-[54px] lg:text-[68px]"
+                style={{ lineHeight: 0.95, letterSpacing: "-0.045em" }}
+              >
                 Parenting is a team sport.
-                <span className="mt-1 block text-kinora-800">
+                <span className="block text-kinora-800">
                   Kinora keeps you on the same page.
                 </span>
               </h1>
@@ -368,9 +352,12 @@ export default function LandingPage() {
                   <span className="whitespace-nowrap text-kinora-800">One calmer team.</span>
                 </h2>
                 <p className={`${bodyCopy} mt-6 max-w-[620px]`}>
-                  Everything supports the same loop: notice how the team is
-                  doing, choose one small next step, practice it, and keep what
-                  worked. No leaderboards. No parent scores. No feed.
+                  One shared loop: notice how the team is doing, choose one
+                  small next step, practice it, and keep what worked. No
+                  leaderboards. No parent scores. No feed.
+                </p>
+                <p className="mt-4 text-[13px] text-neutral-500">
+                  Real screens from the demo workspace.
                 </p>
               </div>
               <Link
@@ -395,7 +382,7 @@ export default function LandingPage() {
             <SectionLabel>A day with Kinora</SectionLabel>
             <h2 className={`${sectionHeading} mt-5`}>
               <span className="block">Ten seconds at breakfast.</span>
-              <span className="mt-1 block text-kinora-800">
+              <span className="block text-kinora-800">
                 Twenty minutes after bedtime.
               </span>
             </h2>

@@ -125,7 +125,7 @@ function LiveKitSheet({
       open={open}
       onOpenChange={onOpenChange}
       title="Voice room"
-      description="One phone between you. Kinora listens to the room and follows who is speaking."
+      description="Join the shared phone."
     >
       {status === "idle" ? (
         <div className="space-y-3">
@@ -301,7 +301,14 @@ export function SessionRoom({ session }: { session: Session }) {
     refresh,
     applyPayload,
   } = useFamily();
-  const livekit = useLiveKitRoom();
+  const livekit = useLiveKitRoom({
+    onSpeakerDetected: (speaker) => {
+      if (session.mode !== "voice") return;
+      if (!session.participants.includes(speaker.identity)) return;
+      activeSpeakerRef.current = speaker.identity;
+      setSpeakerId(speaker.identity);
+    },
+  });
   const agentPresent = livekit.agentPresent;
   const livekitStatus = livekit.status;
   const livekitTranscriptions = livekit.transcriptions;
@@ -368,7 +375,6 @@ export function SessionRoom({ session }: { session: Session }) {
     // Voice mode follows the agent's live speaker detection instead.
     if (session.mode !== "text") return;
     if (lastTurn?.speakerId === "kinora" && lastTurn.invite) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSpeakerId(lastTurn.invite);
     }
   }, [lastTurn?.id, lastTurn?.invite, lastTurn?.speakerId, session.mode]);
@@ -773,7 +779,7 @@ export function SessionRoom({ session }: { session: Session }) {
           </div>
         ) : null}
         <div className="rounded-2xl bg-white p-1.5 shadow-[0_22px_55px_-32px_rgba(50,30,100,0.4)]">
-          <div className="rounded-[17px] bg-[#f3f3f3] p-2">
+          <div className="rounded-2xl bg-[#f3f3f3] p-2">
             {speech.listening ? (
               <div className="mb-1.5 flex items-center gap-2 rounded-lg bg-white/70 px-2 py-1 text-[13.5px] text-kinora-900">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#e0576f]" />
@@ -828,7 +834,7 @@ export function SessionRoom({ session }: { session: Session }) {
                 onClick={() => void send()}
                 disabled={!text.trim() || thinking}
                 aria-label="Send message"
-                className="focus-ring mb-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[11px] bg-ink text-white shadow-[0_8px_18px_-12px_rgba(120,70,230,0.85)] disabled:opacity-50"
+                className="focus-ring mb-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-ink text-white shadow-[0_8px_18px_-12px_rgba(120,70,230,0.85)] disabled:opacity-50"
               >
                 {thinking ? (
                   <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-white/50 border-t-white" />
@@ -881,7 +887,7 @@ export function SessionRoom({ session }: { session: Session }) {
         open={moreOpen}
         onOpenChange={setMoreOpen}
         title="Session safety & info"
-        description="A coaching session, not therapy or crisis care."
+        description="Session safety and information."
       >
         <div className="space-y-2">
           <div className="rounded-2xl border border-[#f0dfe3] bg-[#fff8f9] p-3">
@@ -939,7 +945,7 @@ function EndSheet({
       open={open}
       onOpenChange={onOpenChange}
       title="End and reflect?"
-      description="Kinora will write a neutral summary, one next step, and the agreements you can save."
+      description="Kinora will write a neutral summary and the agreements you can save."
     >
       <div className="rounded-2xl border border-[#e9e1fb] bg-[#faf7ff] p-3 text-[13.5px] leading-relaxed text-ink-soft">
         {hasParentTurns

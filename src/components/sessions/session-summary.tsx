@@ -134,7 +134,7 @@ export function SessionSummary({ session }: { session: Session }) {
           </div>
         ) : null}
 
-        <section className="relative overflow-hidden rounded-[28px] border border-white bg-gradient-to-br from-[#f4edff] via-[#fbf9ff] to-white p-4 text-center">
+        <section className="relative overflow-hidden rounded-3xl border border-white bg-gradient-to-br from-[#f4edff] via-[#fbf9ff] to-white p-4 text-center">
           <div className="absolute -top-8 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-[#d6c7fe]/50 blur-2xl" />
           <div className="relative mx-auto flex justify-center">
             <KinoraOrb size={90} animated label="Kinora summary" />
@@ -176,7 +176,7 @@ export function SessionSummary({ session }: { session: Session }) {
                   disabled={saved}
                   aria-pressed={checked}
                   className={cn(
-                    "flex w-full items-start gap-2.5 rounded-[14px] border p-2.5 text-left transition",
+                    "flex w-full items-start gap-2.5 rounded-2xl border p-2.5 text-left transition",
                     checked
                       ? "border-[#ddccfb] bg-[#faf7ff]"
                       : "border-[#ece8f4] bg-white",
@@ -235,7 +235,7 @@ export function SessionSummary({ session }: { session: Session }) {
             href={`/app/courses/${course.slug}`}
             className="group mt-3 flex items-center gap-3 rounded-2xl border border-[#ece8f4] bg-white p-4 transition hover:-translate-y-0.5"
           >
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[12px] bg-[#f1eaff] text-kinora-800">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#f1eaff] text-kinora-800">
               <BookOpen className="h-4 w-4" />
             </span>
             <span className="min-w-0 flex-1">

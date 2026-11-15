@@ -41,7 +41,7 @@ export default function ChildrenPage() {
       }
     >
       <div className="px-5 pb-8">
-        <section className="relative overflow-hidden rounded-[28px] border border-white bg-gradient-to-br from-[#fff8e8] via-[#fbf9ff] to-white p-4">
+        <section className="relative overflow-hidden rounded-3xl border border-white bg-gradient-to-br from-[#fff8e8] via-[#fbf9ff] to-white p-4">
           <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-[#f5b942]/20 blur-2xl" />
           <div className="relative flex items-start gap-3">
             <KinoraOrb size={76} animated label="Kinora child discovery" />
@@ -122,7 +122,7 @@ export default function ChildrenPage() {
                         ) : null}
                       </div>
                     ) : (
-                      <div className="mt-2.5 flex items-center justify-between rounded-[12px] bg-[#fbf8ff] px-2.5 py-2">
+                      <div className="mt-2.5 flex items-center justify-between rounded-xl bg-[#fbf8ff] px-2.5 py-2">
                         <p className="text-[13px] text-[#7b6a91]">
                           Start a three-minute discovery
                         </p>

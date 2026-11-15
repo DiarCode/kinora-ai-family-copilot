@@ -32,83 +32,53 @@ export const problemStats: Stat[] = [
 export type UseCase = {
   id: string;
   title: string;
-  description: string;
-  bullets: string[];
-  icon: "mood" | "compass" | "chat" | "voice" | "child" | "book";
+  image: string;
+  imageAlt: string;
+  href: string;
 };
 
 export const useCases: UseCase[] = [
   {
     id: "mood",
     title: "Know how the team is doing.",
-    description:
-      "Each parent taps Sunny, Cloudy, or Rainy. Kinora keeps a private timeline and turns it into a useful forecast, not a score.",
-    bullets: [
-      "Ten seconds per parent, per day",
-      "A private 7-day and 30-day timeline",
-      "Share only what you choose",
-    ],
-    icon: "mood",
+    image: "/images/app/mood-check-in.webp",
+    imageAlt: "Mood check-in card with Michael and Lucy's daily weather",
+    href: "/app",
   },
   {
     id: "next",
     title: "Always know the next small step.",
-    description:
-      "Kinora reads the family's real state and suggests one useful action: a ten-minute reset, a bedtime handoff, a three-minute discovery.",
-    bullets: [
-      "Opens the page that does the work",
-      "Matched to moods and what is in progress",
-      "One suggestion, not a feed",
-    ],
-    icon: "compass",
+    image: "/images/app/next-actions.webp",
+    imageAlt: "Three suggested next actions for the family",
+    href: "/app",
   },
   {
     id: "assistant",
     title: "Ask about your family, not the internet.",
-    description:
-      "Ask about bedtime, a school decision, or what happened in your last session. Kinora answers with your family's context.",
-    bullets: [
-      "Grounded in your check-ins and sessions",
-      "Warm, brief, and never a verdict",
-      "Shows which memories it used",
-    ],
-    icon: "chat",
+    image: "/images/app/assistant.webp",
+    imageAlt: "Kinora assistant answering a question about the last session",
+    href: "/app/assistant",
   },
   {
     id: "sessions",
     title: "Talk it through, together.",
-    description:
-      "Kinora leads a structured voice or text conversation, hears both sides, and ends with one agreement you can keep.",
-    bullets: [
-      "Voice or text, on one phone or two",
-      "A built-in pause when things get heated",
-      "A written summary and a next course",
-    ],
-    icon: "voice",
+    image: "/images/app/session-summary.webp",
+    imageAlt: "Session summary for the bedtime handoff",
+    href: "/app/sessions",
   },
   {
     id: "children",
     title: "See the child in front of you.",
-    description:
-      "Age-banded activities turn what you already notice into a strengths map: what comes naturally, where to make room, and what to try this week.",
-    bullets: [
-      "Picture choices for ages 2 to 5, richer scenarios for 6 to 13",
-      "A conversation starter, never a diagnosis",
-      "Retake every 90 days as they grow",
-    ],
-    icon: "child",
+    image: "/images/app/strengths-map.webp",
+    imageAlt: "Sophie's strengths map in the children module",
+    href: "/app/children",
   },
   {
     id: "courses",
     title: "Practice in five-minute reps.",
-    description:
-      "Short courses on repair, emotion coaching, fair load, and screens. Each ends with a quiz and one real-life thing to try.",
-    bullets: [
-      "Six evidence-grounded courses",
-      "Suggested after a session or inside the assistant",
-      "Pick up exactly where you left off",
-    ],
-    icon: "book",
+    image: "/images/app/courses.webp",
+    imageAlt: "Courses screen with progress and categories",
+    href: "/app/courses",
   },
 ];
 

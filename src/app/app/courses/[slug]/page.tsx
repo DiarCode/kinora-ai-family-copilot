@@ -170,7 +170,7 @@ export default function CoursePage() {
                 }}
               >
                 <span
-                  className="grid h-11 w-11 place-items-center rounded-[15px] text-white shadow-lg"
+                  className="grid h-11 w-11 place-items-center rounded-xl text-white shadow-lg"
                   style={{ backgroundColor: course.accent }}
                 >
                   <Icon className="h-5 w-5" strokeWidth={1.9} />

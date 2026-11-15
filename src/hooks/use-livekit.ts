@@ -31,6 +31,10 @@ export type DetectedSpeaker = {
   name: string;
 };
 
+export type LiveKitRoomOptions = {
+  onSpeakerDetected?: (speaker: DetectedSpeaker) => void;
+};
+
 type LiveKitRoomLike = {
   connect: (url: string, token: string) => Promise<void>;
   disconnect: () => void;
@@ -76,7 +80,7 @@ const isAgentParticipant = (participant: {
   kind?: number;
 }) => participant.identity.startsWith("agent-") || participant.kind === 4;
 
-export function useLiveKitRoom() {
+export function useLiveKitRoom(options: LiveKitRoomOptions = {}) {
   const [status, setStatus] = useState<
     "idle" | "connecting" | "connected" | "error"
   >("idle");
@@ -91,11 +95,16 @@ export function useLiveKitRoom() {
   const [audioBlocked, setAudioBlocked] = useState(false);
   const [detectedSpeaker, setDetectedSpeaker] =
     useState<DetectedSpeaker | null>(null);
+  const onSpeakerDetectedRef = useRef(options.onSpeakerDetected);
   const roomRef = useRef<LiveKitRoomLike | null>(null);
   const roomNameRef = useRef<string | null>(null);
   const audioElements = useRef<HTMLMediaElement[]>([]);
   const mutedRef = useRef(false);
   const [localIdentity, setLocalIdentity] = useState<string | null>(null);
+
+  useEffect(() => {
+    onSpeakerDetectedRef.current = options.onSpeakerDetected;
+  }, [options.onSpeakerDetected]);
 
   const syncParticipants = useCallback((room: LiveKitRoomLike) => {
     const remote = Array.from(room.remoteParticipants.values()).map((item) => ({
@@ -315,11 +324,13 @@ export function useLiveKitRoom() {
               message.identity &&
               message.name
             ) {
-              setDetectedSpeaker({
+              const speaker = {
                 speakerId: message.speakerId ?? "",
                 identity: message.identity,
                 name: message.name,
-              });
+              };
+              setDetectedSpeaker(speaker);
+              onSpeakerDetectedRef.current?.(speaker);
             }
           } catch {
             // Ignore non-Kinora data packets.

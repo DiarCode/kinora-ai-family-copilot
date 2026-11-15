@@ -1,0 +1,254 @@
+{
+  "title": "The evening handoff",
+  "subtitle": "Couples session · 2 participants",
+  "problem": "We keep having the same fight about work and phones. Michael says Lucy takes over; Lucy says Michael disappears after work.",
+  "introMs": 1200,
+  "tailMs": 2200,
+  "endCardMs": 4000,
+  "totalMs": 184607,
+  "sharedNeed": "Rest, recognition, and a teammate who assumes good intent.",
+  "agreement": [
+    "When either of you is flooded: say “pause” and name a return time.",
+    "The first ten minutes after Michael gets home are device-free."
+  ],
+  "journey": {
+    "michael": [
+      "Frustrated",
+      "Guarded",
+      "Honest",
+      "Seen",
+      "Sorry",
+      "Heard"
+    ],
+    "lucy": [
+      "Hurt",
+      "Angry",
+      "Honest",
+      "Seen",
+      "Softening",
+      "Heard"
+    ]
+  },
+  "lines": [
+    {
+      "index": 1,
+      "speaker": "kinora",
+      "phaseIndex": 0,
+      "isQuestion": true,
+      "text": "Thank you both for making this time. I’m Kinora. I’m here to understand the loop you’re stuck in, not to decide who’s right. Michael, what happened last night?",
+      "audioFile": null,
+      "durationMs": 11607,
+      "startMs": 1200,
+      "endMs": 12807
+    },
+    {
+      "index": 2,
+      "speaker": "michael",
+      "phaseIndex": 0,
+      "isQuestion": false,
+      "text": "I walked in after a ten-hour day, and before I even put my bag down, Lucy was already on me about my phone. I hadn’t even sat down.",
+      "audioFile": null,
+      "durationMs": 9607,
+      "startMs": 13257,
+      "endMs": 22864
+    },
+    {
+      "index": 3,
+      "speaker": "kinora",
+      "phaseIndex": 0,
+      "isQuestion": true,
+      "text": "I’m listening for the moment, not the verdict. Lucy, what did that look like from your side?",
+      "audioFile": null,
+      "durationMs": 6821,
+      "startMs": 23264,
+      "endMs": 30085
+    },
+    {
+      "index": 4,
+      "speaker": "lucy",
+      "phaseIndex": 0,
+      "isQuestion": false,
+      "text": "I’d been with the kids since six. He walks in, sits down, starts scrolling, like the house isn’t on fire. I don’t need a helper. I need a partner.",
+      "audioFile": null,
+      "durationMs": 10679,
+      "startMs": 30535,
+      "endMs": 41214
+    },
+    {
+      "index": 5,
+      "speaker": "kinora",
+      "phaseIndex": 1,
+      "isQuestion": true,
+      "text": "Two experiences can both be true. Underneath the frustration, Michael, what were you protecting?",
+      "audioFile": null,
+      "durationMs": 7107,
+      "startMs": 41664,
+      "endMs": 48771
+    },
+    {
+      "index": 6,
+      "speaker": "michael",
+      "phaseIndex": 1,
+      "isQuestion": false,
+      "text": "My one quiet minute. Work has been brutal. If I stop moving, it all catches up with me. And when she comes at me like that, I shut down.",
+      "audioFile": null,
+      "durationMs": 9964,
+      "startMs": 49221,
+      "endMs": 59185
+    },
+    {
+      "index": 7,
+      "speaker": "kinora",
+      "phaseIndex": 1,
+      "isQuestion": true,
+      "text": "Lucy, when Michael shuts down, what do you wish he understood?",
+      "audioFile": null,
+      "durationMs": 4679,
+      "startMs": 59585,
+      "endMs": 64264
+    },
+    {
+      "index": 8,
+      "speaker": "lucy",
+      "phaseIndex": 1,
+      "isQuestion": false,
+      "text": "That I disappear too. I’m holding all of it, and when he goes quiet, I’m suddenly alone with it. I get loud because quiet doesn’t get me heard.",
+      "audioFile": null,
+      "durationMs": 10464,
+      "startMs": 64714,
+      "endMs": 75178
+    },
+    {
+      "index": 9,
+      "speaker": "kinora",
+      "phaseIndex": 2,
+      "isQuestion": true,
+      "text": "What did each of you need in that moment that you didn’t get? Lucy, start with the need under the anger.",
+      "audioFile": null,
+      "durationMs": 7679,
+      "startMs": 75628,
+      "endMs": 83307
+    },
+    {
+      "index": 10,
+      "speaker": "lucy",
+      "phaseIndex": 2,
+      "isQuestion": false,
+      "text": "To be seen. Not fixed, seen. And to know I’m not doing this by myself.",
+      "audioFile": null,
+      "durationMs": 5250,
+      "startMs": 83757,
+      "endMs": 89007
+    },
+    {
+      "index": 11,
+      "speaker": "kinora",
+      "phaseIndex": 2,
+      "isQuestion": true,
+      "text": "Michael, when Lucy says she doesn’t want to do this by herself, what happens inside you?",
+      "audioFile": null,
+      "durationMs": 6536,
+      "startMs": 89407,
+      "endMs": 95943
+    },
+    {
+      "index": 12,
+      "speaker": "michael",
+      "phaseIndex": 2,
+      "isQuestion": false,
+      "text": "I feel like I’m failing. No matter how hard I work, I’m still the one letting her down. I need her to know I’m not checked out. I’m just running on empty.",
+      "audioFile": null,
+      "durationMs": 11250,
+      "startMs": 96393,
+      "endMs": 107643
+    },
+    {
+      "index": 13,
+      "speaker": "kinora",
+      "phaseIndex": 3,
+      "isQuestion": true,
+      "text": "I hear a shared need: rest, recognition, and a teammate who assumes good intent. You’re both asking for the same thing in different languages. Does that feel fair to each of you?",
+      "audioFile": null,
+      "durationMs": 12964,
+      "startMs": 108093,
+      "endMs": 121057
+    },
+    {
+      "index": 14,
+      "speaker": "michael",
+      "phaseIndex": 3,
+      "isQuestion": false,
+      "text": "Yeah. I didn’t see it like that.",
+      "audioFile": null,
+      "durationMs": 2536,
+      "startMs": 121457,
+      "endMs": 123993
+    },
+    {
+      "index": 15,
+      "speaker": "lucy",
+      "phaseIndex": 3,
+      "isQuestion": false,
+      "text": "Me neither. I thought he just didn’t care.",
+      "audioFile": null,
+      "durationMs": 3250,
+      "startMs": 124293,
+      "endMs": 127543
+    },
+    {
+      "index": 16,
+      "speaker": "kinora",
+      "phaseIndex": 4,
+      "isQuestion": true,
+      "text": "So here’s one small agreement. When either of you is flooded, you say pause and name a return time. And the first ten minutes after Michael gets home are device-free. Does that feel doable?",
+      "audioFile": null,
+      "durationMs": 13750,
+      "startMs": 127943,
+      "endMs": 141693
+    },
+    {
+      "index": 17,
+      "speaker": "lucy",
+      "phaseIndex": 4,
+      "isQuestion": false,
+      "text": "Ten minutes I can do. But I need him to actually put the phone down.",
+      "audioFile": null,
+      "durationMs": 5107,
+      "startMs": 142143,
+      "endMs": 147250
+    },
+    {
+      "index": 18,
+      "speaker": "michael",
+      "phaseIndex": 4,
+      "isQuestion": false,
+      "text": "I can do that. And Lucy... I’m sorry. I didn’t realize the quiet was landing as disappearing.",
+      "audioFile": null,
+      "durationMs": 6893,
+      "startMs": 147550,
+      "endMs": 154443
+    },
+    {
+      "index": 19,
+      "speaker": "lucy",
+      "phaseIndex": 4,
+      "isQuestion": false,
+      "text": "I’m sorry too. For coming in hot before you even sat down. I’ll try the pause thing.",
+      "audioFile": null,
+      "durationMs": 6250,
+      "startMs": 154793,
+      "endMs": 161043
+    },
+    {
+      "index": 20,
+      "speaker": "kinora",
+      "phaseIndex": 5,
+      "isQuestion": false,
+      "text": "That’s a real agreement, not a resolution of everything. I’ll save it to your summary with one next step: this week, try the five-minute course, Repair After the Storm, together. Thank you both. This was a conversation, not a verdict.",
+      "audioFile": null,
+      "durationMs": 16964,
+      "startMs": 161443,
+      "endMs": 178407
+    }
+  ]
+}

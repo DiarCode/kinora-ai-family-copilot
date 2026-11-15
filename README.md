@@ -34,8 +34,8 @@ The visual language follows `reference_design.webp`: lavender canvas, soft `#F3F
 ## The two-minute demo
 
 1. Open `/` and read the research-backed story. **Get Started** opens the app as Michael.
-2. On **Home**, tap **Sunny** for Michael and **Cloudy** for Lucy. The 7-day timeline updates, and the "Next best" list recalculates from real family state.
-3. Tap **Ask Kinora** → ask *"What did we agree in our last session?"* Kinora answers with the saved bedtime agreement and shows which memories it used.
+2. On **Home**, tap **Sunny** for Michael and **Cloudy** for Lucy. The 7-day timeline updates, and the suggested next steps recalculate from real family state.
+3. Tap **Ask Kinora** → ask *"What did we agree in our last session?"* Kinora answers with the saved bedtime agreement.
 4. Open **Sessions** → **Start now** → choose a starter problem → **Text** → **Start now**. Michael describes the bedtime handoff, Kinora invites Lucy, Lucy answers, and Kinora reflects the need under the frustration.
 5. Tap **End** → **End and reflect**. Review the neutral summary, save the two agreements, and open the recommended course.
 6. Open **Children** → **Sophie** → **Start the discovery**. Answer ten picture-first questions; the profile becomes *The Creative Director* with strengths, stretch zones, interests, career seeds, and things to try. Reload — it persists.
@@ -57,7 +57,7 @@ Everything above is a real interaction backed by the server store. There are no 
 
 ### 2. Family home (`/app`)
 
-- **Moods**: Michael and Lucy each choose **Sunny / Cloudy / Rainy** once per day. The choice is editable and persists. A 7-day timeline shows both parents side by side; a 14-day history sheet shows counts and a gentle pattern note. Moods are private by default.
+- **Moods**: Michael and Lucy each choose **Sunny / Cloudy / Rainy** once per day. The choice is editable and persists, with a clean 7-day timeline for both parents.
 - **Next best actions**: a transparent rule engine uses today's moods, the last session, stale/missing child profiles, course progress, and upcoming sessions. Every action deep-links to the page that does the work. Priority order includes:
   - rainy-day reset for each parent,
   - a team check-in when both parents are low,
@@ -66,14 +66,12 @@ Everything above is a real interaction backed by the server store. There are no 
   - prepare for an upcoming session or book one after a 7-day gap,
   - "bank the good day" when both parents are sunny.
 - **Quick actions** to the assistant, sessions, the first child, and courses.
-- **Family snapshot** with the child profile status, course progress, and the latest session summary.
-- **Composer** to ask Kinora anything, with emoji, booking, and quick-action paths.
-- **Kinora Plus** demo banner and sheet (activates a local demo plan; no payment is taken).
+- The home surface is deliberately focused: greeting, mood check-in, quick actions, and today's suggested next steps.
 
 ### 3. Individual assistant (`/app/assistant`)
 
 - Context-aware replies built from real state: today's moods, 7-day mood history, child profiles, the latest session and agreements, and course progress.
-- **Memory is visible**: every answer cites the memories it used (`Today's moods`, `Sophie (not yet mapped)`, `Last session: The bedtime handoff`, …).
+- Answers stay grounded in real family state without exposing model names, token counts, or developer labels.
 - **Anti-triangulation**: one-sided venting about a partner is acknowledged, then redirected to a two-sided session instead of being validated into a "who is right" answer.
 - **Safety routing**: crisis and abuse language stops coaching and surfaces 988, 911, and the DV hotline.
 - A live thinking state, copy / regenerate / share / save-for-later actions, new conversation, transcript copy, and persistent threads.
@@ -85,9 +83,9 @@ Everything above is a real interaction backed by the server store. There are no 
 - Start immediately or schedule with the problem written down.
 - Voice or text mode; both partners are included.
 - Kinora leads a structured, evidence-informed arc: **story → emotion → needs → common ground → agreement → close**. It alternates speakers, references what was just said, and never declares a winner.
-- The one-device room knows whose turn it is from Kinora's invitation; a parent can override the speaker. The **Two phones** sheet joins a real LiveKit room, where each device's identity is the speaker identity.
-- In voice mode, the zero-setup path uses a soft female system voice and the Web Speech API for listening, with a text fallback at every step. The **Two phones** path uses the real LiveKit room and deployed `kinora-agent` (AssemblyAI STT → Ollama → Cartesia TTS), and posts final captions back into the session.
-- A written summary includes **what we heard** (with both parents' quotes), **two agreements**, a **next step**, and a **recommended course**. Agreements can be saved to family memory.
+- One phone sits between the parents. The deployed `kinora-agent` listens to the shared microphone, uses speaker diarization to tell Michael and Lucy apart, highlights the detected parent, and tags the transcript. The parent buttons are a manual correction, not the primary signal.
+- Voice mode opens the shared-phone LiveKit meeting automatically. The deployed `kinora-agent` handles STT, the Ollama turn, and Cartesia speech, then posts final captions back into the session. If LiveKit is unavailable, the room shows an honest retry state and the text composer remains usable.
+- A written summary includes **what we heard** (with both parents' quotes), **two agreements**, and a **recommended course**. Agreements can be saved to family memory.
 - A 20-minute pause and repair framing comes from the flooding/repair research; the session is explicitly **coaching, not therapy or mediation**.
 - Crisis/abuse language pauses the session and shows the real resources instead of continuing.
 
@@ -178,7 +176,7 @@ src/
   utils/supabase/            server, client, and session-refresh helpers
   proxy.ts                   Next 16 proxy: global API limit + auth refresh
   hooks/
-    use-speech.ts            Web Speech recognition + Kinora TTS
+    use-speech.ts            Web Speech dictation for text mode
     use-livekit.ts           room join, dispatch, participants, captions,
                              speaker-select data packets
 agents/kinora-voice/         LiveKit Agents Python worker + Dockerfile + tests
@@ -192,7 +190,7 @@ docs/superpowers/specs/      product + technical design
 
 - The app layout fetches a `FamilyState` snapshot on the server and passes it to a client `FamilyProvider`.
 - Mutations go through typed API routes, which validate with Zod and run through a serialized repository (`read → mutate → atomic write`).
-- The provider applies the returned state, so the UI is always showing persisted state. Sessions poll while active so two phones converge.
+- The provider applies the returned state, so the UI is always showing persisted state. Sessions poll while active so the shared phone stays in sync.
 - The default backend is a JSON file at `.data/kinora.json` (or `KINORA_DATA_DIR`). It is atomic and safe for a single instance. Supabase can replace it without changing API routes.
 
 ### Seeded state
@@ -210,7 +208,7 @@ docs/superpowers/specs/      product + technical design
 
 The default `KINORA_AI_MODE=engine` uses a deterministic, context-aware engine:
 
-- The assistant routes intents (mood, child, session, course, conflict, plan) and writes answers from real state, with explicit memory labels. It has no network dependency and cannot be slow or unavailable.
+- The assistant routes intents (mood, child, session, course, conflict, plan) and writes answers from real state with grounded family context. It has no network dependency and cannot be slow or unavailable.
 - The psychologist is a small state machine with a phase-aware coaching arc, speaker tracking, domain-specific reflections/agreements, and a neutral summary.
 - Safety screening runs before coaching in both surfaces.
 
@@ -233,22 +231,18 @@ The assistant service falls back to the Kinora Engine on a missing key, timeout,
 
 ## Voice sessions and LiveKit
 
-The session is designed to work with a phone between two parents. There are two layers, and both work without the other:
+A voice session runs on **one phone placed between the parents**. Both parents speak into the same microphone in turns. There is no robotic device-voice fallback and no second phone to join.
 
-1. **Device voice** — Web Speech API for listening and a soft system voice for speaking. This is the zero-setup fallback.
-2. **LiveKit voice room** — a real room, a real deployed agent, and browser captions posted back into the app.
+### The one-phone voice-agent path
 
-### The real voice-agent path
-
-- **Join**: a voice session opens the **Voice room** sheet automatically and keeps a **Join the voice room** button visible. Each phone calls `/api/livekit/token`. The route verifies that the room belongs to a stored session and that the identity is a family member in that session, then issues a scoped 2-hour token (`roomJoin`, `canPublish`, `canSubscribe`, `canPublishData`).
-- **Dispatch**: after the first phone connects, the browser calls `/api/livekit/dispatch`. The route loads the session by room name, creates the room if needed, and sends an explicit dispatch to the `kinora-agent` worker with session metadata: title, problem, opening line, parent names, and who has the floor first. A finished dispatch is not treated as active, so re-joining a room starts a fresh agent job.
-- **Agent**: `agents/kinora-voice/` is a LiveKit Agents 1.8 Python worker. `RoomIO` links to the parent in the room, AssemblyAI (`assemblyai/universal-3-6-pro`) transcribes, **Ollama Cloud `gemma4:31b`** writes the next turn, and **Cartesia Sonic 3** speaks it in a female voice. The agent is instructed to use only the seeded parent names, keep the evidence-informed arc, never decide who is right, and stop coaching for safety.
-- **Speaker switching**: tapping **Michael** or **Lucy** publishes a reliable `kinora.speaker` data packet. The agent re-links `RoomIO` to that identity and tags the next user turn as `[Name is speaking]`, so one shared microphone still knows who has the floor.
+- **Join**: a voice session auto-connects as the shared `family_phone` identity. The token route issues a scoped 2-hour token (`roomJoin`, `canPublish`, `canSubscribe`, `canPublishData`). Per-parent identities are still accepted for operator and debug use.
+- **Dispatch**: after the shared phone connects, the browser calls `/api/livekit/dispatch`. The route loads the session by room name, creates the room if needed, and sends an explicit dispatch to the `kinora-agent` worker with session metadata: title, problem, opening line, parent names, and who has the floor first. A finished dispatch is not treated as active, so re-joining a room starts a fresh agent job.
+- **Agent**: `agents/kinora-voice/` is a LiveKit Agents 1.8 Python worker. `RoomIO` links to the shared phone, AssemblyAI (`assemblyai/universal-3-6-pro`) transcribes with **speaker diarization** (`speaker_labels`), **Ollama Cloud `gemma4:31b`** writes the next turn, and **Cartesia Sonic 3** speaks it in a female voice. The agent is instructed to use only the seeded parent names, keep the evidence-informed arc, never decide who is right, and stop coaching for safety.
+- **Speaker detection**: the first voice after the opening maps to the parent Kinora invited first; the next new voice maps to the other parent. The agent tags the user turn as `[Name is speaking]` and publishes `kinora.speaker_detected` over the data channel so the phone highlights the right parent and labels the transcript. Tapping **Michael** or **Lucy** is a manual correction for the current voice.
 - **Captions back to the app**: the browser receives LiveKit transcriptions for both sides and posts final segments to `/api/sessions/[id]/transcript`. Those become real session turns, so memory, the summary, and saved agreements still work. The opening is de-duplicated.
 - **Audio unlock**: the room unlocks WebAudio from the join tap and exposes **Tap to enable sound** if a mobile browser pauses playback. The agent audio element is `playsinline`, and attached tracks are unmuted when the room says audio is allowed.
-- **End**: the agent stays while either parent remains, then shuts down after the room has been empty for two minutes. A parent can also leave the room and keep the text room fully usable.
-
-The browser disables its local TTS/STT once the agent is present, so there is no double voice. On the device-voice path, the opening turn is voiced only after the browser has confirmed speech-synthesis support; if a mobile browser blocks it, the session shows **Tap to hear Kinora** and retries on that gesture.
+- **End**: the agent stays while the shared phone remains, then shuts down after the room has been empty for two minutes. A parent can leave the room and keep the text room fully usable.
+- **No fallback voice**: if LiveKit, the agent, or the microphone is unavailable, the session stays usable as text. It never switches to a browser system voice.
 
 ### Local and cloud
 
@@ -276,7 +270,7 @@ The cloud agent runs in **eu-central**. Cartesia Sonic 3 has an EU endpoint; Fis
 
 ### Graceful limits
 
-If LiveKit, the agent, or the microphone is unavailable, the UI says so and the session stays usable in text/device-voice mode. The token and dispatch routes are rate-limited; the agent waits up to 60 seconds for a parent before speaking the opening, so an early dispatch does not waste the opening on an empty room. The voice sheet reports a dispatch timeout after 20 seconds and offers **Ask Kinora to join again**.
+If LiveKit, the agent, or the microphone is unavailable, the UI says so and the session stays usable in text mode. The token and dispatch routes are rate-limited; the agent waits up to 60 seconds for the shared phone before speaking the opening, so an early dispatch does not waste the opening on an empty room. The voice card reports a dispatch timeout after 20 seconds and offers **Ask Kinora to join again**.
 
 This is deliberately a **turn-based** voice experience, not an always-on third voice during a fight. The research warns that flooded people cannot process a third voice mid-conflict; Kinora is used when calm or scheduled for later, and it recommends a pause when either partner is flooded.
 
@@ -379,12 +373,12 @@ The agent reads the repo `.env.local` when run locally, and LiveKit-injected env
 ```bash
 npm run typecheck     # TypeScript, including tests
 npm run lint          # ESLint (vendored registry components excluded)
-npm test              # 81 unit + component tests
-npm run test:e2e      # 29 Playwright tests (27 mobile + 2 desktop visual)
+npm test              # 85 unit + component tests
+npm run test:e2e      # 28 Playwright tests (26 mobile + 2 desktop visual)
 npm run test:all      # typecheck + lint + unit + e2e
 
 cd agents/kinora-voice
-uv run pytest -q      # 2 agent instruction/safety tests
+uv run pytest -q      # 4 agent instruction/safety tests
 uv run ruff check src tests
 ```
 
@@ -396,7 +390,7 @@ Coverage highlights:
 - **Agent**: instruction building (both parent names, first speaker, safety resources, no invented names) and safety/arc text; pytest + ruff pass.
 - **Container**: the multi-stage image was built and run against a named data volume; `/api/health`, `/app`, `/app/sessions/new`, and a mood mutation all returned successfully.
 - **E2E**: landing → app; mood persistence; rainy-day actions; menu navigation; family sheet voice preference; Plus activation; assistant memory, redirects, crisis routing, voice fallback, new conversations; child unknown state → assessment → persistent profile; adding a child; non-diagnostic/retake notes; course pass, fail, review, retry; session start → both sides → end → summary → save; scheduled session; safety pause; API validation; LiveKit token scoping (valid session, unknown room 404, outsider 403); visual/overflow checks.
-- **LiveKit live verification**: local agent and cloud agent both joined real rooms; STT transcribed, the LLM replied with the correct parent name, TTS was captioned, speaker switching re-linked `RoomIO`, the browser posted final turns to the app, and the summary was generated from the voice transcript. The cloud agent was deployed to `eu-central` and dispatch through the app route returned a real dispatch ID.
+- **LiveKit live verification**: one shared phone joined a real room; the agent joined automatically; diarization mapped two different voices to Michael and Lucy; the phone UI followed the detected speaker; the LLM replied by the correct parent name; Cartesia audio played continuously; final turns reached the app; and the cloud agent runs in `eu-central` with a real dispatch ID.
 
 The curated screenshots in `docs/screenshots/` were generated by that suite.
 
@@ -457,7 +451,7 @@ In this project the cloud agent is deployed as **`CA_qw379pkXaDJQ` / `kinora-age
 - **Demo limitations.**
   - Single seeded family; no auth, multi-tenancy, invitations, billing, or push notifications.
   - The assistant and psychologist are deterministic by default; the LLM is opt-in and currently pointed at Ollama Cloud.
-  - Voice has two paths: the zero-setup browser voice fallback, and the real LiveKit room + deployed `kinora-agent` worker (AssemblyAI STT, Ollama LLM, Cartesia TTS). The agent is deployed in `eu-central`; a local worker is also supported.
+  - Voice is one shared phone + the deployed `kinora-agent` worker (AssemblyAI STT with speaker diarization, Ollama LLM, Cartesia TTS). There is deliberately no browser system-voice fallback; text is the fallback. The agent is deployed in `eu-central`; a local worker is also supported.
   - The rate limiter is in-process; use Redis/Upstash before running multiple app instances.
   - Supabase is active in this environment after the migration; a fresh clone still defaults to the file backend until it applies the migration and sets `DATA_BACKEND=supabase`.
   - Child discovery is a conversation starter, not a clinical instrument.
@@ -479,6 +473,22 @@ The product content draws on the research folder in this repo, including:
 - COPPA (amended rule in force 2026): minimal child data and no child accounts under 13.
 
 Full source URLs are listed in `src/content/landing.ts` and at the bottom of the landing page.
+
+---
+
+## Deployment
+
+Production: **https://kinora-swart.vercel.app**
+
+The app deploys on Vercel from this repository. Pushes to `main` ship to
+Production; pull requests get isolated Preview deployments. GitHub Actions runs
+typecheck, lint, unit tests, and Playwright before merge.
+
+Environment variables (Supabase, LiveKit, Ollama Cloud) are configured in the
+Vercel project for Production, Preview, and Development. See
+[`docs/deployment.md`](docs/deployment.md) for the full setup, the
+`scripts/vercel-env-sync.sh` helper, the CI/CD flow, rollback steps, and known
+platform constraints.
 
 ---
 

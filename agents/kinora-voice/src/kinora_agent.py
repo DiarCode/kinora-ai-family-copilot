@@ -167,6 +167,15 @@ class KinoraAssistant(Agent):
         if manual_identity:
             manual = next((p for p in self.parents if p["id"] == manual_identity), None)
             if manual:
+                previous = self.speaker_voices.get(speaker_id)
+                # A correction frees the parent we had guessed for this voice
+                # so the next new voice can take that name.
+                if (
+                    previous
+                    and previous["id"] != manual["id"]
+                    and previous not in self._unassigned
+                ):
+                    self._unassigned.append(previous)
                 for other_id, other in list(self.speaker_voices.items()):
                     if other["id"] == manual["id"] and other_id != speaker_id:
                         del self.speaker_voices[other_id]
@@ -194,7 +203,7 @@ class KinoraAssistant(Agent):
                 extra={
                     "speaker_id": speaker_id,
                     "identity": mapped["id"],
-                    "name": mapped["name"],
+                    "parent_name": mapped["name"],
                 },
             )
         return mapped
@@ -344,14 +353,19 @@ async def kinora_session(ctx: JobContext) -> None:
             logger.debug("invalid speaker packet", exc_info=True)
 
     def on_user_input_transcribed(ev: Any) -> None:
-        if not getattr(ev, "is_final", False):
-            return
-        speaker_id = getattr(ev, "speaker_id", None)
-        if not speaker_id:
-            return
-        mapped = assistant.assign_speaker(str(speaker_id))
-        if mapped:
-            publish_detected_speaker(mapped)
+        try:
+            if not getattr(ev, "is_final", False):
+                return
+            speaker_id = getattr(ev, "speaker_id", None)
+            if not speaker_id:
+                return
+            mapped = assistant.assign_speaker(str(speaker_id))
+            if mapped:
+                publish_detected_speaker(mapped)
+        except Exception:
+            # Speaker labels are an enhancement; never break the session over
+            # one malformed or unmapped transcript.
+            logger.debug("speaker detection failed", exc_info=True)
 
     def on_participant_connected(_: Any) -> None:
         cancel_idle_shutdown()

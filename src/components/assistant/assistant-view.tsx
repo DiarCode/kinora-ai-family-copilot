@@ -76,7 +76,7 @@ function WelcomeMessage({
           <KinoraOrb size={30} glow={false} animated={false} label="Kinora" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="rounded-[20px] border border-[#e4e2e8] bg-[#efeff1] px-3.5 py-3">
+          <div className="rounded-2xl border border-[#e4e2e8] bg-[#efeff1] px-3.5 py-3">
             <span className="text-[15px] font-semibold text-ink">Kinora</span>
             <KinoraResponse className="mt-2 text-[15px] leading-relaxed text-ink">
               {welcome.text}
@@ -569,7 +569,7 @@ export function AssistantView({
             onClick={startNewChat}
             className="flex w-full items-center gap-3 rounded-2xl border border-[#ece8f4] bg-white p-4 text-left"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-[11px] bg-kinora-100 text-kinora-800">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-kinora-100 text-kinora-800">
               <Pencil className="h-4 w-4" />
             </span>
             <span className="flex-1 text-[15px] font-medium">
@@ -582,7 +582,7 @@ export function AssistantView({
             onClick={() => void copyTranscript()}
             className="flex w-full items-center gap-3 rounded-2xl border border-[#ece8f4] bg-white p-4 text-left"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-[11px] bg-[#f3f0f8] text-ink-soft">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#f3f0f8] text-ink-soft">
               <Copy className="h-4 w-4" />
             </span>
             <span className="flex-1 text-[15px] font-medium">
@@ -597,7 +597,7 @@ export function AssistantView({
             }}
             className="flex w-full items-center gap-3 rounded-2xl border border-[#ece8f4] bg-white p-4 text-left"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-[11px] bg-[#f3f0f8] text-ink-soft">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#f3f0f8] text-ink-soft">
               <Info className="h-4 w-4" />
             </span>
             <span className="flex-1 text-[15px] font-medium">

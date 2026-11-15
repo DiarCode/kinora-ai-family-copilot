@@ -90,7 +90,7 @@ export function SessionScheduled({ session }: { session: Session }) {
       }
     >
       <div className="px-5 pb-8">
-        <section className="relative overflow-hidden rounded-[28px] border border-white bg-gradient-to-br from-[#f4edff] via-[#fbf9ff] to-white p-4 text-center">
+        <section className="relative overflow-hidden rounded-3xl border border-white bg-gradient-to-br from-[#f4edff] via-[#fbf9ff] to-white p-4 text-center">
           <div className="absolute -top-8 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-[#d6c7fe]/50 blur-2xl" />
           <div className="relative mx-auto flex justify-center">
             <KinoraOrb size={86} animated label="Scheduled session" />
