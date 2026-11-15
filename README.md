@@ -480,9 +480,10 @@ Full source URLs are listed in `src/content/landing.ts` and at the bottom of the
 
 Production: **https://kinora-swart.vercel.app**
 
-The app deploys on Vercel from this repository. Pushes to `main` ship to
-Production; pull requests get isolated Preview deployments. GitHub Actions runs
-typecheck, lint, unit tests, and Playwright before merge.
+The app deploys on Vercel from this repository. GitHub Actions runs typecheck,
+lint, unit tests, and Playwright on every push and PR. Pushes to `main` also run
+`vercel deploy --prod` once the `VERCEL_TOKEN` repository secret is configured
+(see the guide); until then, deploy manually with `vercel --prod`.
 
 Environment variables (Supabase, LiveKit, Ollama Cloud) are configured in the
 Vercel project for Production, Preview, and Development. See
